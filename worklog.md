@@ -73,3 +73,22 @@ Work Log:
 Stage Summary:
 - Users can now upload a profile photo (camera badge on avatar) and a banner photo ("Add banner photo" / Edit profile dialog) — instant save, flat-color fallback, automatic orphan cleanup.
 - Deliverable refreshed: `/home/z/my-project/download/harax.zip` (+ `download/README.md` pointer updated).
+
+---
+Task ID: 4
+Agent: main-agent (Super Z)
+Task: Blend the user's two campus photos into the landing page atmospherically — the Haramaya main-gate photo at the top (hero) and the aerial campus photo around the last CTA section.
+
+Work Log:
+- Analyzed both uploads with VLM: "ChatGPT Image Sep 13" = Haramaya University main entrance gate (1448x1086) → hero; "2hara.png" = aerial view of campus housing (1676x938) → bottom CTA.
+- Optimized via scripts/make-atmo-images.py (PIL): gentle desaturation + brightness lift, downscaled, WebP q~55-58 → gate.webp 140KB (1100w), campus-aerial.webp 170KB (1280w) in public/img/landing/.
+- globals.css: new "atmospheric photo backdrops" layer — `.atmo` (absolute, pointer-events-none), `.atmo-img` (object-cover, blur 2px, opacity .26 light / .34 + darker filter in dark mode), `.atmo-mask-soft` (radial alpha mask, photo breathes in the middle and melts at edges), `.atmo-mask-horizon` (linear alpha mask, strongest low, dissolves upward AND at the bottom edge — no hard cuts against the ticker). Masks are alpha-only; flat-color design language intact.
+- landing.tsx: gate photo as hero backdrop (objectPosition 50% 62%, horizon mask) behind the z-10 content; aerial photo as backdrop of the final CTA section (soft mask, lazy) with the lemon card floating at z-10; added pt-10 to the CTA section so the photo has breathing room around the card.
+- Debugged a stale dev-server CSS watcher (served old opacity values after edits — touch didn't help) → restarted the orchestrator (scripts/dev.mjs) and confirmed fresh CSS served.
+- Verified with VLM across 6 screenshots: hero light/dark, CTA light/dark, mobile 390x844 hero+CTA — photo visible and blending smoothly, text readable, no layout issues, 0 console/page errors. Dark mode required boosting (.34 opacity / brightness .88) after first attempt was invisible.
+- Preserved the user's own uploaded profile photo + banner (ict.office account) and the post-referenced upload in the zip — checked all /uploads references in DB before packaging.
+- Repacked download/harax.zip (230 files): new landing + globals.css + both WebP images + all DB-referenced uploads; README updated ("atmospheric photos of the Haramaya campus").
+
+Stage Summary:
+- Landing hero now carries the Haramaya gate photo and the final CTA section the aerial campus view, both dissolved into the background (blurred, masked, low opacity, dark-mode aware).
+- Deliverable refreshed: /home/z/my-project/download/harax.zip.

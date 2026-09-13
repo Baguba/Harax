@@ -108,6 +108,15 @@ export function Landing() {
 
       {/* ── HERO ────────────────────────────────────────── */}
       <section className="relative flex min-h-[105svh] flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16 text-center">
+        {/* Haramaya main gate — atmospheric backdrop, dissolved into the page */}
+        <div className="atmo" aria-hidden="true">
+          <img
+            src="/img/landing/gate.webp"
+            alt=""
+            className="atmo-img atmo-mask-horizon"
+            style={{ objectPosition: "50% 62%" }}
+          />
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -308,9 +317,18 @@ export function Landing() {
       </section>
 
       {/* ── CTA ─────────────────────────────────────────── */}
-      <section className="relative mx-auto max-w-7xl px-4 pb-24 sm:px-6">
+      <section className="relative mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6">
+        {/* Haramaya from above — atmospheric backdrop around the final card */}
+        <div className="atmo" aria-hidden="true">
+          <img
+            src="/img/landing/campus-aerial.webp"
+            alt=""
+            className="atmo-img atmo-mask-soft"
+            loading="lazy"
+          />
+        </div>
         <ScrollReveal>
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-primary p-10 text-center text-primary-foreground sm:p-16">
+          <div className="relative z-10 overflow-hidden rounded-[2.5rem] bg-primary p-10 text-center text-primary-foreground sm:p-16">
             <MessageCircle className="absolute left-10 top-10 h-10 w-10 opacity-25" aria-hidden="true" />
             <CalendarDays className="absolute bottom-10 right-12 h-12 w-12 opacity-25" aria-hidden="true" />
             <h2 className="relative font-display text-4xl font-bold leading-tight sm:text-5xl">
