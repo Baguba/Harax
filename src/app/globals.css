@@ -172,40 +172,54 @@
 }
 
 /* ── Atmospheric photo backdrops ──────────────────────────────
-   Real campus photos (Haramaya gate + aerial) sitting behind section
-   content: soft blur, low opacity, alpha-mask fades dissolve the edges
-   into the page background. Masks control transparency only — colors
-   stay flat, no color gradients. */
+   Real campus photos (Haramaya gate + aerial) presented like
+   screen-printed poster art: crisp and clearly visible, with a flat
+   wash of the page color over them so they sit in the palette and
+   text stays readable. No blur-melt, no faint ghost cliché.
+   Fades are alpha-only — colors stay flat. */
 .atmo {
   position: absolute;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
 }
+/* flat wash of the page color, laid over the photo like a print layer */
+.atmo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--background);
+  opacity: 0.36;
+}
+.dark .atmo::after {
+  opacity: 0.52;
+}
+/* deeper wash where headline text sits directly on the photo */
+.atmo-strong::after {
+  opacity: 0.48;
+}
+.dark .atmo-strong::after {
+  opacity: 0.62;
+}
 .atmo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.26;
-  filter: blur(2px) saturate(0.9) brightness(1.04);
+  opacity: 1;
+  filter: saturate(0.92) contrast(1.03);
 }
 .dark .atmo-img {
-  opacity: 0.34;
-  filter: blur(2.5px) saturate(0.75) brightness(0.88);
+  filter: saturate(0.8) brightness(0.94) contrast(1.06);
 }
-/* soft oval window — photo breathes in the middle, melts at every edge */
-.atmo-mask-soft {
-  -webkit-mask-image: radial-gradient(ellipse 88% 75% at 50% 52%, #000 42%, rgba(0, 0, 0, 0.5) 68%, transparent 98%);
-  mask-image: radial-gradient(ellipse 88% 75% at 50% 52%, #000 42%, rgba(0, 0, 0, 0.5) 68%, transparent 98%);
-}
-/* horizon fade — photo strongest low in the section, dissolving up into the
-   page background and softly out at the very bottom edge (no hard cuts) */
+/* edge fades — only where the photo meets fixed chrome or section seams */
 .atmo-mask-horizon {
-  -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.78) 14%, rgba(0, 0, 0, 0.5) 34%, rgba(0, 0, 0, 0.16) 60%, transparent 86%);
-  mask-image: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.78) 14%, rgba(0, 0, 0, 0.5) 34%, rgba(0, 0, 0, 0.16) 60%, transparent 86%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 9%, #000 24%, #000 96%, rgba(0, 0, 0, 0.8) 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 9%, #000 24%, #000 96%, rgba(0, 0, 0, 0.8) 100%);
 }
-@media (prefers-reduced-motion: reduce) {
-  .atmo-img { filter: blur(2px) saturate(0.9) brightness(1.04); }
+/* corners only — the photo stays basically full-bleed */
+.atmo-mask-soft {
+  -webkit-mask-image: radial-gradient(ellipse 130% 115% at 50% 50%, #000 74%, transparent 100%);
+  mask-image: radial-gradient(ellipse 130% 115% at 50% 50%, #000 74%, transparent 100%);
 }
 
 /* ── Marquee ──────────────────────────────────────────────── */

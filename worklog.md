@@ -92,3 +92,22 @@ Work Log:
 Stage Summary:
 - Landing hero now carries the Haramaya gate photo and the final CTA section the aerial campus view, both dissolved into the background (blurred, masked, low opacity, dark-mode aware).
 - Deliverable refreshed: /home/z/my-project/download/harax.zip.
+
+---
+Task ID: 5
+Agent: main-agent (Super Z)
+Task: Rework the landing photo treatment — user found the faint-blur background "very common AI slop"; wanted the photos much more visible with a different, designer-y style.
+
+Work Log:
+- Replaced the blur-melt treatment with a screen-print poster style in globals.css:
+  - `.atmo-img` now fully opaque and crisp (no blur; saturate .92 / contrast 1.03; dark: brightness .94 saturate .8) — the photo reads as an actual photo.
+  - Blending is done by a flat wash of the page background color laid over the photo (`.atmo::after`, 36% light / 52% dark; `.atmo-strong` 48%/62% for the hero where the headline sits directly on the photo) — like a print layer, harmonizes the photo with the flat white/lemon palette.
+  - Masks reduced to edge-only fades: `.atmo-mask-horizon` fades just the top under the fixed nav + slight bottom edge; `.atmo-mask-soft` fades only extreme corners — the photos are essentially full-bleed.
+- landing.tsx: hero atmo layer gets `atmo-strong`; CTA keeps standard wash; comments updated.
+- Restarted the dev orchestrator (CSS watcher stale again) and confirmed the served CSS chunk contains the new rules.
+- VLM-verified 5 screenshots: light hero + CTA ("clearly visible", "deliberate designer poster treatment, not generic AI background", text fully readable), dark hero + CTA (moody poster, readable), mobile 390x844 hero. 0 console errors.
+- Repacked download/harax.zip with the updated globals.css + landing.tsx.
+
+Stage Summary:
+- Landing photos are now crisp and clearly visible behind a flat color wash (screen-print poster look) instead of the faint blurred wash — light, dark and mobile verified.
+- Deliverable refreshed: /home/z/my-project/download/harax.zip.

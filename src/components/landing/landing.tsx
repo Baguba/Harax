@@ -108,8 +108,8 @@ export function Landing() {
 
       {/* ── HERO ────────────────────────────────────────── */}
       <section className="relative flex min-h-[105svh] flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16 text-center">
-        {/* Haramaya main gate — atmospheric backdrop, dissolved into the page */}
-        <div className="atmo" aria-hidden="true">
+        {/* Haramaya main gate — screen-print poster backdrop, crisp and present */}
+        <div className="atmo atmo-strong" aria-hidden="true">
           <img
             src="/img/landing/gate.webp"
             alt=""
