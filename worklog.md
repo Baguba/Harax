@@ -111,3 +111,21 @@ Work Log:
 Stage Summary:
 - Landing photos are now crisp and clearly visible behind a flat color wash (screen-print poster look) instead of the faint blurred wash — light, dark and mobile verified.
 - Deliverable refreshed: /home/z/my-project/download/harax.zip.
+
+---
+Task ID: 6
+Agent: main-agent (Super Z)
+Task: Add a log out option on top of the profile page (user request: "add log out option on top of my profile").
+
+Work Log:
+- Audit: logout existed only as a tiny icon button in the desktop Sidebar (Topbar received onLogout but never rendered it); on mobile there was NO logout anywhere — the sidebar is lg-only and MobileNav has no logout.
+- `src/components/profile/profile-view.tsx`: own-profile header now shows a **Log out** pill next to *Edit profile* (absolute top-right of the banner, both in a flex gap group): glass style like its neighbor, red text (red-600 / dark red-300), LogOut icon, spinner while busy; gated behind `profile.isMe`.
+- Handler reuses `logoutFlow()` from app-chrome (POST /api/auth/logout + "Signed out" toast) then `setUser(null)` + `qc.clear()` — same flow as the sidebar, wrapped in try/finally.
+- Browser-verified end-to-end (agent-browser): button present on own profile, absent on other users' profiles (Dr. Meron — no Log out/Edit/Add banner); clicking it shows the toast, returns to the landing page, and `/api/auth/me` returns `user: null` (server session truly ended); desktop 1280×800 light + dark, mobile 390×844 (95px + 117px pills, fit cleanly); VLM verified the design in all three (red Log out + dark Edit profile, no overlap, readable on dark glass); 0 console errors; tsc + eslint clean for the file.
+- Debugged a headless-screenshot trap worth remembering: after framer-motion view transitions the captured frame can freeze (content stuck at opacity 0 mid-animation). Fixes that worked: real viewport resize (`agent-browser set viewport <w> <h>`), page reload, or injecting `main *{opacity:1!important;transform:none!important}` before the shot; DOM rect checks stay reliable throughout.
+- New reusable packaging script `scripts/package-zip.sh` (rsync stage → prune scripts → restore ONLY DB-referenced uploads via Python sqlite3 (sqlite3 CLI is NOT installed in this sandbox — a bash sqlite3 call silently kept zero uploads; caught and fixed) → zip → `unzip -t`).
+- README: documented the profile Log out button; repacked `download/harax.zip` (234 files, 1.1M) with the new profile-view, README, and all 3 DB-referenced uploads (seeded post image + ict.office avatar/banner).
+
+Stage Summary:
+- Every user can now log out from the top of their own profile on any screen size; session ends server-side.
+- Deliverable refreshed: /home/z/my-project/download/harax.zip.

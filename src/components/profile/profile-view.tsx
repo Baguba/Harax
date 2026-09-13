@@ -17,7 +17,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Pencil, Loader2, CalendarDays, Users, Megaphone, MapPin, AtSign, Newspaper, Camera, ImagePlus, X } from "lucide-react";
+import { Pencil, Loader2, CalendarDays, Users, Megaphone, MapPin, AtSign, Newspaper, Camera, ImagePlus, X, LogOut } from "lucide-react";
+import { logoutFlow } from "@/components/shell/app-chrome";
 import { DEPARTMENTS, YEARS } from "@/lib/validation-constants";
 
 /* solid cover colors — flat, no gradients */
@@ -58,6 +59,7 @@ export function ProfileView({ userId }: { userId: string }) {
   const setView = useAppStore((s) => s.setView);
   const qc = useQueryClient();
   const [editOpen, setEditOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const [photoBusy, setPhotoBusy] = useState<"avatar" | "banner" | null>(null);
   const avatarInput = useRef<HTMLInputElement>(null);
   const bannerInput = useRef<HTMLInputElement>(null);
@@ -80,6 +82,18 @@ export function ProfileView({ userId }: { userId: string }) {
   if (!profile) {
     return <EmptyState emoji="🔍" title="Profile not found" />;
   }
+
+  /** sign out from the profile header — same flow as the sidebar button. */
+  const handleLogout = async () => {
+    if (loggingOut) return;
+    setLoggingOut(true);
+    try {
+      await logoutFlow();
+    } finally {
+      setUser(null);
+      qc.clear();
+    }
+  };
 
   /** header flow: upload + save immediately, like big social apps do. */
   const applyPhoto = async (file: File | undefined, purpose: "avatar" | "banner") => {
@@ -121,13 +135,25 @@ export function ProfileView({ userId }: { userId: string }) {
             <div className="absolute inset-0" style={{ background: profile.coverUrl ?? COVERS[0] }} />
           )}
           {profile.isMe && (
-            <Button
-              onClick={() => setEditOpen(true)}
-              size="sm"
-              className="absolute right-3 top-3 gap-1.5 rounded-2xl glass font-semibold"
-            >
-              <Pencil className="h-3.5 w-3.5" /> Edit profile
-            </Button>
+            <div className="absolute right-3 top-3 flex items-center gap-2">
+              <Button
+                onClick={handleLogout}
+                disabled={loggingOut}
+                size="sm"
+                className="gap-1.5 rounded-2xl glass font-semibold text-red-600 hover:text-red-700 dark:text-red-300 dark:hover:text-red-200"
+                aria-label="Log out"
+              >
+                {loggingOut ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <LogOut className="h-3.5 w-3.5" aria-hidden />}
+                Log out
+              </Button>
+              <Button
+                onClick={() => setEditOpen(true)}
+                size="sm"
+                className="gap-1.5 rounded-2xl glass font-semibold"
+              >
+                <Pencil className="h-3.5 w-3.5" /> Edit profile
+              </Button>
+            </div>
           )}
           {profile.isMe && (
             <button

@@ -56,6 +56,8 @@ Open your own profile and you can personalize it two ways:
 
 Both save instantly, work on mobile and desktop, and accept JPG / PNG / WebP / GIF up to 5 MB (photo) and 8 MB (banner). Uploads are checked server-side by magic bytes (a renamed `.exe` can never pass as an image), stored under `public/uploads/`, and files you replace or remove are cleaned up automatically.
 
+Your own profile header also carries a **Log out** button (top of the banner, next to *Edit profile*) — handy on phones, where the sidebar isn't visible. It ends the session server-side and returns you to the landing page.
+
 ## All scripts
 
 | Command | What it does |
