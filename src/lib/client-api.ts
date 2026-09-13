@@ -29,10 +29,14 @@ export async function apiQ<T>(path: string): Promise<T> {
   return res.data;
 }
 
-export async function uploadFile(file: File): Promise<{ ok: true; url: string; mediaType: "image" | "video" } | { ok: false; error: string }> {
+export async function uploadFile(
+  file: File,
+  purpose?: "avatar" | "cover" | "post"
+): Promise<{ ok: true; url: string; mediaType: "image" | "video" } | { ok: false; error: string }> {
   try {
     const form = new FormData();
     form.append("file", file);
+    if (purpose) form.append("purpose", purpose);
     const res = await fetch("/api/upload", { method: "POST", body: form });
     const json = await res.json().catch(() => null);
     if (!res.ok || !json?.ok) return { ok: false, error: json?.error ?? "Upload failed" };

@@ -47,6 +47,15 @@ The sign-in modal also has one-click chips for all four accounts. Google sign-in
 
 The database ships **pre-seeded** with a realistic Haramaya community (22 users, posts, groups, events, channels, sidechat rooms, notifications). Log in and explore.
 
+## Profile photos & banners
+
+Open your own profile and you can personalize it two ways:
+
+- **Profile photo** — tap the small **camera badge** on your avatar (or use *Edit profile → Change photo*).
+- **Banner** — tap **“Add banner photo”** on the cover strip (or pick a flat color in *Edit profile → Banner*), and swap in your own photo any time.
+
+Both save instantly, work on mobile and desktop, and accept JPG / PNG / WebP / GIF up to 5 MB (photo) and 8 MB (banner). Uploads are checked server-side by magic bytes (a renamed `.exe` can never pass as an image), stored under `public/uploads/`, and files you replace or remove are cleaned up automatically.
+
 ## All scripts
 
 | Command | What it does |

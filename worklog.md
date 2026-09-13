@@ -51,3 +51,25 @@ Stage Summary:
 - Design is flat white + lemon green, zero gradients, no lightning/sparkle clutter, new casual doodle logo everywhere (UI + PWA icons + OG art).
 - Deliverable: `/home/z/my-project/download/harax.zip` + run instructions in `download/README.md` and inside the zip.
 - Dev script now: `bun run dev` (sandbox) / `npm run dev` (zip) → orchestrator (web :3000 + chat :3003, control :3011). Demo logins unchanged (password `harax2026`).
+
+---
+Task ID: 3
+Agent: main-agent (Super Z)
+Task: Add profile photo upload + banner photo upload to the profile page.
+
+Work Log:
+- Audit: backend already fully supported avatar/cover uploads (`POST /api/upload` purposes avatar/cover with magic-byte sniffing + size caps; `profileSchema` accepts avatarUrl/coverUrl; Prisma User has both fields) — only the frontend upload UI and image-rendering of banners were missing.
+- Rewrote `src/components/profile/profile-view.tsx`:
+  - Camera badge button overlaid on the avatar (own profile only) → instant upload + PATCH + query invalidation + app-store `setUser` (avatar updates everywhere in the shell instantly, survives reload via `/api/auth/me`).
+  - "Add banner photo" / "Change banner" pill on the cover strip → instant upload + save.
+  - Banner now renders uploaded images (`object-cover` <img>) vs flat colors (style background) via `isImageRef()`.
+  - Edit dialog: avatar "Change photo"/"Remove photo" row with live preview; Banner section = 5 flat color tiles + dashed upload tile + image preview with X-remove; uploads in dialog save on "Save changes".
+  - Housekeeping: replaced/removed uploaded files are deleted via `DELETE /api/upload` (header flow forgets the previous file; dialog tracks `fresh` session uploads and deletes them on cancel, and deletes abandoned originals on save).
+- Browser-verified end-to-end as Selam (student): header avatar upload ("Looking sharp" toast, DB updated, shell avatar live), header banner upload ("Banner updated" toast, button flips to "Change banner"), dialog remove-photo→save (avatarUrl null), dialog cancel after upload (orphan file deleted from public/uploads), dialog remove-banner→save (banner file deleted, coverUrl falls back to #a3e635). VLM screenshot verification of rendered photos. 0 console/page errors. tsc + eslint clean for the file.
+- Restored demo DB state (Selam's original generated avatar, no cover) and removed test upload files; `public/uploads` now only holds the file referenced by a seeded post.
+- README.md (root + inside zip): added "Profile photos & banners" section documenting both flows, formats/limits and cleanup behavior.
+- Repackaged `download/harax.zip` (223 files): full source incl. new profile-view, pristine pre-seeded db/custom.db, empty public/uploads/, updated README; excluded test screenshots (shot-*.png / final-*.png) that had leaked into scripts/. Zip integrity + DB state verified by extraction.
+
+Stage Summary:
+- Users can now upload a profile photo (camera badge on avatar) and a banner photo ("Add banner photo" / Edit profile dialog) — instant save, flat-color fallback, automatic orphan cleanup.
+- Deliverable refreshed: `/home/z/my-project/download/harax.zip` (+ `download/README.md` pointer updated).
