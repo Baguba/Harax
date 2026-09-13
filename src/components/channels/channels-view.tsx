@@ -8,7 +8,6 @@ import type { ChannelDTO } from "@/lib/types";
 import { useAppStore } from "@/store/app-store";
 import { UserAvatar } from "@/components/common/user-avatar";
 import { EmptyState } from "@/components/common/empty-state";
-import { AuroraField } from "@/components/canvas/aurora-field";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -31,7 +30,7 @@ export function ChannelsView() {
   const channels = data?.channels ?? [];
 
   const toggleSub = async (c: ChannelDTO) => {
-    if (!user) return toast.info("Sign in to subscribe ⚡");
+    if (!user) return toast.info("Sign in to subscribe");
     const res = await api<{ subscribed: boolean; subscriberCount: number }>(`/api/channels/${c.id}/subscribe`, { body: {} });
     if (!res.ok) return toast.error(res.error);
     qc.invalidateQueries({ queryKey: ["channels"] });
@@ -41,8 +40,7 @@ export function ChannelsView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-forest via-ink to-ink p-6 text-lemon-soft">
-        <AuroraField density={34} blobs={3} />
+      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-6 text-lemon-soft">
         <div className="relative flex flex-wrap items-center gap-3">
           <div className="min-w-0">
             <div className="inline-flex items-center gap-2 rounded-full border border-lemon/30 bg-lemon/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-lime-300">

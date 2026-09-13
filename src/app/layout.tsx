@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Harax — Haramaya University Community",
   description:
-    "Harax is the official community platform of Haramaya University: posts, events, groups, channels and sidechat — built by the campus, for the campus. ⚡",
+    "Harax is the official community platform of Haramaya University: posts, events, groups, channels and sidechat — built by the campus, for the campus.",
   keywords: ["Harax", "Haramaya University", "Ethiopia", "university community", "students", "campus"],
   authors: [{ name: "Harax" }],
   manifest: "/manifest.webmanifest",

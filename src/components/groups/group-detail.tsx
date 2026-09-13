@@ -81,12 +81,12 @@ export function GroupDetail({ groupId }: { groupId: string }) {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-lime-100/70 via-card to-card dark:from-lime-400/10">
+      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card">
         <div className="relative flex items-center gap-3.5 p-4 sm:p-5">
           <button onClick={goBack} className="rounded-xl p-2 text-muted-foreground transition-colors hover:bg-muted lg:hidden" aria-label="Back">
             <ChevronLeft className="h-5 w-5" />
           </button>
-          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-lime-200 to-lime-400 text-3xl">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-secondary text-3xl">
             {group.emoji}
           </span>
           <div className="min-w-0 flex-1">
@@ -139,6 +139,7 @@ export function GroupDetail({ groupId }: { groupId: string }) {
               chat={chat}
               canChat={canChat}
               title={group.name}
+              joinCta={group.isPublic ? { label: `Join ${group.name} to chat`, action: join } : undefined}
             />
           </TabsContent>
 
@@ -193,15 +194,18 @@ export function ChatRoom({
   canChat,
   title,
   anonymous = false,
+  joinCta,
 }: {
   chat: ReturnType<typeof useChat>;
   canChat: boolean;
   title: string;
   anonymous?: boolean;
+  joinCta?: { label: string; action: () => void };
 }) {
   const user = useAppStore((s) => s.user);
   const [text, setText] = useState("");
   const [media, setMedia] = useState<{ url: string; mediaType: string } | null>(null);
+  const [sending, setSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const typingSent = useRef(false);
@@ -210,10 +214,16 @@ export function ChatRoom({
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [chat.messages.length, chat.typing]);
 
-  const send = () => {
+  const send = async () => {
     if (!text.trim() && !media) return;
-    const ok = chat.send(text.trim(), media ?? undefined);
-    if (!ok) return;
+    if (sending) return;
+    setSending(true);
+    const res = await chat.send(text.trim(), media ?? undefined);
+    setSending(false);
+    if (!res.ok) {
+      toast.error(res.error ?? "Message didn't send — try again.");
+      return;
+    }
     setText("");
     setMedia(null);
     chat.setTypingState(false);
@@ -309,7 +319,13 @@ export function ChatRoom({
             {chat.authError}
           </p>
         )}
-        {media && (
+        {!canChat && joinCta ? (
+          <Button onClick={joinCta.action} className="h-11 w-full rounded-2xl font-bold">
+            <UserPlus className="h-4 w-4" /> {joinCta.label}
+          </Button>
+        ) : (
+          <>
+          {media && (
           <div className="relative mb-2 inline-flex rounded-xl border p-1">
             {media.mediaType === "image" ? (
               <img src={media.url} alt="to send" className="h-16 rounded-lg" />
@@ -341,10 +357,12 @@ export function ChatRoom({
             className="max-h-28 min-h-[42px] flex-1 resize-none rounded-2xl border border-border/70 bg-muted/40 px-4 py-2.5 text-sm outline-none transition-all placeholder:text-muted-foreground/60 focus:border-lemon/60 focus:bg-card disabled:opacity-60"
             aria-label={`Message ${title}`}
           />
-          <Button onClick={send} disabled={!canChat || (!text.trim() && !media)} size="icon" className="h-11 w-11 rounded-2xl shadow-[0_6px_16px_rgba(163,230,53,0.35)]" aria-label="Send message">
-            <Send className="h-5 w-5" />
+          <Button onClick={send} disabled={!canChat || sending || (!text.trim() && !media)} size="icon" className="h-11 w-11 rounded-2xl" aria-label="Send message">
+            {sending ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
           </Button>
         </div>
+          </>
+        )}
         <input ref={fileRef} type="file" accept="image/*" hidden onChange={onFile} aria-hidden="true" />
       </div>
     </div>

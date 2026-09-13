@@ -31,7 +31,7 @@ export function ChannelDetail({ channelId }: { channelId: string }) {
   const channel = data?.channel;
 
   const toggleSub = async () => {
-    if (!channel || !user) return toast.info("Sign in to subscribe ⚡");
+    if (!channel || !user) return toast.info("Sign in to subscribe");
     const res = await api<{ subscribed: boolean; subscriberCount: number }>(`/api/channels/${channelId}/subscribe`, { body: {} });
     if (!res.ok) return toast.error(res.error);
     qc.invalidateQueries({ queryKey: ["channel", channelId] });
@@ -65,8 +65,7 @@ export function ChannelDetail({ channelId }: { channelId: string }) {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-forest via-ink to-ink p-5 text-lemon-soft sm:p-6">
-        <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-lemon/15 blur-3xl" />
+      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-5 text-lemon-soft sm:p-6">
         <button onClick={goBack} className="absolute left-3 top-3 rounded-xl p-2 text-lemon-soft/70 transition-colors hover:bg-white/10 hover:text-white lg:hidden" aria-label="Back">
           <ChevronLeft className="h-5 w-5" />
         </button>

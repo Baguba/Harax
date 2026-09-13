@@ -70,7 +70,7 @@ export async function POST(req: Request) {
   if (!user) return fail("Sign in to post.", 401);
 
   const rl = rateLimit({ key: clientKey(req, `post:${user.id}`), max: 10, windowMs: 5 * 60_000 });
-  if (!rl.ok) return fail(`You're posting too fast ⚡ Wait ${rl.retryAfterSec}s.`, 429);
+  if (!rl.ok) return fail(`You're posting too fast — wait ${rl.retryAfterSec}s.`, 429);
 
   const body = await readJson(req);
   if (!body) return fail("Invalid request body");

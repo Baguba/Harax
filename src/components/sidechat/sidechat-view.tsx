@@ -9,9 +9,8 @@ import { useAppStore } from "@/store/app-store";
 import { useChat } from "@/hooks/use-chat";
 import { ChatRoom } from "@/components/groups/group-detail";
 import { EmptyState } from "@/components/common/empty-state";
-import { AuroraField } from "@/components/canvas/aurora-field";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Ghost, MessageCircle, Flame, ChevronLeft, ShieldAlert, Sparkles } from "lucide-react";
+import { Ghost, MessageCircle, Flame, ChevronLeft, ChevronRight, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function SideChatView() {
@@ -31,8 +30,7 @@ export function SideChatView() {
   if (activeRoom) {
     return (
       <div className="space-y-4">
-        <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-ink via-forest to-ink p-5 text-lemon-soft">
-          <div className="grain absolute inset-0" />
+        <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-5 text-lemon-soft">
           <button onClick={() => setActiveRoom(null)} className="absolute left-3 top-3 rounded-xl p-2 text-lemon-soft/70 transition hover:bg-white/10 hover:text-white" aria-label="All rooms">
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -72,9 +70,7 @@ export function SideChatView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-ink via-forest to-ink p-6 text-lemon-soft">
-        <AuroraField density={40} blobs={4} />
-        <div className="grain absolute inset-0" />
+      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-6 text-lemon-soft">
         <div className="relative">
           <div className="inline-flex items-center gap-2 rounded-full border border-lemon/30 bg-lemon/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-lime-300">
             <Ghost className="h-3 w-3" /> Anonymous · No names · Just vibes
@@ -112,7 +108,7 @@ export function SideChatView() {
                   </span>
                 )}
                 <div className="flex items-center gap-3">
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-forest to-ink text-3xl transition-transform group-hover:scale-110 group-hover:rotate-6">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-forest text-3xl transition-transform group-hover:scale-110 group-hover:rotate-6">
                     {r.emoji}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -134,7 +130,7 @@ export function SideChatView() {
                   <span className="inline-flex items-center gap-1"><MessageCircle className="h-3 w-3" /> {r.messageCount} messages</span>
                   {r.lastHourActive && <span className="inline-flex items-center gap-1 text-lime-700 dark:text-lime-400"><Flame className="h-3 w-3" /> popping now</span>}
                   <span className="ml-auto inline-flex items-center gap-1 font-bold text-lime-700 transition-transform group-hover:translate-x-0.5 dark:text-lime-400">
-                    <Sparkles className="h-3 w-3" /> Enter
+                    <ChevronRight className="h-3 w-3" /> Enter
                   </span>
                 </div>
               </motion.button>

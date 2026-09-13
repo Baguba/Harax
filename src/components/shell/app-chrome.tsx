@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Newspaper, Compass, CalendarDays, Users, Megaphone, Ghost, Bell, User as UserIcon, ShieldCheck, Zap, Plus, LogOut, Moon, Sun, Search, X, ChevronLeft } from "lucide-react";
+import { Newspaper, Compass, CalendarDays, Users, Megaphone, Ghost, Bell, User as UserIcon, ShieldCheck, BadgeCheck, Plus, LogOut, Moon, Sun, Search, X, ChevronLeft } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAppStore, type View, type ViewName } from "@/store/app-store";
@@ -45,7 +45,7 @@ export function Sidebar({ unread, onLogout }: { unread: number; onLogout: () => 
 
       <Button
         onClick={() => setComposerOpen(true)}
-        className="mt-6 h-11 rounded-2xl font-display font-bold shadow-[0_8px_24px_rgba(163,230,53,0.3)]"
+        className="mt-6 h-11 rounded-2xl font-display font-bold"
       >
         <Plus className="h-5 w-5" /> New post
       </Button>
@@ -187,7 +187,7 @@ export function Topbar({ unread, onLogout }: { unread: number; onLogout: () => v
                     <SearchRow key={u.id} onClick={() => go({ name: "profile", id: u.id })}>
                       <UserAvatar user={u} size="sm" />
                       <span className="min-w-0 flex-1 truncate text-sm font-semibold">{u.name}</span>
-                      {u.verified && <Zap className="h-3.5 w-3.5 text-lime-600" />}
+                      {u.verified && <BadgeCheck className="h-3.5 w-3.5 text-lime-600" aria-label="Verified" />}
                       <span className="truncate text-[10px] text-muted-foreground">{u.department}</span>
                     </SearchRow>
                   ))}
@@ -294,7 +294,7 @@ export function MobileNav({ unread }: { unread: number }) {
       {/* mobile new post FAB */}
       <button
         onClick={() => setComposerOpen(true)}
-        className="fixed bottom-[84px] right-4 z-40 flex h-13 w-13 items-center justify-center rounded-full bg-gradient-to-br from-lime-300 via-lime-400 to-lime-600 text-ink shadow-[0_10px_30px_rgba(163,230,53,0.5)] transition-transform hover:scale-110 active:scale-90 lg:hidden"
+        className="fixed bottom-[84px] right-4 z-40 flex h-13 w-13 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-110 active:scale-90 lg:hidden"
         aria-label="Create post"
       >
         <Plus className="h-6 w-6" strokeWidth={2.5} />

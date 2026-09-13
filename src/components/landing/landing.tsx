@@ -1,14 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, CalendarDays, MessageCircle, Megaphone, ShieldCheck, Sparkles, Users, Zap, Newspaper, Ghost, Lock } from "lucide-react";
-import { AuroraField } from "@/components/canvas/aurora-field";
+import { ArrowRight, CalendarDays, MessageCircle, Megaphone, ShieldCheck, Users, Newspaper, Ghost, Lock, Check } from "lucide-react";
 import { HaraxLogo, HaraxMark } from "@/components/common/harax-logo";
 import { ScrollReveal, StaggerGroup, StaggerItem } from "@/components/common/scroll-reveal";
 import { MockPostCard, MockChatCard, MockEventCard, MockChannelToast } from "@/components/landing/hero-mocks";
 import { useAppStore } from "@/store/app-store";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 const TICKER = [
   "Registrar: add/drop closes Friday ⚠️",
@@ -26,37 +24,31 @@ const FEATURES = [
     icon: Newspaper,
     title: "Campus Feed",
     desc: "A living newspaper of Haramaya — posts, photos and short videos from students, lecturers and offices, with reactions and comment threads that actually feel alive.",
-    accent: "from-lime-300/40 to-lime-500/20",
   },
   {
     icon: CalendarDays,
     title: "Events Hub",
     desc: "Welcome nights, hackathons, football finals and career fairs — discover what's happening, RSVP in one tap and see who else is going.",
-    accent: "from-emerald-300/40 to-lime-500/20",
   },
   {
     icon: Users,
     title: "Telegram-style Groups",
     desc: "Class squads, study circles and clubs with real-time chat. Authenticated members create groups, add students and keep the conversation rolling.",
-    accent: "from-lime-300/40 to-green-600/20",
   },
   {
     icon: Megaphone,
     title: "Official Channels",
     desc: "One-to-many broadcasts from the registrar, student union and departments. Subscribe, get notified, never miss a deadline again.",
-    accent: "from-amber-300/40 to-lime-500/20",
   },
   {
     icon: Ghost,
     title: "Sidechat Rooms",
     desc: "The fun zone — anonymous rooms for campus tea, memes and confessions. Zero names, zero pressure, maximum vibes.",
-    accent: "from-lime-300/40 to-teal-500/20",
   },
   {
     icon: ShieldCheck,
     title: "Bank-grade Safety",
     desc: "Role-based access, bcrypt-hashed passwords, rate limiting, moderation tools and superadmin controls. Fun on the surface, serious underneath.",
-    accent: "from-green-500/30 to-lime-400/20",
   },
 ];
 
@@ -105,7 +97,7 @@ export function Landing() {
             </Button>
             <Button
               onClick={() => openAuth("register")}
-              className="group font-display font-semibold shadow-[0_6px_20px_rgba(163,230,53,0.35)]"
+              className="group font-display font-semibold"
             >
               Join Harax
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -116,10 +108,6 @@ export function Landing() {
 
       {/* ── HERO ────────────────────────────────────────── */}
       <section className="relative flex min-h-[105svh] flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16 text-center">
-        <AuroraField density={90} blobs={5} />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
-
         <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -127,13 +115,12 @@ export function Landing() {
           className="relative z-10 mx-auto max-w-4xl"
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-lemon/40 bg-lemon/10 px-4 py-1.5 text-xs font-semibold text-lime-800 dark:text-lime-300">
-            <Sparkles className="h-3.5 w-3.5" />
             Built for Haramaya University · Ethiopia
           </div>
           <h1 className="font-display text-[clamp(2.6rem,7.5vw,5.2rem)] font-bold leading-[1.02] tracking-tight">
             Your campus,
             <br />
-            <span className="text-lemon-gradient">connected.</span>
+            <span className="text-lime-600 dark:text-lime-400">connected.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-balance text-base leading-relaxed text-muted-foreground sm:text-lg">
             Harax is the community platform of Haramaya University — posts, events, groups,
@@ -144,10 +131,10 @@ export function Landing() {
             <Button
               size="lg"
               onClick={() => openAuth("register")}
-              className="h-12 rounded-2xl px-8 font-display text-base font-bold shadow-[0_10px_36px_rgba(163,230,53,0.45)] transition-transform hover:scale-[1.03] active:scale-95"
+              className="h-12 rounded-2xl px-8 font-display text-base font-bold transition-transform hover:scale-[1.03] active:scale-95"
             >
               Create your account
-              <Zap className="h-5 w-5 fill-primary-foreground" />
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
             <Button
               size="lg"
@@ -191,7 +178,7 @@ export function Landing() {
         <ScrollReveal className="mx-auto max-w-2xl text-center">
           <p className="font-display text-sm font-bold uppercase tracking-[0.25em] text-lime-700 dark:text-lime-400">Everything campus</p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            One platform. <span className="text-lemon-gradient">Every corner of Haramaya.</span>
+            One platform. <span className="text-lime-600 dark:text-lime-400">Every corner of Haramaya.</span>
           </h2>
           <p className="mt-4 text-muted-foreground">
             Facebook-style feed, Telegram-style groups, official channels and anonymous sidechat —
@@ -203,7 +190,7 @@ export function Landing() {
           {FEATURES.map((f) => (
             <StaggerItem key={f.title}>
               <div className="card-lift group relative h-full overflow-hidden rounded-3xl border bg-card p-6">
-                <div className={cn("absolute inset-0 -z-10 bg-gradient-to-br opacity-60 transition-opacity group-hover:opacity-100", f.accent)} />
+                <div className="absolute inset-0 -z-10 bg-accent/60 dark:bg-accent/30" />
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-lemon transition-transform group-hover:rotate-6 group-hover:scale-110">
                   <f.icon className="h-6 w-6" />
                 </div>
@@ -217,7 +204,6 @@ export function Landing() {
 
       {/* ── STATS BAND ──────────────────────────────────── */}
       <section className="relative overflow-hidden bg-ink py-20 text-foreground-invert" aria-label="Harax in numbers">
-        <AuroraField density={40} blobs={3} className="opacity-60" />
         <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-2 gap-10 px-4 text-center sm:grid-cols-4 sm:px-6">
           {[
             { n: "30K+", l: "Community members" },
@@ -226,7 +212,7 @@ export function Landing() {
             { n: "24/7", l: "Sidechat energy" },
           ].map((s, i) => (
             <ScrollReveal key={s.l} delay={i * 0.08}>
-              <p className="font-display text-5xl font-bold text-lemon-gradient sm:text-6xl">{s.n}</p>
+              <p className="font-display text-5xl font-bold text-lime-300 sm:text-6xl">{s.n}</p>
               <p className="mt-2 text-sm font-medium text-lemon-soft/70">{s.l}</p>
             </ScrollReveal>
           ))}
@@ -249,7 +235,7 @@ export function Landing() {
                   {r.points.map((p) => (
                     <li key={p} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                       <span className="mt-0.5 flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full bg-lemon/25">
-                        <Zap className="h-3 w-3 text-lime-800 dark:text-lime-300" />
+                        <Check className="h-3 w-3 text-lime-800 dark:text-lime-300" />
                       </span>
                       {p}
                     </li>
@@ -286,8 +272,7 @@ export function Landing() {
 
       {/* ── SAFETY ──────────────────────────────────────── */}
       <section id="safety" className="mx-auto max-w-7xl px-4 pb-24 sm:px-6">
-        <div className="relative overflow-hidden rounded-[2.5rem] border bg-gradient-to-br from-forest via-ink to-ink p-8 text-foreground-invert sm:p-14">
-          <AuroraField density={30} blobs={2} className="opacity-40" />
+        <div className="relative overflow-hidden rounded-[2.5rem] border bg-forest p-8 text-foreground-invert sm:p-14">
           <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-lemon/30 bg-lemon/10 px-4 py-1.5 text-xs font-semibold text-lime-300">
@@ -296,7 +281,7 @@ export function Landing() {
               <h2 className="mt-5 font-display text-3xl font-bold leading-tight sm:text-4xl">
                 Fun on the surface.
                 <br />
-                <span className="text-lemon-gradient">Fortified underneath.</span>
+                <span className="text-lime-300">Fortified underneath.</span>
               </h2>
               <p className="mt-4 max-w-lg leading-relaxed text-lemon-soft/75">
                 Harax is engineered like production infrastructure, not a weekend project. Every
@@ -325,8 +310,7 @@ export function Landing() {
       {/* ── CTA ─────────────────────────────────────────── */}
       <section className="relative mx-auto max-w-7xl px-4 pb-24 sm:px-6">
         <ScrollReveal>
-          <div className="glow-lemon relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-lime-300 via-lime-400 to-lime-600 p-10 text-center text-ink sm:p-16">
-            <div className="grain absolute inset-0" />
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-primary p-10 text-center text-primary-foreground sm:p-16">
             <MessageCircle className="absolute left-10 top-10 h-10 w-10 opacity-25" aria-hidden="true" />
             <CalendarDays className="absolute bottom-10 right-12 h-12 w-12 opacity-25" aria-hidden="true" />
             <h2 className="relative font-display text-4xl font-bold leading-tight sm:text-5xl">
@@ -334,14 +318,14 @@ export function Landing() {
               <br />
               Are you?
             </h2>
-            <p className="relative mx-auto mt-4 max-w-lg font-medium text-ink/75">
+            <p className="relative mx-auto mt-4 max-w-lg font-medium text-ink/70">
               Join with Google or email in under a minute. Your first post, group and sidechat
               confession await.
             </p>
             <Button
               size="lg"
               onClick={() => openAuth("register")}
-              className="relative mt-8 h-13 rounded-2xl bg-ink px-10 font-display text-base font-bold text-lemon shadow-[0_14px_40px_rgba(12,17,11,0.35)] transition-transform hover:scale-[1.04] active:scale-95"
+              className="relative mt-8 h-13 rounded-2xl bg-ink px-10 font-display text-base font-bold text-lemon shadow-xl transition-transform hover:scale-[1.04] active:scale-95"
             >
               Start on Harax
               <ArrowRight className="h-5 w-5" />

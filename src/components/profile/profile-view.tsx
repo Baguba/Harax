@@ -10,7 +10,6 @@ import { UserAvatar } from "@/components/common/user-avatar";
 import { RoleBadge, VerifiedBadge } from "@/components/common/role-badge";
 import { PostCard } from "@/components/feed/post-card";
 import { EmptyState } from "@/components/common/empty-state";
-import { AuroraField } from "@/components/canvas/aurora-field";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -19,16 +18,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Pencil, Loader2, CalendarDays, Users, Megaphone, MapPin, AtSign, Sparkles } from "lucide-react";
+import { Pencil, Loader2, CalendarDays, Users, Megaphone, MapPin, AtSign, Newspaper } from "lucide-react";
 import { DEPARTMENTS, YEARS } from "@/lib/validation-constants";
 
-const COVERS = [
-  "linear-gradient(120deg, #d9f99d, #4d7c0f)",
-  "linear-gradient(120deg, #0c110b, #365314)",
-  "linear-gradient(120deg, #a3e635, #14290f)",
-  "linear-gradient(120deg, #bef264, #3f6212)",
-  "linear-gradient(120deg, #ecfccb, #65a30d)",
-];
+/* solid cover colors — flat, no gradients */
+const COVERS = ["#a3e635", "#4d7c0f", "#14290f", "#d9f99d", "#65a30d"];
 
 export function ProfileView({ userId }: { userId: string }) {
   const me = useAppStore((s) => s.user);
@@ -67,8 +61,6 @@ export function ProfileView({ userId }: { userId: string }) {
       {/* header card */}
       <div className="overflow-hidden rounded-3xl border bg-card">
         <div className="relative h-36 sm:h-44" style={{ background: profile.coverUrl ?? COVERS[0] }}>
-          <AuroraField density={18} blobs={2} interactive={false} />
-          <div className="absolute inset-0 grain" />
           {profile.isMe && (
             <Button
               onClick={() => setEditOpen(true)}
@@ -171,7 +163,7 @@ export function ProfileView({ userId }: { userId: string }) {
       {/* posts */}
       <section aria-label="User posts">
         <h3 className="mb-3 flex items-center gap-2 font-display text-sm font-bold">
-          <Sparkles className="h-4 w-4 text-lime-600" /> {profile.isMe ? "Your posts" : "Latest posts"}
+          <Newspaper className="h-4 w-4 text-lime-600" /> {profile.isMe ? "Your posts" : "Latest posts"}
         </h3>
         {profile.posts.length === 0 ? (
           <EmptyState

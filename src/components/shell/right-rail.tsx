@@ -37,9 +37,8 @@ export function RightRail() {
     <div className="space-y-4">
       {/* Campus pulse */}
       <RailCard title="Campus pulse" icon={Flame}>
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-forest via-ink to-ink p-4 text-lemon-soft">
-          <div className="grain absolute inset-0" />
-          <p className="relative font-display text-3xl font-bold text-lemon-gradient">⚡ Active</p>
+        <div className="relative overflow-hidden rounded-2xl bg-forest p-4 text-lemon-soft">
+          <p className="relative font-display text-3xl font-bold text-lime-300">Active now</p>
           <p className="relative mt-1 text-[11px] leading-relaxed text-lemon-soft/70">
             {hotRooms.length > 0
               ? `${hotRooms.map((r) => r.name).join(" & ")} are popping right now`
@@ -129,7 +128,7 @@ export function RightRail() {
       <p className="px-2 pt-2 text-center text-[10px] leading-relaxed text-muted-foreground">
         Harax · Haramaya University community
         <br />
-        Made with ⚡ and lemon green
+        Made with lemon green in Haramaya
       </p>
     </div>
   );

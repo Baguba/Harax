@@ -237,7 +237,7 @@ async function main() {
   type PostSeed = { author: string; content: string; media?: string; mediaType?: string; days: number };
   const postSeeds: PostSeed[] = [
     { author: selam.id, days: 0.05, content: "Sunset over the experimental farms today hit different 🌅 No filter, straight from the iPhone. Haramaya really said 'let me show off before finals week.' ☕📚" },
-    { author: ict.id, days: 0.2, content: "⚡ NETWORK MAINTENANCE: Internet will be down in the dorms this Saturday 2:00–5:00 AM for fiber upgrades. Plan your Netflix accordingly 😅 Use the library hotspot if you must." },
+    { author: ict.id, days: 0.2, content: "NETWORK MAINTENANCE: Internet will be down in the dorms this Saturday 2:00–5:00 AM for fiber upgrades. Plan your Netflix accordingly 😅 Use the library hotspot if you must." },
     { author: dawit.id, days: 0.35, content: "Lost my student ID somewhere between the cafeteria and Dorm 7. Name's on it. Free doro kit meal from me if you return it 🙏", media: OG("Lost ID Card", "CAMPUS", "lost-id"), mediaType: "image" },
     { author: meron.id, days: 0.5, content: "Reminder to my CS students: assignment 3 deadline is Friday midnight. Yes, GitHub Copilot counts only if you can explain every line — I will ask you in the viva 😌" },
     { author: tigist.id, days: 0.8, content: "Marketing class group project and my team just chose 'Selling Harar coffee to Gen Z' as our topic. Honestly? Easy A. ☕📈", media: OG("Harar Coffee Gen Z", "ACADEMIC", "coffee-project"), mediaType: "image" },
@@ -363,7 +363,7 @@ async function main() {
     { userId: selam.id, type: "POST_COMMENT", title: "Dawit commented on your post", body: "\"This is so real 😂\"", link: "feed" },
     { userId: selam.id, type: "CHANNEL_POST", title: "Haramaya Official", body: "📢 OFFICIAL: The university calendar for 2026/27…", link: "channel:haramaya" },
     { userId: selam.id, type: "EVENT_NEW", title: "New event: Freshman Welcome Night", body: "Sat at Main Campus Amphitheatre", link: "events" },
-    { userId: dawit.id, type: "SYSTEM", title: "Welcome to Harax! ⚡", body: "Your campus, connected. Complete your profile to shine.", link: "settings" },
+    { userId: dawit.id, type: "SYSTEM", title: "Welcome to Harax!", body: "Your campus, connected. Complete your profile to shine.", link: "settings" },
   ];
   for (const n of notifs) {
     await db.notification.create({ data: { ...n, read: false, createdAt: mins(-90) } });

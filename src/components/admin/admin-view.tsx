@@ -7,7 +7,6 @@ import { api, apiQ, timeAgo } from "@/lib/client-api";
 import type { AdminStats, ReportDTO, Role } from "@/lib/types";
 import { useAppStore } from "@/store/app-store";
 import { EmptyState } from "@/components/common/empty-state";
-import { AuroraField } from "@/components/canvas/aurora-field";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -21,7 +20,7 @@ import { RoleBadge } from "@/components/common/role-badge";
 import { toast } from "sonner";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import {
-  LayoutDashboard, Users, FileWarning, Loader2, Ban, CheckCircle2, ShieldCheck, Search, TrendingUp, MessageSquare, Newspaper, Megaphone, CalendarDays, Flag, Zap,
+  LayoutDashboard, Users, FileWarning, Loader2, Ban, CheckCircle2, ShieldCheck, Search, TrendingUp, MessageSquare, Newspaper, Megaphone, CalendarDays, Flag, Activity, Flame,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ROLE_RANK } from "@/lib/role-utils";
@@ -52,14 +51,13 @@ export function AdminView() {
     { label: "Groups", value: s.groups, icon: Users, delta: "active" },
     { label: "Channels", value: s.channels, icon: Megaphone, delta: `${s.roleDist.ADMIN ?? 0} admins` },
     { label: "Open reports", value: s.openReports, icon: Flag, delta: "moderation queue" },
-    { label: "Sessions", value: s.activeSessions, icon: Zap, delta: "signed in" },
+    { label: "Sessions", value: s.activeSessions, icon: Activity, delta: "signed in" },
   ];
 
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-ink via-forest to-ink p-6 text-lemon-soft">
-        <AuroraField density={30} blobs={3} />
+      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-6 text-lemon-soft">
         <div className="relative flex flex-wrap items-center gap-3">
           <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-lemon/15">
             <ShieldCheck className="h-6 w-6 text-lemon" />
@@ -125,7 +123,7 @@ export function AdminView() {
 
           {/* top posts */}
           <div className="rounded-3xl border bg-card p-5">
-            <h3 className="mb-3 flex items-center gap-2 font-display text-sm font-bold"><Zap className="h-4 w-4 text-lime-600" /> Hottest posts right now</h3>
+            <h3 className="mb-3 flex items-center gap-2 font-display text-sm font-bold"><Flame className="h-4 w-4 text-lime-600" /> Hottest posts right now</h3>
             <div className="space-y-2">
               {data.topPosts.map((p, i) => (
                 <div key={p.id} className="flex items-center gap-3 rounded-2xl border border-border/50 bg-muted/20 p-3">

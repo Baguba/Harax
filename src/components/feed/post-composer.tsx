@@ -8,11 +8,11 @@ import { api, uploadFile } from "@/lib/client-api";
 import { useAppStore } from "@/store/app-store";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ImagePlus, Video, Loader2, X, Send, Sparkles } from "lucide-react";
+import { ImagePlus, Video, Loader2, X, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { PostDTO } from "@/lib/types";
 
-const QUICK_EMOJIS = ["⚡", "🌱", "😂", "🔥", "💚", "☕", "🎓", "⚽", "✨", "🙏"];
+const QUICK_EMOJIS = ["🌱", "😂", "🔥", "💚", "☕", "🎓", "⚽", "✨", "🙏", "🎉"];
 
 export function PostComposer({ onPosted, autoFocus, groupId, channelId, compactPlaceholder }: { onPosted?: () => void; autoFocus?: boolean; groupId?: string; channelId?: string; compactPlaceholder?: string }) {
   const user = useAppStore((s) => s.user);
@@ -65,7 +65,7 @@ export function PostComposer({ onPosted, autoFocus, groupId, channelId, compactP
     qc.invalidateQueries({ queryKey: ["feed"] });
     if (groupId) qc.invalidateQueries({ queryKey: ["group-posts", groupId] });
     if (channelId) qc.invalidateQueries({ queryKey: ["channel", channelId] });
-    toast.success(groupId ? "Posted to the group ⚡" : channelId ? "Broadcast published 📣" : "Posted to the campus feed ⚡");
+    toast.success(groupId ? "Posted to the group" : channelId ? "Broadcast published 📣" : "Posted to the campus feed");
     onPosted?.();
   };
 
@@ -79,7 +79,7 @@ export function PostComposer({ onPosted, autoFocus, groupId, channelId, compactP
             onChange={(e) => setContent(e.target.value)}
             autoFocus={autoFocus}
             maxLength={2000}
-            placeholder={compactPlaceholder ?? (groupId ? "Post for the group…" : channelId ? "Write a broadcast…" : "What's happening at Haramaya today? ☕⚡")}
+            placeholder={compactPlaceholder ?? (groupId ? "Post for the group…" : channelId ? "Write a broadcast…" : "What's happening at Haramaya today?")}
             className="min-h-[64px] resize-none rounded-2xl border-0 bg-muted/60 px-4 py-3 text-[15px] leading-relaxed placeholder:text-muted-foreground/70 focus-visible:ring-1 focus-visible:ring-lemon/60"
           />
 
@@ -134,7 +134,7 @@ export function PostComposer({ onPosted, autoFocus, groupId, channelId, compactP
             <Button
               onClick={submit}
               disabled={posting || uploading || (!content.trim() && !media)}
-              className="h-10 rounded-2xl px-5 font-display font-bold shadow-[0_6px_18px_rgba(163,230,53,0.35)]"
+              className="h-10 rounded-2xl px-5 font-display font-bold"
             >
               {posting || uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
               Post
@@ -149,7 +149,6 @@ export function PostComposer({ onPosted, autoFocus, groupId, channelId, compactP
         <div className={cn("mt-2 flex items-center gap-2 text-xs text-muted-foreground")}>
           <Loader2 className="h-3.5 w-3.5 animate-spin text-lemon" />
           Uploading your moment…
-          <Sparkles className="ml-auto h-3.5 w-3.5 text-lemon" />
         </div>
       )}
     </div>

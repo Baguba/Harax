@@ -7,7 +7,6 @@ import { api, apiQ } from "@/lib/client-api";
 import type { GroupDTO } from "@/lib/types";
 import { useAppStore } from "@/store/app-store";
 import { EmptyState } from "@/components/common/empty-state";
-import { AuroraField } from "@/components/canvas/aurora-field";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -37,7 +36,7 @@ export function GroupsView() {
   const filtered = q.trim() ? source.filter((g) => g.name.toLowerCase().includes(q.toLowerCase())) : source;
 
   const join = async (g: GroupDTO) => {
-    if (!user) return toast.info("Sign in to join groups ⚡");
+    if (!user) return toast.info("Sign in to join groups");
     const res = await api(`/api/groups/${g.id}/members`, { body: {} });
     if (!res.ok) return toast.error(res.error);
     setToast(`${g.emoji} Joined ${g.name}!`);
@@ -50,15 +49,14 @@ export function GroupsView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-lime-100/70 via-card to-card dark:from-lime-400/10">
-        <AuroraField density={30} blobs={2} interactive={false} />
+      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card">
         <div className="relative flex flex-wrap items-center gap-3 p-5">
           <div>
             <h1 className="font-display text-2xl font-bold tracking-tight">Groups 💬</h1>
             <p className="mt-0.5 text-xs text-muted-foreground">Class squads, study circles, clubs — Telegram-style group chat on campus.</p>
           </div>
           <Button
-            onClick={() => (user ? setCreateOpen(true) : toast.info("Sign in to create groups ⚡"))}
+            onClick={() => (user ? setCreateOpen(true) : toast.info("Sign in to create groups"))}
             className="ml-auto h-10 rounded-2xl font-display font-bold shadow-[0_6px_18px_rgba(163,230,53,0.35)]"
           >
             <Plus className="h-4 w-4" /> Create group
@@ -111,7 +109,7 @@ export function GroupsView() {
               className="card-lift group flex flex-col rounded-3xl border bg-card p-5"
             >
               <div className="flex items-start gap-3">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-lime-200 to-lime-400 text-3xl transition-transform group-hover:rotate-6 group-hover:scale-110">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-secondary text-3xl transition-transform group-hover:rotate-6 group-hover:scale-110">
                   {g.emoji}
                 </span>
                 <div className="min-w-0 flex-1">

@@ -65,10 +65,9 @@ function BootScreen() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="font-display text-3xl font-bold tracking-tight"
+          className="font-display text-3xl font-bold tracking-tight text-foreground"
         >
-          <span className="text-foreground">Ha</span>
-          <span className="text-lemon-gradient">rax</span>
+          harax
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
@@ -81,7 +80,7 @@ function BootScreen() {
       </div>
       <div className="h-1 w-40 overflow-hidden rounded-full bg-muted">
         <motion.div
-          className="h-full w-1/2 rounded-full bg-gradient-to-r from-lime-300 to-lime-500"
+          className="h-full w-1/2 rounded-full bg-primary"
           animate={{ x: ["-100%", "220%"] }}
           transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
         />

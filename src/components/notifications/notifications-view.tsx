@@ -8,7 +8,7 @@ import { useAppStore } from "@/store/app-store";
 import { EmptyState } from "@/components/common/empty-state";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bell, Heart, MessageCircle, CalendarDays, Megaphone, Users, Sparkles, CheckCheck } from "lucide-react";
+import { Bell, Heart, MessageCircle, CalendarDays, Megaphone, Users, Info, CheckCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TYPE_META: Record<string, { icon: React.ElementType; className: string; label: string }> = {
@@ -17,7 +17,7 @@ const TYPE_META: Record<string, { icon: React.ElementType; className: string; la
   EVENT_NEW: { icon: CalendarDays, className: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300", label: "Event" },
   CHANNEL_POST: { icon: Megaphone, className: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300", label: "Broadcast" },
   GROUP_ADDED: { icon: Users, className: "bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300", label: "Group" },
-  SYSTEM: { icon: Sparkles, className: "bg-muted text-foreground", label: "System" },
+  SYSTEM: { icon: Info, className: "bg-muted text-foreground", label: "System" },
 };
 
 export function NotificationsView() {

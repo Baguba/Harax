@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HaraxLogo } from "@/components/common/harax-logo";
 import { UserAvatar } from "@/components/common/user-avatar";
-import { Eye, EyeOff, Loader2, Lock, Mail, ShieldCheck, User, GraduationCap, ArrowLeft, Sparkles } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, Mail, ShieldCheck, User, Users, GraduationCap, ArrowLeft } from "lucide-react";
 import { api } from "@/lib/client-api";
 import { useAppStore } from "@/store/app-store";
 import { toast } from "sonner";
@@ -79,7 +79,7 @@ export function AuthModal() {
 
                 <div className="mt-6 rounded-2xl border border-dashed border-lemon/40 bg-lemon/5 p-4">
                   <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-lime-800 dark:text-lime-300">
-                    <Sparkles className="h-3.5 w-3.5" /> Demo accounts (1-click)
+                    <Users className="h-3.5 w-3.5" /> Demo accounts (1-click)
                   </p>
                   <div className="grid grid-cols-2 gap-2">
                     {DEMO_ACCOUNTS.map((acc) => (
@@ -104,7 +104,7 @@ export function AuthModal() {
         onSuccess={(user) => {
           setUser(user);
           setView({ name: "feed" });
-          toast.success(`Welcome, ${user.name.split(" ")[0]}! ⚡`, { description: "Signed in with Google." });
+          toast.success(`Welcome, ${user.name.split(" ")[0]}!`, { description: "Signed in with Google." });
         }}
       />
     </>
@@ -125,7 +125,7 @@ function DemoChip({ account }: { account: (typeof DEMO_ACCOUNTS)[number] }) {
     setUser(res.data.user);
     setView({ name: "feed" });
     closeAuth();
-    toast.success(`Welcome back, ${res.data.user.name.split(" ")[0]}! ⚡`);
+    toast.success(`Welcome back, ${res.data.user.name.split(" ")[0]}!`);
   };
 
   return (
@@ -162,7 +162,7 @@ function LoginPanel() {
     setUser(res.data.user);
     setView({ name: "feed" });
     closeAuth();
-    toast.success(`Welcome back, ${res.data.user.name.split(" ")[0]}! ⚡`);
+    toast.success(`Welcome back, ${res.data.user.name.split(" ")[0]}!`);
   };
 
   return (
@@ -235,7 +235,7 @@ function RegisterPanel() {
     setUser(res.data.user);
     setView({ name: "feed" });
     closeAuth();
-    toast.success(`Welcome to Harax, ${res.data.user.name.split(" ")[0]}! ⚡`, {
+    toast.success(`Welcome to Harax, ${res.data.user.name.split(" ")[0]}!`, {
       description: "Post your first update or join a group to get started.",
     });
   };

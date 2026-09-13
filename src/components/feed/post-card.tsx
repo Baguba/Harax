@@ -236,7 +236,7 @@ export function PostCard({ post }: { post: PostDTO }) {
         <div className="relative flex-1" onMouseEnter={() => user && setShowReactions(true)} onMouseLeave={() => setShowReactions(false)}>
           <ReactionButton
             mine={reactions.mine}
-            onClick={() => user ? (reactions.mine ? react(reactions.mine) : react("LIKE")) : toast.info("Sign in to react ⚡")}
+            onClick={() => user ? (reactions.mine ? react(reactions.mine) : react("LIKE")) : toast.info("Sign in to react")}
           />
           <AnimatePresence>
             {showReactions && user && (

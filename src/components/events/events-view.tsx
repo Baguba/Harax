@@ -9,7 +9,6 @@ import { useAppStore } from "@/store/app-store";
 import { UserAvatar } from "@/components/common/user-avatar";
 import { EmptyState } from "@/components/common/empty-state";
 import { ConfettiBurst } from "@/components/common/confetti";
-import { AuroraField } from "@/components/canvas/aurora-field";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -41,7 +40,7 @@ export function EventsView() {
   const sortedByDate = useMemo(() => events, [events]);
 
   const rsvp = async (event: EventDTO, status: "GOING" | "INTERESTED" | "NONE") => {
-    if (!user) return toast.info("Sign in to RSVP ⚡");
+    if (!user) return toast.info("Sign in to RSVP");
     const res = await api<{ myRsvp: string; going: number; interested: number }>(`/api/events/${event.id}/rsvp`, {
       body: { status },
     });
@@ -59,15 +58,14 @@ export function EventsView() {
       <ConfettiBurst trigger={confetti} />
 
       {/* header */}
-      <div className="relative mb-5 overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-lime-100/70 via-card to-card dark:from-lime-400/10">
-        <AuroraField density={30} blobs={2} interactive={false} />
+      <div className="relative mb-5 overflow-hidden rounded-3xl border border-border/60 bg-card">
         <div className="relative flex flex-wrap items-center gap-3 p-5">
           <div className="min-w-0">
             <h1 className="font-display text-2xl font-bold tracking-tight">Campus events 📅</h1>
             <p className="mt-0.5 text-xs text-muted-foreground">Welcome nights, hackathons, football finals — all in one place.</p>
           </div>
           <Button
-            onClick={() => (user ? setCreateOpen(true) : toast.info("Sign in to create events ⚡"))}
+            onClick={() => (user ? setCreateOpen(true) : toast.info("Sign in to create events"))}
             className="ml-auto h-10 rounded-2xl font-display font-bold shadow-[0_6px_18px_rgba(163,230,53,0.35)]"
           >
             <Plus className="h-4 w-4" /> Create event
@@ -145,9 +143,9 @@ export function EventsView() {
                   {e.coverUrl ? (
                     <img src={e.coverUrl} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                   ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-lime-300 to-forest" />
+                    <div className="h-full w-full bg-accent" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
+                  <div className="absolute inset-0 bg-ink/45" />
                   <div className="absolute left-3 top-3 flex items-center gap-2">
                     <span className={cn("rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide backdrop-blur", cat?.className)}>
                       {cat?.emoji} {e.category}
@@ -226,9 +224,9 @@ function EventDetailDialog({
           {event.coverUrl ? (
             <img src={event.coverUrl} alt="" className="h-full w-full object-cover" />
           ) : (
-            <div className="h-full w-full bg-gradient-to-br from-lime-300 to-forest" />
+            <div className="h-full w-full bg-accent" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 to-ink/10" />
+          <div className="absolute inset-0 bg-ink/55" />
           <button onClick={onClose} className="absolute right-3 top-3 rounded-full bg-ink/50 p-2 text-white backdrop-blur transition hover:bg-ink" aria-label="Close">
             <X className="h-4 w-4" />
           </button>

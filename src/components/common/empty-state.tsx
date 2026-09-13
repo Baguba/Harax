@@ -19,7 +19,7 @@ export function EmptyState({
   return (
     <div className={cn("flex flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-border/80 px-6 py-14 text-center", className)}>
       <div className="relative">
-        <div className="absolute inset-0 -z-10 animate-pulse-glow rounded-full" />
+        <div className="absolute inset-0 -z-10 animate-soft-pulse rounded-full bg-lemon/30" />
         <span className="text-5xl" role="img" aria-label={title}>
           {emoji}
         </span>

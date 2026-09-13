@@ -7,7 +7,6 @@ import { useAppStore } from "@/store/app-store";
 import { UserAvatar } from "@/components/common/user-avatar";
 import { EmptyState } from "@/components/common/empty-state";
 import { ScrollReveal } from "@/components/common/scroll-reveal";
-import { AuroraField } from "@/components/canvas/aurora-field";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Compass, Users, Megaphone, CalendarDays, ArrowUpRight, TrendingUp } from "lucide-react";
@@ -30,8 +29,7 @@ export function ExploreView() {
   return (
     <div className="space-y-8">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-forest via-ink to-ink p-6 text-lemon-soft">
-        <AuroraField density={40} blobs={3} />
+      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-6 text-lemon-soft">
         <div className="relative">
           <div className="inline-flex items-center gap-2 rounded-full border border-lemon/30 bg-lemon/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-lime-300">
             <Compass className="h-3 w-3" /> Explore Haramaya
@@ -39,7 +37,7 @@ export function ExploreView() {
           <h1 className="mt-3 font-display text-3xl font-bold">
             Discover every corner
             <br />
-            <span className="text-lemon-gradient">of your campus.</span>
+            <span className="text-lime-300">of your campus.</span>
           </h1>
           <p className="mt-2 max-w-md text-xs leading-relaxed text-lemon-soft/70">
             Trending groups, official channels, upcoming events and the people who make Haramaya hum.
@@ -63,7 +61,7 @@ export function ExploreView() {
               >
                 <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-lemon/10 blur-2xl transition-all group-hover:bg-lemon/25" />
                 <div className="flex items-center gap-3">
-                  <div className="rounded-2xl bg-gradient-to-br from-lime-300 to-lime-600 p-2.5 text-center text-ink">
+                  <div className="rounded-2xl bg-secondary p-2.5 text-center text-foreground">
                     <p className="font-display text-lg font-bold leading-none">{d.day}</p>
                     <p className="text-[8px] font-bold tracking-widest">{d.month}</p>
                   </div>
@@ -93,7 +91,7 @@ export function ExploreView() {
               onClick={() => setView({ name: "group", id: g.id })}
               className="card-lift flex items-center gap-3 rounded-3xl border bg-card p-4 text-left"
             >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-lime-200 to-lime-400 text-2xl">{g.emoji}</span>
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-2xl">{g.emoji}</span>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-display text-sm font-bold">{g.name}</p>
                 <p className="truncate text-xs text-muted-foreground">{g.description ?? "Campus group"}</p>

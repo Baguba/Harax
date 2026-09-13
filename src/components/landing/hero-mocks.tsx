@@ -24,7 +24,7 @@ export function MockPostCard() {
       <p className="mt-3 text-[11px] leading-relaxed text-foreground/85">
         Sunset over the experimental farms today hit different 🌅 No filter, straight from the phone.
       </p>
-      <div className="mt-3 h-28 rounded-xl bg-gradient-to-br from-lime-200 via-lime-400 to-forest" />
+      <div className="mt-3 h-28 rounded-xl bg-accent" />
       <div className="mt-3 flex items-center gap-3 text-[10px] text-muted-foreground">
         <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 font-semibold text-red-500 dark:bg-red-500/10">
           <Heart className="h-3 w-3 fill-red-500" /> 24
@@ -59,7 +59,7 @@ export function MockChatCard() {
           <p className="text-xs font-semibold">Leku Tea Room</p>
           <p className="text-[9px] text-muted-foreground">Sidechat · anonymous</p>
         </div>
-        <span className="ml-auto flex h-2 w-2 rounded-full bg-lemon animate-pulse-glow" />
+        <span className="ml-auto flex h-2 w-2 rounded-full bg-lemon animate-soft-pulse" />
       </div>
       <div className="mt-3 space-y-2">
         {bubbles.map((b, i) => (
@@ -92,7 +92,7 @@ export function MockEventCard() {
       transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
     >
       <div className="flex items-start gap-3">
-        <div className="rounded-xl bg-gradient-to-br from-lime-300 to-lime-600 p-2 text-center">
+        <div className="rounded-xl bg-secondary p-2 text-center text-foreground">
           <p className="font-display text-base font-bold leading-none text-ink">18</p>
           <p className="text-[8px] font-bold tracking-widest text-ink/80">OCT</p>
         </div>
@@ -125,7 +125,7 @@ export function MockChannelToast() {
       animate={{ y: [0, -8, 0] }}
       transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
     >
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-lime-300 to-lime-600">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary">
         <Megaphone className="h-5 w-5 text-ink" />
       </span>
       <div className="min-w-0">

@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#d9f99d"/>
-      <stop offset="1" stop-color="#65a30d"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" fill="#0c110b"/>
-  <rect x="96" y="96" width="320" height="320" rx="72" fill="url(#bg)"/>
-  <path d="M286 176 L204 296 h52 l-26 104 96 -132 h-56 z" fill="#0c110b"/>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Harax maskable icon: hand-drawn speech bubble on a lemon field, safe-zone padded -->
+  <rect width="512" height="512" rx="112" fill="#a3e635"/>
+  <g transform="translate(116 116) scale(4.35)">
+    <g transform="rotate(-4 32 32)">
+      <path d="M22 12C17.2 12 13.2 16 13.2 20.8C13.2 25.2 13 29.4 13.2 33.6C13.4 38.2 17.2 41.8 22 41.8L27.8 41.8C25.2 45.2 22.4 48.3 20.2 50.6C23.6 49 27.2 45.4 30.6 42C34.9 42 39.7 41.9 44 41.6C48.8 41.4 52.4 37.8 52.4 33C52.5 29 52.6 24.6 52.4 20.6C52.3 16 48.6 12.2 43.8 12.2C36 12.1 28.5 12 22 12Z" fill="#fbfdf8" stroke="#0c110b" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M28.6 19.4L28.6 35M28.6 25.6C29.8 23.4 31.8 22.6 33.7 23.1C35.9 23.7 37 25.8 36.9 28.3L36.9 35" stroke="#0c110b" stroke-width="3.4" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(44.2 1.8) rotate(32)">
+      <path d="M1.4 9.4C0.4 4.5 3.3 0.8 8.4 0.6C9.6 5.5 6.9 9.6 1.9 10C1.7 10 1.5 9.7 1.4 9.4Z" fill="#4d7c0f" stroke="#0c110b" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M2.8 7.7C4.4 5.7 6.2 3.8 8.1 2.3" stroke="#d9f99d" stroke-width="1.6" stroke-linecap="round"/>
+    </g>
+  </g>
 </svg>

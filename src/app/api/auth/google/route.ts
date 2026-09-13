@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
   await db.notification.create({
     data: {
-      userId: user.id, type: "SYSTEM", title: "Welcome to Harax! ⚡",
+      userId: user.id, type: "SYSTEM", title: "Welcome to Harax!",
       body: "Signed in with Google. Your campus, connected.",
       link: "feed",
     },

@@ -7,7 +7,6 @@ import type { PostDTO } from "@/lib/types";
 import { PostComposer } from "@/components/feed/post-composer";
 import { PostCard, PostSkeleton } from "@/components/feed/post-card";
 import { EmptyState } from "@/components/common/empty-state";
-import { AuroraField } from "@/components/canvas/aurora-field";
 import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/store/app-store";
 import { toast } from "sonner";
@@ -31,12 +30,11 @@ export function FeedView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-lime-100/60 via-card to-card dark:from-lime-400/10">
-        <AuroraField density={26} blobs={2} interactive={false} />
+      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card">
         <div className="relative flex items-center gap-3 p-5">
           <div>
             <h1 className="font-display text-2xl font-bold tracking-tight">
-              Good {dayPart()}, {user?.name.split(" ")[0]} ⚡
+              Good {dayPart()}, {user?.name.split(" ")[0]}
             </h1>
             <p className="mt-0.5 text-xs text-muted-foreground">Here's what's happening around Haramaya today.</p>
           </div>
