@@ -65,3 +65,5 @@ server.log
 /examples/
 /uploads/
 /mini-services/*.log
+# chat-pasted session images — not part of the app source
+/upload/
