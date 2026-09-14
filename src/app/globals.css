@@ -6,8 +6,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-baloo);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -41,6 +41,8 @@
   --color-lemon-soft: var(--lemon-soft);
   --color-ink: var(--ink);
   --color-forest: var(--forest);
+  --color-edge: var(--edge);
+  --color-edge-soft: var(--edge-soft);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -48,18 +50,25 @@
   --radius-2xl: calc(var(--radius) + 12px);
 }
 
-/* ── HARAX palette ──────────────────────────────────────────
+/* ── HARAX ARCADE palette ────────────────────────────────────
+   Chunky game-UI take on the Harax brand:
    lemon #a3e635 · ink #0c110b · forest #14290f
-   White canvas, lemon energy, forest depth. ── */
+   Flat fills, fat ink borders, hard bevel shadows. No gradients. ── */
 
 :root {
-  --radius: 1rem;
+  --radius: 1.15rem;
   --lemon: #a3e635;
   --lemon-soft: #d9f99d;
   --ink: #0c110b;
   --forest: #14290f;
 
-  --background: #fbfdf8;
+  /* game edges — every surface gets a fat outline + a hard lift shadow */
+  --edge: #26331d;        /* card outline (ink-green) */
+  --edge-soft: #c6d4b2;   /* hard shadow a card casts on the tray */
+  --bevel-lemon: #63990f; /* pressed edge under lemon buttons */
+  --bevel-red: #b02338;   /* pressed edge under red buttons */
+
+  --background: #edf1e4;
   --foreground: #10160f;
   --card: #ffffff;
   --card-foreground: #10160f;
@@ -67,15 +76,15 @@
   --popover-foreground: #10160f;
   --primary: #a3e635;
   --primary-foreground: #0c110b;
-  --secondary: #f1f7e8;
+  --secondary: #f2f7e9;
   --secondary-foreground: #1c2b12;
-  --muted: #eef4e4;
-  --muted-foreground: #5c6b55;
+  --muted: #e6eed6;
+  --muted-foreground: #57644d;
   --accent: #ecf8d8;
   --accent-foreground: #1c2b12;
-  --destructive: #dc2626;
-  --border: #e2ecd4;
-  --input: #d8e5c4;
+  --destructive: #e63946;
+  --border: #d3dfbe;
+  --input: #26331d;
   --ring: #84cc16;
   --chart-1: #a3e635;
   --chart-2: #4d7c0f;
@@ -86,9 +95,9 @@
   --sidebar-foreground: #10160f;
   --sidebar-primary: #a3e635;
   --sidebar-primary-foreground: #0c110b;
-  --sidebar-accent: #f1f7e8;
+  --sidebar-accent: #f2f7e9;
   --sidebar-accent-foreground: #1c2b12;
-  --sidebar-border: #e2ecd4;
+  --sidebar-border: #d3dfbe;
   --sidebar-ring: #84cc16;
 }
 
@@ -98,36 +107,41 @@
   --ink: #050803;
   --forest: #0d1a07;
 
-  --background: #070b05;
-  --foreground: #edf5e0;
-  --card: #0d130a;
-  --card-foreground: #edf5e0;
-  --popover: #0d130a;
-  --popover-foreground: #edf5e0;
+  --edge: #37502a;
+  --edge-soft: rgba(0, 0, 0, 0.55);
+  --bevel-lemon: #3f6a06;
+  --bevel-red: #7c1626;
+
+  --background: #0a120a;
+  --foreground: #eef5e0;
+  --card: #101a0e;
+  --card-foreground: #eef5e0;
+  --popover: #101a0e;
+  --popover-foreground: #eef5e0;
   --primary: #a3e635;
   --primary-foreground: #0c110b;
-  --secondary: #131b0d;
+  --secondary: #16220f;
   --secondary-foreground: #dbe8c8;
-  --muted: #131b0d;
+  --muted: #16220f;
   --muted-foreground: #8aa07e;
-  --accent: #18240e;
+  --accent: #1b2a10;
   --accent-foreground: #d9f99d;
   --destructive: #ef4444;
-  --border: rgba(163, 230, 53, 0.16);
-  --input: rgba(163, 230, 53, 0.22);
+  --border: rgba(163, 230, 53, 0.18);
+  --input: #37502a;
   --ring: #a3e635;
   --chart-1: #a3e635;
   --chart-2: #65a30d;
   --chart-3: #eab308;
   --chart-4: #4ade80;
   --chart-5: #bef264;
-  --sidebar: #0a0f06;
-  --sidebar-foreground: #edf5e0;
+  --sidebar: #0d1609;
+  --sidebar-foreground: #eef5e0;
   --sidebar-primary: #a3e635;
   --sidebar-primary-foreground: #0c110b;
-  --sidebar-accent: #131b0d;
+  --sidebar-accent: #16220f;
   --sidebar-accent-foreground: #d9f99d;
-  --sidebar-border: rgba(163, 230, 53, 0.14);
+  --sidebar-border: rgba(163, 230, 53, 0.16);
   --sidebar-ring: #a3e635;
 }
 
@@ -140,7 +154,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "cv11", "ss01";
+    font-weight: 600;
   }
   ::selection {
     background: #a3e635;
@@ -150,25 +164,112 @@
 
 /* ── Typography ───────────────────────────────────────────── */
 .font-display {
-  font-family: var(--font-space-grotesk), var(--font-inter), sans-serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-baloo), var(--font-nunito), sans-serif;
+  letter-spacing: 0;
+}
+.text-game-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
 }
 
-/* ── Cinematic surfaces ───────────────────────────────────── */
+/* ── Sticker headings (the game look) ─────────────────────── */
+/* white fill + fat ink outline + hard offset shadow — comic sticker */
+.sticker {
+  color: #ffffff;
+  -webkit-text-stroke: clamp(4px, 0.13em, 11px) var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 0 0.09em 0 rgba(12, 17, 11, 0.25);
+}
+/* ink fill + lemon hard offset — for headings on light surfaces */
+.sticker-ink {
+  color: var(--ink);
+  text-shadow: 0.055em 0.055em 0 var(--lemon);
+}
+.dark .sticker-ink {
+  color: var(--foreground);
+  text-shadow: 0.055em 0.055em 0 rgba(163, 230, 53, 0.35);
+}
+/* lemon fill + ink outline — for numbers on dark bands */
+.sticker-lemon {
+  color: var(--lemon);
+  -webkit-text-stroke: clamp(3px, 0.09em, 8px) var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 0 0.07em 0 rgba(0, 0, 0, 0.45);
+}
+
+/* ── Game surfaces ────────────────────────────────────────── */
+/* the workhorse card: fat outline + hard lift off the tray */
+.game-card {
+  background: var(--card);
+  border: 2px solid var(--edge);
+  box-shadow: 0 4px 0 0 var(--edge-soft);
+}
+.dark .game-card {
+  box-shadow: 0 4px 0 0 var(--edge-soft);
+}
+/* inset panel inside a card — settings-tile look */
+.game-inset {
+  background: var(--secondary);
+  border: 2px solid var(--edge);
+  border-radius: 1rem;
+}
+/* chunky pill chip */
+.game-chip {
+  border: 2px solid var(--edge);
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: 0 3px 0 0 var(--edge-soft);
+}
+
+/* glass on photos — now with a fat white outline, like a sticker badge */
 .glass {
-  background: color-mix(in srgb, var(--card) 92%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 2px solid color-mix(in srgb, #ffffff 68%, transparent);
+  box-shadow: 0 3px 0 0 rgba(12, 17, 11, 0.22);
 }
 
+/* hover pop for cards */
 .card-lift {
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .card-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px -18px rgba(20, 41, 15, 0.28);
-  border-color: color-mix(in srgb, var(--lemon) 45%, var(--border));
+  transform: translateY(-3px);
+  box-shadow: 0 7px 0 0 var(--edge-soft);
+}
+
+/* ── Speech bubble (mascot) ───────────────────────────────── */
+.speech-bubble {
+  position: relative;
+  background: var(--ink);
+  color: #ffffff;
+  border: 2.5px solid #ffffff;
+  border-radius: 1.35rem;
+  box-shadow: 0 5px 0 0 rgba(12, 17, 11, 0.3);
+}
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  left: 28px;
+  bottom: -10px;
+  width: 15px;
+  height: 15px;
+  background: var(--ink);
+  border-right: 2.5px solid #ffffff;
+  border-bottom: 2.5px solid #ffffff;
+  transform: rotate(45deg);
+  border-bottom-right-radius: 5px;
+}
+.dark .speech-bubble {
+  background: var(--lemon);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 0 5px 0 0 rgba(0, 0, 0, 0.55);
+}
+.dark .speech-bubble::after {
+  background: var(--lemon);
+  border-color: var(--ink);
 }
 
 /* ── Atmospheric photo backdrops ──────────────────────────────
@@ -275,16 +376,20 @@
   scrollbar-width: none;
 }
 
-/* ── Chat bubbles ─────────────────────────────────────────── */
+/* ── Chat bubbles — chunky, outlined ──────────────────────── */
 .chat-me {
   background: var(--lemon);
   color: #0c110b;
-  border-radius: 1.25rem 1.25rem 0.3rem 1.25rem;
+  border: 2px solid var(--ink);
+  border-radius: 1.25rem 1.25rem 0.35rem 1.25rem;
+  box-shadow: 0 3px 0 0 rgba(12, 17, 11, 0.22);
 }
 .chat-them {
-  background: var(--secondary);
-  color: var(--secondary-foreground);
-  border-radius: 1.25rem 1.25rem 1.25rem 0.3rem;
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 2px solid var(--edge);
+  border-radius: 1.25rem 1.25rem 1.25rem 0.35rem;
+  box-shadow: 0 3px 0 0 var(--edge-soft);
 }
 
 /* typing dots */
@@ -326,8 +431,8 @@
   left: 12%;
   right: 12%;
   bottom: 2px;
-  height: 2px;
-  border-radius: 2px;
+  height: 3px;
+  border-radius: 3px;
   background: #a3e635;
   transform: scaleX(0);
   transition: transform 0.3s ease;

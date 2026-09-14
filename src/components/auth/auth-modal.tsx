@@ -71,15 +71,15 @@ export function AuthModal() {
 
                 <button
                   onClick={() => setGoogleOpen(true)}
-                  className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl border border-border bg-card px-4 py-3.5 font-display text-sm font-semibold transition-all hover:border-lemon/50 hover:bg-accent/60 active:scale-[0.99]"
+                  className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl border-2 border-edge bg-card px-4 py-3.5 font-display text-sm font-bold shadow-[0_4px_0_0_var(--edge-soft)] transition-all hover:bg-secondary active:translate-y-[3px] active:shadow-none"
                 >
                   <GoogleIcon className="h-5 w-5" />
                   Continue with Google
                 </button>
 
-                <div className="mt-6 rounded-2xl border border-dashed border-lemon/40 bg-lemon/5 p-4">
-                  <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-lime-800 dark:text-lime-300">
-                    <Users className="h-3.5 w-3.5" /> Demo accounts (1-click)
+                <div className="game-inset mt-6 border-dashed p-4">
+                  <p className="mb-3 flex items-center gap-1.5 font-display text-[11px] font-bold uppercase tracking-wide text-lime-800 dark:text-lime-300">
+                    <Users className="h-3.5 w-3.5" /> Demo accounts — 1-click
                   </p>
                   <div className="grid grid-cols-2 gap-2">
                     {DEMO_ACCOUNTS.map((acc) => (
@@ -132,7 +132,7 @@ function DemoChip({ account }: { account: (typeof DEMO_ACCOUNTS)[number] }) {
     <button
       onClick={login}
       disabled={loading}
-      className="flex items-center gap-2 rounded-xl border bg-card px-2.5 py-2 text-left transition-all hover:border-lemon/60 hover:shadow-md active:scale-95 disabled:opacity-60"
+      className="flex items-center gap-2 rounded-xl border-2 border-edge bg-card px-2.5 py-2 text-left font-semibold shadow-[0_3px_0_0_var(--edge-soft)] transition-all hover:bg-secondary active:translate-y-[2px] active:shadow-none disabled:opacity-60"
     >
       <UserAvatar user={{ name: account.name, avatarUrl: null }} size="sm" />
       <span className="min-w-0">
@@ -168,7 +168,7 @@ function LoginPanel() {
   return (
     <form onSubmit={submit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="login-email" className="text-xs font-semibold">Email</Label>
+        <Label htmlFor="login-email" className="text-xs font-bold">Email</Label>
         <div className="relative">
           <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -179,7 +179,7 @@ function LoginPanel() {
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="login-password" className="text-xs font-semibold">Password</Label>
+        <Label htmlFor="login-password" className="text-xs font-bold">Password</Label>
         <div className="relative">
           <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -192,7 +192,7 @@ function LoginPanel() {
           </button>
         </div>
       </div>
-      <Button type="submit" disabled={loading} className="h-12 w-full rounded-2xl font-display text-base font-bold shadow-[0_8px_24px_rgba(163,230,53,0.35)]">
+      <Button type="submit" disabled={loading} className="h-12 w-full rounded-2xl text-base text-game-caps">
         {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Sign in to Harax"}
       </Button>
     </form>
@@ -244,38 +244,38 @@ function RegisterPanel() {
     <form onSubmit={submit} className="space-y-4">
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2 space-y-2">
-          <Label htmlFor="reg-name" className="text-xs font-semibold">Full name</Label>
+          <Label htmlFor="reg-name" className="text-xs font-bold">Full name</Label>
           <div className="relative">
             <User className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input id="reg-name" required minLength={2} placeholder="e.g. Selam Awoke" value={name} onChange={(e) => setName(e.target.value)} className="rounded-xl pl-10" disabled={loading} />
           </div>
         </div>
         <div className="col-span-2 space-y-2">
-          <Label htmlFor="reg-email" className="text-xs font-semibold">Email</Label>
+          <Label htmlFor="reg-email" className="text-xs font-bold">Email</Label>
           <div className="relative">
             <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input id="reg-email" type="email" required placeholder="you@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-xl pl-10" disabled={loading} />
           </div>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs font-semibold">I am a</Label>
+          <Label className="text-xs font-bold">I am a</Label>
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button" onClick={() => setRole("STUDENT")}
-              className={`flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-semibold transition-all ${role === "STUDENT" ? "border-lemon bg-lemon/15 text-lime-800 dark:text-lime-300" : "hover:border-lemon/50"}`}
+              className={`flex items-center justify-center gap-1.5 rounded-xl border-2 px-3 py-2.5 text-xs font-bold transition-all ${role === "STUDENT" ? "border-ink bg-lemon text-ink shadow-[0_3px_0_0_var(--bevel-lemon)]" : "border-edge hover:bg-secondary"}`}
             >
               <GraduationCap className="h-4 w-4" /> Student
             </button>
             <button
               type="button" onClick={() => setRole("LECTURER")}
-              className={`flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-semibold transition-all ${role === "LECTURER" ? "border-lemon bg-lemon/15 text-lime-800 dark:text-lime-300" : "hover:border-lemon/50"}`}
+              className={`flex items-center justify-center gap-1.5 rounded-xl border-2 px-3 py-2.5 text-xs font-bold transition-all ${role === "LECTURER" ? "border-ink bg-lemon text-ink shadow-[0_3px_0_0_var(--bevel-lemon)]" : "border-edge hover:bg-secondary"}`}
             >
               <ShieldCheck className="h-4 w-4" /> Lecturer
             </button>
           </div>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs font-semibold">{role === "STUDENT" ? "Year" : " "}</Label>
+          <Label className="text-xs font-bold">{role === "STUDENT" ? "Year" : " "}</Label>
           <Select value={year} onValueChange={setYear} disabled={loading || role !== "STUDENT"}>
             <SelectTrigger className="rounded-xl"><SelectValue placeholder="Year" /></SelectTrigger>
             <SelectContent>
@@ -284,7 +284,7 @@ function RegisterPanel() {
           </Select>
         </div>
         <div className="col-span-2 space-y-2">
-          <Label className="text-xs font-semibold">Department</Label>
+          <Label className="text-xs font-bold">Department</Label>
           <Select value={department} onValueChange={setDepartment} disabled={loading}>
             <SelectTrigger className="rounded-xl"><SelectValue placeholder="Choose your department" /></SelectTrigger>
             <SelectContent className="max-h-60 nice-scrollbar">
@@ -293,7 +293,7 @@ function RegisterPanel() {
           </Select>
         </div>
         <div className="col-span-2 space-y-2">
-          <Label htmlFor="reg-password" className="text-xs font-semibold">Password</Label>
+          <Label htmlFor="reg-password" className="text-xs font-bold">Password</Label>
           <div className="relative">
             <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input id="reg-password" type={show ? "text" : "password"} required minLength={8} placeholder="Min 8 chars, Aa + number" value={password} onChange={(e) => setPassword(e.target.value)} className="rounded-xl pl-10 pr-10" disabled={loading} />
@@ -308,12 +308,12 @@ function RegisterPanel() {
                   <span key={i} className={`h-full flex-1 rounded-full transition-colors ${i < strength ? (strength <= 1 ? "bg-red-400" : strength <= 2 ? "bg-amber-400" : "bg-lemon") : "bg-muted"}`} />
                 ))}
               </div>
-              <span className="text-[10px] font-semibold text-muted-foreground">{strengthLabel}</span>
+              <span className="text-[10px] font-bold text-muted-foreground">{strengthLabel}</span>
             </div>
           )}
         </div>
       </div>
-      <Button type="submit" disabled={loading} className="h-12 w-full rounded-2xl font-display text-base font-bold shadow-[0_8px_24px_rgba(163,230,53,0.35)]">
+      <Button type="submit" disabled={loading} className="h-12 w-full rounded-2xl text-base text-game-caps">
         {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Create my account"}
       </Button>
     </form>

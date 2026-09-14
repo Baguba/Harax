@@ -29,12 +29,12 @@ export function ExploreView() {
   return (
     <div className="space-y-8">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-6 text-lemon-soft">
+      <div className="relative overflow-hidden rounded-3xl border-2 border-ink bg-forest p-6 text-lemon-soft shadow-[0_6px_0_0_rgba(12,17,11,0.35)]">
         <div className="relative">
-          <div className="inline-flex items-center gap-2 rounded-full border border-lemon/30 bg-lemon/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-lime-300">
+          <div className="inline-flex items-center gap-2 rounded-full border-2 border-lemon bg-lemon px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-ink shadow-[0_2px_0_0_rgba(12,17,11,0.4)]">
             <Compass className="h-3 w-3" /> Explore Haramaya
           </div>
-          <h1 className="mt-3 font-display text-3xl font-bold">
+          <h1 className="mt-3 font-display text-3xl font-extrabold">
             Discover every corner
             <br />
             <span className="text-lime-300">of your campus.</span>
@@ -57,7 +57,7 @@ export function ExploreView() {
               <button
                 key={e.id}
                 onClick={() => setView({ name: "events" })}
-                className="card-lift group relative overflow-hidden rounded-3xl border bg-card p-4 text-left"
+                className="card-lift group relative overflow-hidden game-card rounded-3xl p-4 text-left"
               >
                 <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-lemon/10 blur-2xl transition-all group-hover:bg-lemon/25" />
                 <div className="flex items-center gap-3">
@@ -72,7 +72,7 @@ export function ExploreView() {
                 </div>
                 <div className="mt-3 flex items-center gap-2">
                   <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold ${cat?.className}`}>{cat?.emoji} {e.category}</span>
-                  <span className="text-[10px] font-semibold text-lime-700 dark:text-lime-400">{e.stats.going} going</span>
+                  <span className="text-[10px] font-bold text-lime-700 dark:text-lime-400">{e.stats.going} going</span>
                   <ArrowUpRight className="ml-auto h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
               </button>
@@ -89,13 +89,13 @@ export function ExploreView() {
             <button
               key={g.id}
               onClick={() => setView({ name: "group", id: g.id })}
-              className="card-lift flex items-center gap-3 rounded-3xl border bg-card p-4 text-left"
+              className="card-lift flex items-center gap-3 game-card rounded-3xl p-4 text-left"
             >
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-2xl">{g.emoji}</span>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-display text-sm font-bold">{g.name}</p>
                 <p className="truncate text-xs text-muted-foreground">{g.description ?? "Campus group"}</p>
-                <p className="mt-1 text-[10px] font-semibold text-lime-700 dark:text-lime-400">{g.memberCount} members · {g.postCount} posts</p>
+                <p className="mt-1 text-[10px] font-bold text-lime-700 dark:text-lime-400">{g.memberCount} members · {g.postCount} posts</p>
               </div>
             </button>
           ))}
@@ -111,7 +111,7 @@ export function ExploreView() {
             <button
               key={c.id}
               onClick={() => setView({ name: "channel", id: c.id })}
-              className="card-lift flex items-center gap-3 rounded-3xl border bg-card p-4 text-left"
+              className="card-lift flex items-center gap-3 game-card rounded-3xl p-4 text-left"
             >
               <UserAvatar user={{ name: c.name, avatarUrl: c.avatarUrl }} size="lg" />
               <div className="min-w-0 flex-1">
@@ -120,7 +120,7 @@ export function ExploreView() {
                   {c.official && <Badge className="h-4 rounded bg-lemon px-1.5 text-[8px] font-bold text-ink">VERIFIED</Badge>}
                 </p>
                 <p className="truncate text-xs text-muted-foreground">{c.description}</p>
-                <p className="mt-1 text-[10px] font-semibold text-lime-700 dark:text-lime-400">{c.subscriberCount} subscribers</p>
+                <p className="mt-1 text-[10px] font-bold text-lime-700 dark:text-lime-400">{c.subscriberCount} subscribers</p>
               </div>
             </button>
           ))}
@@ -135,7 +135,7 @@ export function ExploreView() {
             <button
               key={p.id}
               onClick={() => setView({ name: "profile", id: p.id })}
-              className="card-lift flex flex-col items-center gap-2 rounded-3xl border bg-card p-4 text-center"
+              className="card-lift flex flex-col items-center gap-2 game-card rounded-3xl p-4 text-center"
             >
               <UserAvatar user={p} size="xl" />
               <p className="w-full truncate text-xs font-bold">{p.name}</p>

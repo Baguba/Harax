@@ -2,7 +2,7 @@
 
 A campus community platform for Haramaya University (Ethiopia): a Facebook-style feed, events hub, Telegram-style groups with real-time chat, official broadcast channels, and anonymous sidechat rooms — for students, lecturers, admins and super admins.
 
-Built with **Next.js 16 + TypeScript + Tailwind CSS 4 + shadcn/ui + Prisma (SQLite) + Socket.IO**, styled in flat white + lemon green, with atmospheric photos of the Haramaya campus blended into the landing page.
+Built with **Next.js 16 + TypeScript + Tailwind CSS 4 + shadcn/ui + Prisma (SQLite) + Socket.IO**, styled as a **chunky game-UI** (think Supercell-style menus): Baloo 2 + Nunito typography, sticker headlines with fat ink outlines, cards and buttons with thick borders and hard bevel shadows that "press in" when clicked — all in flat lemon green + ink, with atmospheric photos of the Haramaya campus blended into the landing page.
 
 ---
 

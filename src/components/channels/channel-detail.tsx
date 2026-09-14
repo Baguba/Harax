@@ -65,7 +65,7 @@ export function ChannelDetail({ channelId }: { channelId: string }) {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-5 text-lemon-soft sm:p-6">
+      <div className="relative overflow-hidden rounded-3xl border-2 border-ink bg-forest p-5 text-lemon-soft shadow-[0_5px_0_0_rgba(12,17,11,0.35)] sm:p-6">
         <button onClick={goBack} className="absolute left-3 top-3 rounded-xl p-2 text-lemon-soft/70 transition-colors hover:bg-white/10 hover:text-white lg:hidden" aria-label="Back">
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -88,7 +88,7 @@ export function ChannelDetail({ channelId }: { channelId: string }) {
           </div>
           <Button
             onClick={toggleSub}
-            className={cn2(channel.isSubscribed ? "border border-lemon/40 bg-transparent text-lemon hover:bg-lemon/10" : "bg-lemon font-bold text-ink hover:bg-lime-300")}
+            className={cn2(channel.isSubscribed ? "border-2 border-lemon/50 bg-transparent text-lemon hover:bg-lemon/10" : "bg-lemon text-ink hover:bg-lime-300 text-game-caps")}
           >
             {channel.isSubscribed ? <><BellRing className="h-4 w-4" /> Subscribed</> : <><Bell className="h-4 w-4" /> Subscribe</>}
           </Button>
@@ -113,7 +113,7 @@ export function ChannelDetail({ channelId }: { channelId: string }) {
         </Tabs>
       ) : (
         <div className="space-y-4">
-          <div className="flex items-center gap-2.5 rounded-2xl border border-lemon/30 bg-lemon/10 p-3.5 text-xs font-semibold text-lime-800 dark:text-lime-300">
+          <div className="flex items-center gap-2.5 rounded-2xl border border-lemon/30 bg-lemon/10 p-3.5 text-xs font-bold text-lime-800 dark:text-lime-300">
             <Megaphone className="h-4 w-4" />
             Broadcast channel — only {channel.name} and admins can post. Reactions are open to everyone.
           </div>

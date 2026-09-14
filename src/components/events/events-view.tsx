@@ -58,15 +58,15 @@ export function EventsView() {
       <ConfettiBurst trigger={confetti} />
 
       {/* header */}
-      <div className="relative mb-5 overflow-hidden rounded-3xl border border-border/60 bg-card">
+      <div className="game-card relative mb-5 overflow-hidden rounded-3xl">
         <div className="relative flex flex-wrap items-center gap-3 p-5">
           <div className="min-w-0">
-            <h1 className="font-display text-2xl font-bold tracking-tight">Campus events 📅</h1>
-            <p className="mt-0.5 text-xs text-muted-foreground">Welcome nights, hackathons, football finals — all in one place.</p>
+            <h1 className="font-display text-2xl font-extrabold tracking-tight">Campus events 📅</h1>
+            <p className="mt-0.5 text-xs font-bold text-muted-foreground">Welcome nights, hackathons, football finals — all in one place.</p>
           </div>
           <Button
             onClick={() => (user ? setCreateOpen(true) : toast.info("Sign in to create events"))}
-            className="ml-auto h-10 rounded-2xl font-display font-bold shadow-[0_6px_18px_rgba(163,230,53,0.35)]"
+            className="ml-auto h-10 rounded-2xl text-game-caps"
           >
             <Plus className="h-4 w-4" /> Create event
           </Button>
@@ -81,24 +81,24 @@ export function EventsView() {
               key={c}
               onClick={() => setCategory(c)}
               className={cn(
-                "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-bold transition-all",
+                "game-chip shrink-0 px-3.5 py-1.5 text-xs font-bold transition-all",
                 category === c
-                  ? "border-lemon bg-lemon/20 text-lime-800 dark:text-lime-300"
-                  : "text-muted-foreground hover:border-lemon/50 hover:text-foreground"
+                  ? "border-ink bg-lemon text-ink shadow-[0_2px_0_0_var(--bevel-lemon)]"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
               {c === "ALL" ? "✨ All" : `${CATEGORY_META[c]?.emoji ?? ""} ${c.slice(0, 1)}${c.slice(1).toLowerCase()}`}
             </button>
           ))}
         </div>
-        <div className="ml-auto flex rounded-full border p-0.5">
+        <div className="ml-auto flex rounded-full border-2 border-edge bg-card p-0.5 shadow-[0_2px_0_0_var(--edge-soft)]">
           {(["upcoming", "past"] as const).map((tf) => (
             <button
               key={tf}
               onClick={() => setTimeframe(tf)}
               className={cn(
                 "rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wide transition-colors",
-                timeframe === tf ? "bg-muted text-foreground" : "text-muted-foreground"
+                timeframe === tf ? "bg-ink text-lemon" : "text-muted-foreground"
               )}
             >
               {tf}
@@ -134,7 +134,7 @@ export function EventsView() {
                 animate={{ opacity: 1, y: 0 }}
                 onClick={() => setDetail(e)}
                 className={cn(
-                  "card-lift group relative overflow-hidden rounded-3xl border bg-card text-left",
+                  "card-lift group relative overflow-hidden game-card rounded-3xl text-left",
                   e.myRsvp === "GOING" && "border-lemon/60"
                 )}
               >
@@ -241,23 +241,23 @@ function EventDetailDialog({
 
         <div className="space-y-5 p-5 sm:p-6">
           <div className="grid grid-cols-2 gap-3 text-sm">
-            <div className="flex items-center gap-2.5 rounded-2xl border border-border/60 bg-muted/30 p-3">
+            <div className="game-inset flex items-center gap-2.5 p-3">
               <MapPin className="h-5 w-5 shrink-0 text-lime-600" />
-              <div><p className="text-[10px] font-bold uppercase text-muted-foreground">Location</p><p className="font-semibold">{event.location}</p></div>
+              <div><p className="text-[10px] font-bold uppercase text-muted-foreground">Location</p><p className="font-bold">{event.location}</p></div>
             </div>
-            <div className="flex items-center gap-2.5 rounded-2xl border border-border/60 bg-muted/30 p-3">
+            <div className="game-inset flex items-center gap-2.5 p-3">
               <Users className="h-5 w-5 shrink-0 text-lime-600" />
-              <div><p className="text-[10px] font-bold uppercase text-muted-foreground">Attendance</p><p className="font-semibold">{event.stats.going} going · {event.stats.interested} interested</p></div>
+              <div><p className="text-[10px] font-bold uppercase text-muted-foreground">Attendance</p><p className="font-bold">{event.stats.going} going · {event.stats.interested} interested</p></div>
             </div>
           </div>
 
           <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/90">{event.description}</p>
 
-          <div className="flex items-center gap-3 rounded-2xl border border-border/60 p-3">
+          <div className="game-inset flex items-center gap-3 p-3">
             <UserAvatar user={event.organizer} size="lg" />
             <div className="min-w-0">
               <p className="text-[10px] font-bold uppercase text-muted-foreground">Organized by</p>
-              <p className="truncate font-semibold">{event.organizer.name}</p>
+              <p className="truncate font-bold">{event.organizer.name}</p>
             </div>
             <PartyPopper className="ml-auto h-6 w-6 text-lemon" />
           </div>
@@ -265,14 +265,14 @@ function EventDetailDialog({
           <div className="flex gap-2.5">
             <Button
               onClick={() => onRsvp(event, event.myRsvp === "GOING" ? "NONE" : "GOING")}
-              className={cn("h-12 flex-1 rounded-2xl font-display font-bold", event.myRsvp === "GOING" && "bg-ink text-lemon")}
+              className={cn("h-12 flex-1 rounded-2xl text-game-caps", event.myRsvp === "GOING" && "bg-ink text-lemon")}
             >
               <Check className="h-5 w-5" /> {event.myRsvp === "GOING" ? "You're going ✓" : "I'm going"}
             </Button>
             <Button
               variant="outline"
               onClick={() => onRsvp(event, event.myRsvp === "INTERESTED" ? "NONE" : "INTERESTED")}
-              className="h-12 rounded-2xl font-semibold"
+              className="h-12 rounded-2xl"
             >
               <Star className="h-5 w-5" /> Interested
             </Button>
@@ -324,20 +324,20 @@ function CreateEventDialog({ open, onOpenChange }: { open: boolean; onOpenChange
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Event title</Label>
+            <Label className="text-xs font-bold">Event title</Label>
             <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. CS Department Movie Night" className="rounded-xl" />
           </div>
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Description</Label>
+            <Label className="text-xs font-bold">Description</Label>
             <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What's happening? Who should come? What to bring?" className="min-h-[90px] rounded-xl" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label className="text-xs font-semibold">Location</Label>
+              <Label className="text-xs font-bold">Location</Label>
               <Input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Main Amphitheatre" className="rounded-xl" />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs font-semibold">Category</Label>
+              <Label className="text-xs font-bold">Category</Label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -348,15 +348,15 @@ function CreateEventDialog({ open, onOpenChange }: { open: boolean; onOpenChange
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label className="text-xs font-semibold">Date</Label>
+              <Label className="text-xs font-bold">Date</Label>
               <Input type="date" value={date} min={new Date().toISOString().slice(0, 10)} onChange={(e) => setDate(e.target.value)} className="rounded-xl" />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs font-semibold">Start time</Label>
+              <Label className="text-xs font-bold">Start time</Label>
               <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} className="rounded-xl" />
             </div>
           </div>
-          <Button onClick={submit} disabled={loading} className="h-12 w-full rounded-2xl font-display font-bold shadow-[0_8px_24px_rgba(163,230,53,0.35)]">
+          <Button onClick={submit} disabled={loading} className="h-12 w-full rounded-2xl text-game-caps">
             {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <CalendarDays className="h-5 w-5" />} Publish event
           </Button>
         </div>

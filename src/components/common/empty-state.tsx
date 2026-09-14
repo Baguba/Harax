@@ -17,15 +17,15 @@ export function EmptyState({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-border/80 px-6 py-14 text-center", className)}>
+    <div className={cn("game-card flex flex-col items-center justify-center gap-3 rounded-3xl border-dashed px-6 py-14 text-center", className)}>
       <div className="relative">
-        <div className="absolute inset-0 -z-10 animate-soft-pulse rounded-full bg-lemon/30" />
-        <span className="text-5xl" role="img" aria-label={title}>
+        <div className="absolute inset-0 -z-10 animate-soft-pulse rounded-full bg-lemon/40" />
+        <span className="text-5xl drop-shadow-[0_3px_0_rgba(12,17,11,0.15)]" role="img" aria-label={title}>
           {emoji}
         </span>
       </div>
-      <h3 className="font-display text-lg font-semibold">{title}</h3>
-      {description && <p className="max-w-sm text-sm text-muted-foreground">{description}</p>}
+      <h3 className="font-display text-lg font-extrabold">{title}</h3>
+      {description && <p className="max-w-sm text-sm font-semibold text-muted-foreground">{description}</p>}
       {action}
     </div>
   );

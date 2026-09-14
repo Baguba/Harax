@@ -127,7 +127,7 @@ export function ProfileView({ userId }: { userId: string }) {
   return (
     <div className="space-y-4">
       {/* header card */}
-      <div className="overflow-hidden rounded-3xl border bg-card">
+      <div className="overflow-hidden game-card rounded-3xl">
         <div className="relative h-36 bg-muted sm:h-44">
           {isImageRef(profile.coverUrl) ? (
             <img src={profile.coverUrl} alt="Profile banner" className="absolute inset-0 h-full w-full object-cover" />
@@ -161,7 +161,7 @@ export function ProfileView({ userId }: { userId: string }) {
               onClick={() => bannerInput.current?.click()}
               disabled={photoBusy === "banner"}
               aria-label={isImageRef(profile.coverUrl) ? "Change banner photo" : "Add a banner photo"}
-              className="absolute bottom-3 right-3 inline-flex h-9 items-center gap-1.5 rounded-full glass px-3 text-xs font-bold shadow-md transition-transform hover:scale-105 active:scale-95 disabled:opacity-60"
+              className="absolute bottom-3 right-3 inline-flex h-9 items-center gap-1.5 rounded-full glass px-3 text-xs font-bold transition-transform hover:scale-105 active:scale-95 disabled:opacity-60"
             >
               {photoBusy === "banner" ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -184,7 +184,7 @@ export function ProfileView({ userId }: { userId: string }) {
                   onClick={() => avatarInput.current?.click()}
                   disabled={photoBusy === "avatar"}
                   aria-label="Change profile photo"
-                  className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-card bg-primary text-primary-foreground shadow-md transition-transform hover:scale-110 active:scale-95 disabled:opacity-60"
+                  className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-card bg-primary text-primary-foreground shadow-[0_3px_0_0_var(--bevel-lemon)] transition-transform hover:scale-110 active:translate-y-[2px] active:shadow-none disabled:opacity-60"
                 >
                   {photoBusy === "avatar" ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -211,11 +211,11 @@ export function ProfileView({ userId }: { userId: string }) {
           </div>
           {profile.bio && <p className="mt-3 text-sm leading-relaxed text-foreground/90">{profile.bio}</p>}
 
-          {/* stat strip */}
+          {/* stat strip — game stat tiles */}
           <div className="mt-4 grid grid-cols-4 gap-2">
             {stats.map((s) => (
-              <div key={s.label} className="rounded-2xl border border-border/60 bg-muted/30 p-2.5 text-center">
-                <p className="font-display text-lg font-bold text-lime-700 dark:text-lime-400">{s.value}</p>
+              <div key={s.label} className="game-inset p-2.5 text-center">
+                <p className="font-display text-lg font-extrabold text-lime-700 dark:text-lime-400">{s.value}</p>
                 <p className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground">{s.label}</p>
               </div>
             ))}
@@ -249,7 +249,7 @@ export function ProfileView({ userId }: { userId: string }) {
       {(profile.groups.length > 0 || profile.channels.length > 0) && (
         <div className="grid gap-4 sm:grid-cols-2">
           {profile.groups.length > 0 && (
-            <section className="rounded-3xl border bg-card p-4">
+            <section className="game-card rounded-3xl p-4">
               <h3 className="mb-3 flex items-center gap-2 font-display text-sm font-bold"><Users className="h-4 w-4 text-lime-600" /> Groups</h3>
               <div className="space-y-1">
                 {profile.groups.slice(0, 5).map((g) => (
@@ -262,7 +262,7 @@ export function ProfileView({ userId }: { userId: string }) {
             </section>
           )}
           {profile.channels.length > 0 && (
-            <section className="rounded-3xl border bg-card p-4">
+            <section className="game-card rounded-3xl p-4">
               <h3 className="mb-3 flex items-center gap-2 font-display text-sm font-bold"><Megaphone className="h-4 w-4 text-lime-600" /> Runs channels</h3>
               <div className="space-y-1">
                 {profile.channels.slice(0, 5).map((c) => (
@@ -280,20 +280,20 @@ export function ProfileView({ userId }: { userId: string }) {
 
       {/* upcoming events */}
       {profile.upcomingEvents.length > 0 && (
-        <section className="rounded-3xl border bg-card p-4">
+        <section className="game-card rounded-3xl p-4">
           <h3 className="mb-3 flex items-center gap-2 font-display text-sm font-bold"><CalendarDays className="h-4 w-4 text-lime-600" /> Going next</h3>
           <div className="no-scrollbar flex gap-2.5 overflow-x-auto pb-1">
             {profile.upcomingEvents.map((e) => (
               <button
                 key={e.id}
                 onClick={() => setView({ name: "events" })}
-                className="card-lift flex w-44 shrink-0 flex-col gap-2 rounded-2xl border bg-card p-3 text-left"
+                className="card-lift flex w-44 shrink-0 flex-col gap-2 game-card rounded-2xl p-3 text-left"
               >
                 {e.coverUrl && (
                   <img src={e.coverUrl} alt="" className="h-16 w-full rounded-xl object-cover" loading="lazy" />
                 )}
                 <p className="line-clamp-2 text-xs font-bold leading-snug">{e.title}</p>
-                <p className="text-[10px] font-semibold text-lime-700 dark:text-lime-400">
+                <p className="text-[10px] font-bold text-lime-700 dark:text-lime-400">
                   {new Date(e.startsAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })} · {e.status === "GOING" ? "going" : "interested"}
                 </p>
               </button>
@@ -474,16 +474,16 @@ function EditProfileDialog({ open, onOpenChange, profile }: { open: boolean; onO
           </div>
 
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Display name</Label>
+            <Label className="text-xs font-bold">Display name</Label>
             <Input value={name} onChange={(e) => setName(e.target.value)} className="rounded-xl" maxLength={60} />
           </div>
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Bio</Label>
+            <Label className="text-xs font-bold">Bio</Label>
             <Textarea value={bio} onChange={(e) => setBio(e.target.value)} className="min-h-[70px] rounded-xl" maxLength={300} placeholder="e.g. CS 3rd year · will debug your code for injera" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label className="text-xs font-semibold">Department</Label>
+              <Label className="text-xs font-bold">Department</Label>
               <Select value={department} onValueChange={setDepartment}>
                 <SelectTrigger className="rounded-xl"><SelectValue placeholder="Department" /></SelectTrigger>
                 <SelectContent className="max-h-60 nice-scrollbar">
@@ -492,7 +492,7 @@ function EditProfileDialog({ open, onOpenChange, profile }: { open: boolean; onO
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs font-semibold">Year</Label>
+              <Label className="text-xs font-bold">Year</Label>
               <Select value={year} onValueChange={setYear}>
                 <SelectTrigger className="rounded-xl"><SelectValue placeholder="Year" /></SelectTrigger>
                 <SelectContent>
@@ -504,13 +504,13 @@ function EditProfileDialog({ open, onOpenChange, profile }: { open: boolean; onO
 
           {/* banner: photo + flat colors */}
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Banner</Label>
+            <Label className="text-xs font-bold">Banner</Label>
             <div className="flex gap-2">
               {COVERS.map((c) => (
                 <button
                   key={c}
                   onClick={() => setCover(c)}
-                  className={`h-12 flex-1 rounded-2xl border-2 transition-all ${cover === c ? "border-lemon scale-105" : "border-transparent"}`}
+                  className={`h-12 flex-1 rounded-2xl border-2 transition-all ${cover === c ? "border-ink scale-105 shadow-[0_2px_0_0_var(--bevel-lemon)]" : "border-transparent"}`}
                   style={{ background: c }}
                   aria-label="Choose cover color"
                 />
@@ -521,7 +521,7 @@ function EditProfileDialog({ open, onOpenChange, profile }: { open: boolean; onO
                 disabled={coverBusy}
                 aria-label="Upload a banner photo"
                 className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-2 border-dashed transition-all ${
-                  isImageRef(cover) ? "border-lemon scale-105 bg-muted" : "border-border hover:border-lime-500 hover:bg-muted/50"
+                  isImageRef(cover) ? "border-ink bg-lemon scale-105" : "border-edge hover:border-lime-600 hover:bg-muted/50"
                 }`}
               >
                 {coverBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImagePlus className="h-4 w-4" aria-hidden />}

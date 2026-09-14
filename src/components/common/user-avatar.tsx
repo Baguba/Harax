@@ -46,8 +46,8 @@ export function UserAvatar({
       onClick={onClick}
       onKeyDown={onClick ? (e) => e.key === "Enter" && onClick() : undefined}
       className={cn(
-        "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full font-display font-bold",
-        ring && "ring-2 ring-lemon/60 ring-offset-2 ring-offset-background",
+        "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full border-2 border-ink font-display font-bold",
+        ring && "ring-2 ring-lemon ring-offset-2 ring-offset-background",
         onClick && "cursor-pointer transition-transform hover:scale-105 active:scale-95",
         className
       )}

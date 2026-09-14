@@ -4,7 +4,7 @@
   "description": "Your campus, connected. Posts, events, groups, channels & sidechat for Haramaya University.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#070b05",
+  "background_color": "#edf1e4",
   "theme_color": "#a3e635",
   "orientation": "portrait-primary",
   "categories": ["social", "education", "communication"],

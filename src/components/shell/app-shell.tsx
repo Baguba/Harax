@@ -74,7 +74,7 @@ function ShellInner() {
           </main>
 
           {showRail && (
-            <aside className="sticky top-14 hidden h-[calc(100svh-3.5rem)] w-[320px] shrink-0 overflow-y-auto border-l border-border/50 p-4 nice-scrollbar xl:block">
+            <aside className="sticky top-14 hidden h-[calc(100svh-3.5rem)] w-[320px] shrink-0 overflow-y-auto border-l-2 border-edge bg-card p-4 nice-scrollbar xl:block">
               <RightRail />
             </aside>
           )}
@@ -135,7 +135,7 @@ function MobileComposerSheet() {
             aria-label="Close composer"
           />
           <motion.div
-            className="fixed inset-x-3 bottom-4 z-50 rounded-3xl border bg-card p-4 shadow-2xl lg:hidden"
+            className="fixed inset-x-3 bottom-4 z-50 game-card rounded-3xl p-4 lg:hidden"
             initial={{ y: 300, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 300, opacity: 0 }}

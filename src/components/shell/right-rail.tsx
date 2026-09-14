@@ -37,16 +37,16 @@ export function RightRail() {
     <div className="space-y-4">
       {/* Campus pulse */}
       <RailCard title="Campus pulse" icon={Flame}>
-        <div className="relative overflow-hidden rounded-2xl bg-forest p-4 text-lemon-soft">
-          <p className="relative font-display text-3xl font-bold text-lime-300">Active now</p>
-          <p className="relative mt-1 text-[11px] leading-relaxed text-lemon-soft/70">
+        <div className="relative overflow-hidden rounded-2xl border-2 border-ink bg-forest p-4 text-lemon-soft shadow-[0_4px_0_0_rgba(12,17,11,0.3)]">
+          <p className="relative font-display text-3xl font-extrabold text-lime-300">Active now</p>
+          <p className="relative mt-1 text-[11px] font-bold leading-relaxed text-lemon-soft/70">
             {hotRooms.length > 0
               ? `${hotRooms.map((r) => r.name).join(" & ")} are popping right now`
               : "Sidechat rooms are warming up — be the first spark"}
           </p>
           <button
             onClick={() => setView({ name: "sidechat" })}
-            className="relative mt-3 inline-flex items-center gap-1 rounded-full bg-lemon px-3.5 py-1.5 text-[11px] font-bold text-ink transition-transform hover:scale-105"
+            className="relative mt-3 inline-flex items-center gap-1 rounded-full border-2 border-ink bg-lemon px-3.5 py-1.5 text-[11px] font-bold text-ink shadow-[0_3px_0_0_var(--bevel-lemon)] transition-transform hover:scale-105 active:translate-y-[2px] active:shadow-none"
           >
             <Ghost className="h-3.5 w-3.5" /> Enter sidechat
           </button>
@@ -63,16 +63,16 @@ export function RightRail() {
               <button
                 key={e.id}
                 onClick={() => setView({ name: "events" })}
-                className="flex w-full items-center gap-3 rounded-2xl border border-border/60 bg-card p-3 text-left transition-all hover:border-lemon/50 hover:shadow-md"
+                className="flex w-full items-center gap-3 rounded-2xl border-2 border-edge bg-card p-3 text-left transition-all hover:bg-secondary hover:shadow-[0_3px_0_0_var(--edge-soft)]"
               >
-                <div className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-lemon/20 font-display font-bold text-lime-800 dark:text-lime-300">
+                <div className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl border-2 border-ink bg-lemon font-display font-bold text-ink">
                   <span className="text-sm leading-none">{d.day}</span>
                   <span className="text-[8px] tracking-widest">{d.month}</span>
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-xs font-bold">{e.title}</p>
                   <p className="truncate text-[10px] text-muted-foreground">{e.location} · {d.time}</p>
-                  <p className="mt-1 text-[10px] font-semibold text-lime-700 dark:text-lime-400">{e.stats.going} going</p>
+                  <p className="mt-1 text-[10px] font-bold text-lime-700 dark:text-lime-400">{e.stats.going} going</p>
                 </div>
               </button>
             );
@@ -88,9 +88,9 @@ export function RightRail() {
               <button
                 key={g.id}
                 onClick={() => setView({ name: "group", id: g.id })}
-                className="flex w-full items-center gap-2.5 rounded-2xl border border-border/60 bg-card p-3 text-left transition-all hover:border-lemon/50 hover:shadow-md"
+                className="flex w-full items-center gap-2.5 rounded-2xl border-2 border-edge bg-card p-3 text-left transition-all hover:bg-secondary hover:shadow-[0_3px_0_0_var(--edge-soft)]"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted text-lg">{g.emoji}</span>
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-edge bg-secondary text-lg">{g.emoji}</span>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-xs font-bold">{g.name}</p>
                   <p className="text-[10px] text-muted-foreground">{g.memberCount} members</p>
@@ -109,13 +109,13 @@ export function RightRail() {
             <button
               key={c.id}
               onClick={() => setView({ name: "channel", id: c.id })}
-              className="flex w-full items-center gap-2.5 rounded-2xl border border-border/60 bg-card p-3 text-left transition-all hover:border-lemon/50 hover:shadow-md"
+              className="flex w-full items-center gap-2.5 rounded-2xl border-2 border-edge bg-card p-3 text-left transition-all hover:bg-secondary hover:shadow-[0_3px_0_0_var(--edge-soft)]"
             >
               <UserAvatar user={{ name: c.name, avatarUrl: c.avatarUrl }} size="sm" />
               <div className="min-w-0 flex-1">
                 <p className="flex items-center gap-1 truncate text-xs font-bold">
                   {c.name}
-                  <span className="rounded bg-lemon/25 px-1 text-[8px] font-bold text-lime-800 dark:text-lime-300">✓</span>
+                  <span className="rounded border-2 border-edge bg-lemon px-1 text-[8px] font-bold text-ink">✓</span>
                 </p>
                 <p className="text-[10px] text-muted-foreground">{c.subscriberCount} subscribers</p>
               </div>
@@ -146,10 +146,10 @@ function RailCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-3xl border border-border/60 bg-card/40 p-4">
+    <section className="game-card rounded-3xl p-4">
       <div className="mb-3 flex items-center gap-2">
         <Icon className="h-4 w-4 text-lime-600 dark:text-lime-400" />
-        <h3 className="font-display text-sm font-bold">{title}</h3>
+        <h3 className="font-display text-sm font-extrabold">{title}</h3>
         {action && (
           <button onClick={action.onClick} className="ml-auto text-[10px] font-bold text-lime-700 hover:underline dark:text-lime-400">
             {action.label} →

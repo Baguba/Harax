@@ -129,3 +129,27 @@ Work Log:
 Stage Summary:
 - Every user can now log out from the top of their own profile on any screen size; session ends server-side.
 - Deliverable refreshed: /home/z/my-project/download/harax.zip.
+
+---
+Task ID: 7
+Agent: main-agent (Super Z)
+Task: Total visual overhaul inspired by a user-supplied Supercell-style game-UI screenshot — "change the writing, graphics, style, font and other things… apply to the entire project".
+
+Work Log:
+- Analyzed the inspiration image with VLM (full + quarter crops): Supercell/Brawl-Stars settings screen — chunky rounded typography, sticker text (white fill + fat ink stroke + hard offset shadow), pill buttons with ink borders + 3D bevel edges, thick-outlined cards on a light-gray tray, speech-bubble mascot, playful imperative copy.
+- Strategy: keep the Harax lemon/ink brand + flat no-gradient language (user's earlier standing rule), translate the game STYLE into it (lemon + ink is naturally Brawl-Stars-like).
+- Fonts (layout.tsx): Inter/Space Grotesk → **Baloo 2** (display, chunky rounded) + **Nunito** (body); body base weight 600. PWA theme colors + manifest background updated to the new tray color.
+- globals.css "Harax Arcade" system: new tokens (--edge/--edge-soft card outline+shadow, --bevel-lemon/--bevel-red button bevels, tray bg #edf1e4 light / #0a120a dark, destructive #e63946), .sticker / .sticker-ink / .sticker-lemon headings (paint-order stroke fill), .game-card / .game-inset / .game-chip, .speech-bubble (with tail, dark-mode lemon variant), chunky outlined .chat-me/.chat-them, thicker .glass, bolder .nav-sweep. Atmo photo system untouched.
+- UI primitives: button.tsx rewritten (ink borders + bevel shadow, active:translate-y press-in, caps-friendly, new ink variant, icon-sm size), input/textarea/select-trigger (2px ink border, rounded-xl, bevel shadow, semibold), dialog (2px edge border + hard shadow), badge (pill + border + caps), tabs (lemon active pill).
+- Systematic sweep script (scripts/game-style-sweep.py): 94 class replacements across 19 files (cards → game-card, hairline dividers → 2px edge, chips → game-chip, small semibold → bold).
+- Per-view detailing: landing (sticker hero on the gate photo, caps CTAs, mascot speech bubbles "yo, I'm the Harax leaf 🌿" / "no cap, just campus", game-chip section labels, sticker stats band, outlined feature icons, thicker ticker), hero-mocks, auth modal (game inputs, lemon active tabs, chunky demo chips, caps submits), app shell (solid chunky sidebar with lemon-pill active nav, bordered topbar, pill-highlight mobile tab bar, bevel FAB), feed (game header/tabs, composer "Post it" caps + flex-wrap fix for mobile overflow found in testing, outlined reaction picker), events (game-chip category filters, ink/lemon timeframe toggle, game-inset detail tiles, caps RSVP), groups (lemon tab pills, emoji picker tiles), channels (subscribe states), sidechat (outlined emoji tiles, LIVE badge), notifications (lemon unread cards), profile (game-inset stat tiles, bevel camera badges, ink-bordered cover tiles), admin (ink-bordered forest header, chart tooltip), right-rail (outlined date tiles), role badges (solid fills + ink borders + bevel), user-avatar (ink outline), empty states (dashed game-card).
+- Copy sweep: playful game voice ("What's good on campus today?", "Here's what's popping around Haramaya today.", "Post it", caps buttons: CREATE ACCOUNT / TRY THE DEMO / NEW POST / PUBLISH EVENT / SIGN IN TO HARAX).
+- Fixed mobile composer overflow (docW 404→390) via flex-wrap + full-width submit on <sm.
+- Restarted the dev orchestrator after font/CSS changes (watcher staleness) — Baloo_2/Nunito woff2 confirmed served.
+- Verified via agent-browser + VLM: landing light/dark/mobile (sticker headline crisp on photo, chunky CTAs — "strongly mimics Brawl Stars/Supercell"), auth modal, feed light + dark (cards outlined, lemon pill sidebar), mobile feed (FAB + tab pills; pill styles confirmed via computed styles after VLM misread), events/sidechat/profile/group-chat composites, Google sheet, chat bubble borders via DOM. 0 console errors, 0 new tsc errors (same 10 pre-existing), eslint exit 0.
+- Fixed a real packaging bug found during repack: /tmp wipe + old rsync nesting created public/img/img/ and dropped public root files (icons/manifest/robots) from the zip — package-zip.sh now rsyncs the whole public/ (minus uploads). Zip verified: img/landing at correct path, icons, manifest, robots, 3 DB-referenced uploads, 220 files.
+- README: described the chunky game-UI style + fonts.
+
+Stage Summary:
+- Harax is now a full game-UI experience: Baloo 2 sticker typography, fat ink outlines, bevel buttons that press in, speech-bubble mascot, playful campus copy — consistent across landing, auth, shell, feed, events, groups, channels, sidechat, notifications, profile, admin, light/dark/mobile.
+- Deliverable refreshed: /home/z/my-project/download/harax.zip (220 files, fonts load via next/font at build time — internet needed on first run, same as npm install).

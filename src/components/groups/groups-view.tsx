@@ -49,7 +49,7 @@ export function GroupsView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card">
+      <div className="game-card relative overflow-hidden rounded-3xl">
         <div className="relative flex flex-wrap items-center gap-3 p-5">
           <div>
             <h1 className="font-display text-2xl font-bold tracking-tight">Groups 💬</h1>
@@ -57,7 +57,7 @@ export function GroupsView() {
           </div>
           <Button
             onClick={() => (user ? setCreateOpen(true) : toast.info("Sign in to create groups"))}
-            className="ml-auto h-10 rounded-2xl font-display font-bold shadow-[0_6px_18px_rgba(163,230,53,0.35)]"
+            className="ml-auto h-10 rounded-2xl text-game-caps"
           >
             <Plus className="h-4 w-4" /> Create group
           </Button>
@@ -66,14 +66,14 @@ export function GroupsView() {
 
       {/* tabs + search */}
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex rounded-2xl border p-0.5">
+        <div className="flex rounded-2xl border-2 border-edge bg-card p-0.5 shadow-[0_3px_0_0_var(--edge-soft)]">
           {(["all", "mine"] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
               className={cn(
                 "rounded-xl px-4 py-1.5 text-xs font-bold transition-colors",
-                tab === t ? "bg-lemon/20 text-lime-800 dark:text-lime-300" : "text-muted-foreground"
+                tab === t ? "bg-lemon text-ink" : "text-muted-foreground"
               )}
             >
               {t === "all" ? "Discover" : `My groups${myGroups.length ? ` (${myGroups.length})` : ""}`}
@@ -106,7 +106,7 @@ export function GroupsView() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.04 }}
-              className="card-lift group flex flex-col rounded-3xl border bg-card p-5"
+              className="card-lift group flex flex-col game-card rounded-3xl p-5"
             >
               <div className="flex items-start gap-3">
                 <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-secondary text-3xl transition-transform group-hover:rotate-6 group-hover:scale-110">
@@ -193,15 +193,15 @@ export function CreateGroupDialog({ open, onOpenChange }: { open: boolean; onOpe
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Group name</Label>
+            <Label className="text-xs font-bold">Group name</Label>
             <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. CS 4th Year Squad" className="rounded-xl" maxLength={60} />
           </div>
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Description</Label>
+            <Label className="text-xs font-bold">Description</Label>
             <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What is this group about?" className="min-h-[70px] rounded-xl" maxLength={500} />
           </div>
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Group emoji</Label>
+            <Label className="text-xs font-bold">Group emoji</Label>
             <div className="flex flex-wrap gap-1.5">
               {EMOJI_CHOICES.map((e) => (
                 <button
@@ -209,7 +209,7 @@ export function CreateGroupDialog({ open, onOpenChange }: { open: boolean; onOpe
                   onClick={() => setEmoji(e)}
                   className={cn(
                     "rounded-xl border px-2.5 py-1.5 text-xl transition-all hover:scale-110",
-                    emoji === e && "border-lemon bg-lemon/20 scale-110"
+                    emoji === e && "border-ink bg-lemon scale-110 shadow-[0_2px_0_0_var(--bevel-lemon)]"
                   )}
                   aria-label={`Emoji ${e}`}
                 >
@@ -218,14 +218,14 @@ export function CreateGroupDialog({ open, onOpenChange }: { open: boolean; onOpe
               ))}
             </div>
           </div>
-          <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-muted/30 p-3.5">
+          <div className="game-inset flex items-center justify-between p-3.5">
             <div>
               <p className="text-xs font-bold">Public group</p>
               <p className="text-[10px] text-muted-foreground">Anyone at Haramaya can discover & join</p>
             </div>
             <Switch checked={isPublic} onCheckedChange={setIsPublic} aria-label="Toggle public group" />
           </div>
-          <Button onClick={submit} disabled={loading} className="h-12 w-full rounded-2xl font-display font-bold shadow-[0_8px_24px_rgba(163,230,53,0.35)]">
+          <Button onClick={submit} disabled={loading} className="h-12 w-full rounded-2xl text-game-caps">
             {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Plus className="h-5 w-5" />} Create group
           </Button>
         </div>

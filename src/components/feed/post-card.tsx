@@ -122,7 +122,7 @@ export function PostCard({ post }: { post: PostDTO }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        "overflow-hidden rounded-3xl border bg-card shadow-sm transition-shadow hover:shadow-md",
+        "overflow-hidden game-card rounded-3xl shadow-sm transition-shadow hover:shadow-md",
         post.pinned && "border-lemon/50 bg-lemon/[0.03]"
       )}
     >
@@ -212,7 +212,7 @@ export function PostCard({ post }: { post: PostDTO }) {
 
       {/* reaction summary */}
       {(reactions.total > 0 || comments.count > 0) && (
-        <div className="mx-4 flex items-center gap-2 border-t border-border/60 py-2 text-[11px] text-muted-foreground">
+        <div className="mx-4 flex items-center gap-2 border-t-2 border-edge py-2 text-[11px] text-muted-foreground">
           {topReactions.length > 0 && (
             <span className="flex -space-x-1" aria-label={`Total ${reactions.total} reactions`}>
               {topReactions.map(([r]) => (
@@ -232,7 +232,7 @@ export function PostCard({ post }: { post: PostDTO }) {
       )}
 
       {/* action bar */}
-      <div className="flex items-center gap-1 border-t border-border/60 px-2.5 py-1.5">
+      <div className="flex items-center gap-1 border-t-2 border-edge px-2.5 py-1.5">
         <div className="relative flex-1" onMouseEnter={() => user && setShowReactions(true)} onMouseLeave={() => setShowReactions(false)}>
           <ReactionButton
             mine={reactions.mine}
@@ -244,7 +244,7 @@ export function PostCard({ post }: { post: PostDTO }) {
                 initial={{ opacity: 0, y: 8, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 6, scale: 0.95 }}
-                className="absolute bottom-[110%] left-0 z-10 flex gap-1 rounded-2xl border bg-popover p-1.5 shadow-xl"
+                className="absolute bottom-[110%] left-0 z-10 flex gap-1 rounded-2xl border-2 border-edge bg-popover p-1.5 shadow-[0_5px_0_0_var(--edge-soft)]"
                 role="menu"
               >
                 {REACTIONS.map((r) => (
@@ -267,7 +267,7 @@ export function PostCard({ post }: { post: PostDTO }) {
         <button
           onClick={loadComments}
           className={cn(
-            "flex flex-1 items-center justify-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold transition-colors hover:bg-muted",
+            "flex flex-1 items-center justify-center gap-2 rounded-2xl px-3 py-2 text-xs font-bold transition-colors hover:bg-muted",
             comments.open && "text-lime-700 dark:text-lime-400"
           )}
           aria-expanded={comments.open}
@@ -283,7 +283,7 @@ export function PostCard({ post }: { post: PostDTO }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-t border-border/50 bg-muted/30"
+            className="overflow-hidden border-t-2 border-edge bg-muted/30"
           >
             <CommentThread
               comments={comments.list}
@@ -306,7 +306,7 @@ export function PostCard({ post }: { post: PostDTO }) {
                   <button
                     onClick={submitComment}
                     disabled={sending || !commentText.trim()}
-                    className="absolute bottom-2 right-2.5 rounded-lg p-1 text-muted-foreground transition-colors hover:text-lime-600 disabled:opacity-40"
+                    className="absolute bottom-2 right-2.5 rounded-lg border-2 border-transparent p-1 text-muted-foreground transition-all hover:border-lemon hover:text-lime-700 disabled:opacity-40"
                     aria-label="Send comment"
                   >
                     {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
@@ -328,8 +328,8 @@ function ReactionButton({ mine, onClick }: { mine: Reaction | null; onClick: () 
     <button
       onClick={onClick}
       className={cn(
-        "flex w-full items-center justify-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold transition-all hover:bg-muted active:scale-95",
-        mine && "text-lime-700 dark:text-lime-400"
+        "flex w-full items-center justify-center gap-2 rounded-2xl px-3 py-2 text-xs font-bold transition-all hover:bg-muted active:scale-95",
+        mine && "bg-lemon/25 text-lime-900 dark:text-lime-300"
       )}
       aria-label={mine ? `Reacted ${REACTION_META[mine].label} — click to remove` : "React to post"}
     >
@@ -351,7 +351,7 @@ function ReactionButton({ mine, onClick }: { mine: Reaction | null; onClick: () 
 
 export function PostSkeleton() {
   return (
-    <div className="rounded-3xl border bg-card p-4">
+    <div className="game-card rounded-3xl p-4">
       <div className="flex items-center gap-3">
         <div className="shimmer h-11 w-11 rounded-full" />
         <div className="space-y-2">

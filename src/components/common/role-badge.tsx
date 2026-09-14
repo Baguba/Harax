@@ -5,10 +5,10 @@ import { cn } from "@/lib/utils";
 import type { Role } from "@/lib/types";
 
 const ROLE_CONFIG: Record<string, { label: string; icon: React.ElementType; className: string }> = {
-  STUDENT: { label: "Student", icon: User, className: "bg-secondary text-secondary-foreground border-border" },
-  LECTURER: { label: "Lecturer", icon: GraduationCap, className: "bg-lemon/20 text-lime-800 dark:text-lime-300 border-lemon/40" },
-  ADMIN: { label: "Admin", icon: Shield, className: "bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300 border-amber-300/50" },
-  SUPERADMIN: { label: "Super Admin", icon: ShieldCheck, className: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300 border-red-300/50" },
+  STUDENT: { label: "Student", icon: User, className: "bg-secondary text-secondary-foreground border-edge" },
+  LECTURER: { label: "Lecturer", icon: GraduationCap, className: "bg-lemon text-ink border-ink" },
+  ADMIN: { label: "Admin", icon: Shield, className: "bg-amber-300 text-amber-950 border-amber-800" },
+  SUPERADMIN: { label: "Super Admin", icon: ShieldCheck, className: "bg-red-400 text-red-950 border-red-900" },
 };
 
 export function RoleBadge({ role, className }: { role: string; className?: string }) {
@@ -17,12 +17,12 @@ export function RoleBadge({ role, className }: { role: string; className?: strin
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+        "inline-flex items-center gap-1 rounded-full border-2 px-2 py-0.5 font-display text-[10px] font-bold uppercase tracking-wide shadow-[0_2px_0_0_rgba(12,17,11,0.25)]",
         cfg.className,
         className
       )}
     >
-      <Icon className="h-3 w-3" />
+      <Icon className="h-3 w-3" strokeWidth={2.75} />
       {cfg.label}
     </span>
   );

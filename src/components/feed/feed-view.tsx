@@ -30,15 +30,15 @@ export function FeedView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card">
+      <div className="game-card relative overflow-hidden rounded-3xl">
         <div className="relative flex items-center gap-3 p-5">
           <div>
-            <h1 className="font-display text-2xl font-bold tracking-tight">
+            <h1 className="font-display text-2xl font-extrabold tracking-tight">
               Good {dayPart()}, {user?.name.split(" ")[0]}
             </h1>
-            <p className="mt-0.5 text-xs text-muted-foreground">Here's what's happening around Haramaya today.</p>
+            <p className="mt-0.5 text-xs font-bold text-muted-foreground">Here's what's popping around Haramaya today.</p>
           </div>
-          <div className="ml-auto hidden sm:flex gap-1 rounded-2xl border border-border/60 bg-card/70 p-1">
+          <div className="ml-auto hidden sm:flex gap-1 rounded-2xl border-2 border-edge bg-secondary p-1">
             <TabBtn active={tab === "latest"} onClick={() => setTab("latest")} icon={Clock} label="Latest" />
             <TabBtn active={tab === "trending"} onClick={() => setTab("trending")} icon={Flame} label="Trending" />
           </div>
@@ -46,7 +46,7 @@ export function FeedView() {
       </div>
 
       {/* mobile tabs */}
-      <div className="flex gap-1 rounded-2xl border border-border/60 bg-card/70 p-1 sm:hidden">
+      <div className="flex gap-1 rounded-2xl border-2 border-edge bg-card p-1 shadow-[0_3px_0_0_var(--edge-soft)] sm:hidden">
         <TabBtn active={tab === "latest"} onClick={() => setTab("latest")} icon={Clock} label="Latest" className="flex-1" />
         <TabBtn active={tab === "trending"} onClick={() => setTab("trending")} icon={Flame} label="Trending" className="flex-1" />
       </div>
@@ -62,7 +62,7 @@ export function FeedView() {
         <EmptyState
           emoji="🌱"
           title="The feed is quiet…"
-          description="Be the spark — post what's happening around campus, share a photo from today, or start a discussion."
+          description="Be the spark — post what's popping around campus, share a photo from today, or start a discussion."
         />
       ) : (
         <div className="space-y-4">
@@ -73,7 +73,7 @@ export function FeedView() {
               variant="outline"
               onClick={() => feed.fetchNextPage()}
               disabled={feed.isFetchingNextPage}
-              className="h-11 w-full rounded-2xl font-semibold"
+              className="h-11 w-full rounded-2xl text-game-caps"
             >
               {feed.isFetchingNextPage ? <Loader2 className="h-4 w-4 animate-spin" /> : "Load more posts"}
             </Button>
@@ -89,8 +89,8 @@ function TabBtn({ active, onClick, icon: Icon, label, className }: { active: boo
     <button
       onClick={onClick}
       className={cn(
-        "flex items-center justify-center gap-1.5 rounded-xl px-4 py-1.5 text-xs font-bold transition-all",
-        active ? "bg-lemon/20 text-lime-800 dark:text-lime-300" : "text-muted-foreground hover:text-foreground",
+        "flex items-center justify-center gap-1.5 rounded-xl border-2 border-transparent px-4 py-1.5 text-xs font-bold transition-all",
+        active ? "border-ink bg-lemon text-ink shadow-[0_2px_0_0_var(--bevel-lemon)]" : "text-muted-foreground hover:text-foreground",
         className
       )}
       aria-pressed={active}

@@ -40,7 +40,7 @@ export function ChannelsView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-6 text-lemon-soft">
+      <div className="relative overflow-hidden rounded-3xl border-2 border-ink bg-forest p-6 text-lemon-soft shadow-[0_6px_0_0_rgba(12,17,11,0.35)]">
         <div className="relative flex flex-wrap items-center gap-3">
           <div className="min-w-0">
             <div className="inline-flex items-center gap-2 rounded-full border border-lemon/30 bg-lemon/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-lime-300">
@@ -72,8 +72,8 @@ export function ChannelsView() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
               className={cn(
-                "card-lift rounded-3xl border bg-card p-5",
-                c.official && "border-lemon/40"
+                "card-lift game-card rounded-3xl p-5",
+                c.official && "border-lemon"
               )}
             >
               <div className="flex items-center gap-3">
@@ -95,7 +95,7 @@ export function ChannelsView() {
                 </Button>
               </div>
               <p className="mt-3 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{c.description}</p>
-              <div className="mt-3 flex items-center gap-3 text-[10px] font-semibold text-muted-foreground">
+              <div className="mt-3 flex items-center gap-3 text-[10px] font-bold text-muted-foreground">
                 <span className="inline-flex items-center gap-1"><Megaphone className="h-3 w-3 text-lime-600" /> {c.postCount} broadcasts</span>
                 <span className="inline-flex items-center gap-1"><Check className="h-3 w-3 text-lime-600" /> {c.subscriberCount} subscribers</span>
                 <button onClick={() => setView({ name: "channel", id: c.id })} className="ml-auto font-bold text-lime-700 hover:underline dark:text-lime-400">
@@ -145,14 +145,14 @@ function CreateChannelDialog({ open, onOpenChange }: { open: boolean; onOpenChan
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Channel name</Label>
+            <Label className="text-xs font-bold">Channel name</Label>
             <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Plant Sciences Dept" className="rounded-xl" maxLength={60} />
           </div>
           <div className="space-y-2">
-            <Label className="text-xs font-semibold">Description</Label>
+            <Label className="text-xs font-bold">Description</Label>
             <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What will you broadcast?" className="min-h-[70px] rounded-xl" maxLength={500} />
           </div>
-          <Button onClick={submit} disabled={loading} className="h-12 w-full rounded-2xl font-display font-bold shadow-[0_8px_24px_rgba(163,230,53,0.35)]">
+          <Button onClick={submit} disabled={loading} className="h-12 w-full rounded-2xl text-game-caps">
             {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Megaphone className="h-5 w-5" />} Launch channel
           </Button>
         </div>

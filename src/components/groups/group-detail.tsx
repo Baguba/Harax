@@ -81,7 +81,7 @@ export function GroupDetail({ groupId }: { groupId: string }) {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card">
+      <div className="game-card relative overflow-hidden rounded-3xl">
         <div className="relative flex items-center gap-3.5 p-4 sm:p-5">
           <button onClick={goBack} className="rounded-xl p-2 text-muted-foreground transition-colors hover:bg-muted lg:hidden" aria-label="Back">
             <ChevronLeft className="h-5 w-5" />
@@ -121,7 +121,7 @@ export function GroupDetail({ groupId }: { groupId: string }) {
           </div>
         </div>
         {group.description && (
-          <p className="border-t border-border/50 px-5 py-2.5 text-xs leading-relaxed text-muted-foreground">{group.description}</p>
+          <p className="border-t-2 border-edge px-5 py-2.5 text-xs leading-relaxed text-muted-foreground">{group.description}</p>
         )}
       </div>
 
@@ -156,7 +156,7 @@ export function GroupDetail({ groupId }: { groupId: string }) {
       )}
 
       {/* members preview */}
-      <section className="rounded-3xl border bg-card p-4">
+      <section className="game-card rounded-3xl p-4">
         <h3 className="mb-3 flex items-center gap-2 font-display text-sm font-bold">
           <Users className="h-4 w-4 text-lime-600" /> Members
           <span className="text-xs font-normal text-muted-foreground">{group.memberCount}</span>
@@ -251,13 +251,13 @@ export function ChatRoom({
   };
 
   return (
-    <div className="flex h-[62svh] min-h-[420px] flex-col overflow-hidden rounded-3xl border bg-card">
+    <div className="flex h-[62svh] min-h-[420px] flex-col overflow-hidden game-card rounded-3xl">
       {/* messages */}
       <div className="relative flex-1 space-y-3 overflow-y-auto bg-muted/20 p-4 nice-scrollbar">
         {chat.messages.length === 0 && (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
             <span className="text-4xl">💬</span>
-            <p className="text-sm font-semibold">No messages yet</p>
+            <p className="text-sm font-bold">No messages yet</p>
             <p className="max-w-xs text-xs text-muted-foreground">Be the first to break the ice in {title}.</p>
           </div>
         )}
@@ -305,7 +305,7 @@ export function ChatRoom({
                 <span className="typing-dot h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
                 <span className="typing-dot h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
               </span>
-              <span className="text-[10px] font-semibold text-muted-foreground">{chat.typing.who} is typing…</span>
+              <span className="text-[10px] font-bold text-muted-foreground">{chat.typing.who} is typing…</span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -313,9 +313,9 @@ export function ChatRoom({
       </div>
 
       {/* composer */}
-      <div className="border-t border-border/60 bg-card p-3">
+      <div className="border-t-2 border-edge bg-card p-3">
         {chat.authError && (
-          <p className="mb-2 rounded-xl bg-amber-50 px-3 py-2 text-[11px] font-semibold text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">
+          <p className="mb-2 rounded-xl bg-amber-50 px-3 py-2 text-[11px] font-bold text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">
             {chat.authError}
           </p>
         )}
@@ -354,7 +354,7 @@ export function ChatRoom({
             rows={1}
             maxLength={1000}
             placeholder={canChat ? `Message ${title}…` : "Join the room to chat"}
-            className="max-h-28 min-h-[42px] flex-1 resize-none rounded-2xl border border-border/70 bg-muted/40 px-4 py-2.5 text-sm outline-none transition-all placeholder:text-muted-foreground/60 focus:border-lemon/60 focus:bg-card disabled:opacity-60"
+            className="max-h-28 min-h-[42px] flex-1 resize-none rounded-2xl border-2 border-edge bg-secondary px-4 py-2.5 font-semibold outline-none transition-all placeholder:text-muted-foreground/60 focus:border-lemon focus:bg-card disabled:opacity-60"
             aria-label={`Message ${title}`}
           />
           <Button onClick={send} disabled={!canChat || sending || (!text.trim() && !media)} size="icon" className="h-11 w-11 rounded-2xl" aria-label="Send message">

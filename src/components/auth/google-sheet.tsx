@@ -68,7 +68,7 @@ export function GoogleSheet({
   return (
     <Dialog open={open} onOpenChange={(v) => { if (!v) setMode("choose"); onOpenChange(v); }}>
       <DialogContent className="max-w-[400px] rounded-3xl p-0">
-        <div className="flex flex-col items-center border-b border-border/60 px-6 pb-5 pt-8 text-center">
+        <div className="flex flex-col items-center border-b-2 border-edge px-6 pb-5 pt-8 text-center">
           <GoogleIcon className="h-9 w-9" />
           <DialogTitle className="mt-4 font-display text-xl font-semibold">Sign in with Google</DialogTitle>
           <DialogDescription className="mt-1 text-xs text-muted-foreground">
@@ -88,7 +88,7 @@ export function GoogleSheet({
                 >
                   <UserAvatar user={{ name: acc.name, avatarUrl: null }} size="lg" />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-semibold">{acc.name}</span>
+                    <span className="block truncate text-sm font-bold">{acc.name}</span>
                     <span className="block truncate text-xs text-muted-foreground">{acc.subtitle}</span>
                   </span>
                   {loadingEmail === acc.email && <Loader2 className="h-5 w-5 animate-spin text-lemon" />}
@@ -101,7 +101,7 @@ export function GoogleSheet({
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-muted">
                   <Plus className="h-5 w-5 text-muted-foreground" />
                 </span>
-                <span className="text-sm font-semibold">Use another account</span>
+                <span className="text-sm font-bold">Use another account</span>
               </button>
             </div>
           ) : (
@@ -110,11 +110,11 @@ export function GoogleSheet({
                 <ArrowLeft className="h-4 w-4" /> Back
               </Button>
               <div className="space-y-2">
-                <label className="text-xs font-semibold" htmlFor="g-name">Full name</label>
+                <label className="text-xs font-bold" htmlFor="g-name">Full name</label>
                 <Input id="g-name" value={customName} onChange={(e) => setCustomName(e.target.value)} placeholder="e.g. Kalkidan Bekele" className="rounded-xl" />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-semibold" htmlFor="g-email">Email</label>
+                <label className="text-xs font-bold" htmlFor="g-email">Email</label>
                 <Input id="g-email" type="email" value={customEmail} onChange={(e) => setCustomEmail(e.target.value)} placeholder="you@gmail.com" className="rounded-xl" />
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -123,7 +123,7 @@ export function GoogleSheet({
                     key={r}
                     type="button"
                     onClick={() => setCustomRole(r)}
-                    className={`rounded-xl border px-3 py-2.5 text-xs font-semibold transition-all ${customRole === r ? "border-lemon bg-lemon/15 text-lime-800 dark:text-lime-300" : "hover:border-lemon/50"}`}
+                    className={`rounded-xl border px-3 py-2.5 text-xs font-bold transition-all ${customRole === r ? "border-lemon bg-lemon/15 text-lime-800 dark:text-lime-300" : "hover:border-lemon/50"}`}
                   >
                     {r === "STUDENT" ? "🎓 Student" : "👩‍🏫 Lecturer"}
                   </button>
@@ -136,7 +136,7 @@ export function GoogleSheet({
           )}
         </div>
 
-        <p className="border-t border-border/60 px-6 py-3 text-center text-[10px] leading-relaxed text-muted-foreground">
+        <p className="border-t-2 border-edge px-6 py-3 text-center text-[10px] leading-relaxed text-muted-foreground">
           Sandbox demo mode — accounts are created instantly on Harax.
           In production this dialog is the real Google OAuth flow.
         </p>

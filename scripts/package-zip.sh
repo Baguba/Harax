@@ -11,7 +11,8 @@ rsync -a --delete src "$STAGE/"
 rsync -a --delete prisma "$STAGE/"
 rsync -a --delete mini-services "$STAGE/"
 rsync -a --delete db "$STAGE/"
-rsync -a --delete public/img "$STAGE/public/img/" 2>/dev/null || { mkdir -p "$STAGE/public/img"; rsync -a --delete public/img "$STAGE/public/img/"; }
+# whole public dir except uploads (icons, manifest, img/landing photos...)
+rsync -a --delete --exclude 'uploads' public/ "$STAGE/public/"
 for f in README.md package.json next.config.ts tsconfig.json tailwind.config.ts postcss.config.mjs components.json eslint.config.mjs; do
   cp -f "$f" "$STAGE/"
 done

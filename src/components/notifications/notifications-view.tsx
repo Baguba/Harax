@@ -69,8 +69,8 @@ export function NotificationsView() {
                 transition={{ delay: i * 0.03 }}
                 onClick={() => open(n)}
                 className={cn(
-                  "flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition-all hover:shadow-md",
-                  n.read ? "bg-card/60 border-border/50" : "border-lemon/40 bg-lemon/[0.06]"
+                  "flex w-full items-center gap-3 rounded-2xl border-2 p-4 text-left transition-all hover:shadow-[0_3px_0_0_var(--edge-soft)]",
+                  n.read ? "game-card" : "border-ink bg-lemon/15 shadow-[0_3px_0_0_var(--edge-soft)]"
                 )}
               >
                 <span className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl", meta.className)}>
@@ -83,7 +83,7 @@ export function NotificationsView() {
                   </span>
                   {n.body && <span className="mt-0.5 line-clamp-2 block text-xs text-muted-foreground">{n.body}</span>}
                 </span>
-                <span className="shrink-0 text-[10px] font-semibold text-muted-foreground">{timeAgo(n.createdAt)}</span>
+                <span className="shrink-0 text-[10px] font-bold text-muted-foreground">{timeAgo(n.createdAt)}</span>
               </motion.button>
             );
           })}

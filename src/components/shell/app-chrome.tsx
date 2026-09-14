@@ -38,19 +38,19 @@ export function Sidebar({ unread, onLogout }: { unread: number; onLogout: () => 
   if (!user) return null;
 
   return (
-    <aside className="sticky top-0 hidden h-svh w-[248px] shrink-0 flex-col border-r border-border/60 bg-card/40 px-4 py-5 lg:flex">
+    <aside className="sticky top-0 hidden h-svh w-[248px] shrink-0 flex-col border-r-2 border-edge bg-card px-4 py-5 lg:flex">
       <button className="px-2 py-1 text-left" onClick={() => setView({ name: "feed" })} aria-label="Harax home">
         <HaraxLogo size={36} />
       </button>
 
       <Button
         onClick={() => setComposerOpen(true)}
-        className="mt-6 h-11 rounded-2xl font-display font-bold"
+        className="mt-6 h-11 rounded-2xl text-game-caps"
       >
         <Plus className="h-5 w-5" /> New post
       </Button>
 
-      <nav className="mt-6 flex-1 space-y-1" aria-label="Main navigation">
+      <nav className="mt-6 flex-1 space-y-1.5" aria-label="Main navigation">
         {NAV_ITEMS.map((item) => {
           if (item.showFor === "admin" && !isAdmin(user)) return null;
           const active = view.name === item.name || (item.name === "profile" && view.name === "profile");
@@ -59,34 +59,33 @@ export function Sidebar({ unread, onLogout }: { unread: number; onLogout: () => 
               key={item.name}
               onClick={() => setView(item.name === "profile" ? { name: "profile", id: user.id } : { name: item.name })}
               className={cn(
-                "group relative flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-sm font-semibold transition-all",
-                active ? "bg-lemon/15 text-lime-900 dark:text-lime-300" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                "group relative flex w-full items-center gap-3 rounded-xl border-2 px-3.5 py-2 text-sm font-bold transition-all",
+                active
+                  ? "border-ink bg-lemon text-ink shadow-[0_3px_0_0_var(--bevel-lemon)]"
+                  : "border-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
               aria-current={active ? "page" : undefined}
             >
-              {active && (
-                <motion.span layoutId="nav-active" className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-lemon" />
-              )}
-              <item.icon className={cn("h-5 w-5 transition-transform group-hover:scale-110", active && "text-lime-600 dark:text-lime-400")} />
+              <item.icon className={cn("h-5 w-5 transition-transform group-hover:scale-110")} />
               {item.label}
               {item.name === "notifications" && unread > 0 && (
-                <Badge className="ml-auto h-5 min-w-5 rounded-full bg-lemon px-1.5 text-[10px] font-bold text-ink">{unread}</Badge>
+                <Badge className="ml-auto h-5 min-w-5 rounded-full bg-ink px-1.5 text-[10px] font-bold text-lemon">{unread}</Badge>
               )}
             </button>
           );
         })}
       </nav>
 
-      <div className="rounded-2xl border border-border/60 bg-card p-3">
+      <div className="game-inset p-3">
         <div className="flex items-center gap-2.5">
           <UserAvatar user={user} size="md" />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-bold leading-tight">{user.name}</p>
-            <p className="truncate text-[10px] text-muted-foreground leading-tight">{user.department ?? user.role}</p>
+            <p className="truncate text-[10px] font-bold text-muted-foreground leading-tight">{user.department ?? user.role}</p>
           </div>
           <button
             onClick={onLogout}
-            className="rounded-xl p-2 text-muted-foreground transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+            className="rounded-lg border-2 border-transparent p-1.5 text-muted-foreground transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-500/40 dark:hover:bg-red-500/10"
             aria-label="Sign out"
             title="Sign out"
           >
@@ -143,7 +142,7 @@ export function Topbar({ unread, onLogout }: { unread: number; onLogout: () => v
   };
 
   return (
-    <header className="sticky top-0 z-30 border-b border-border/60 glass">
+    <header className="sticky top-0 z-30 border-b-2 border-edge bg-card/95 backdrop-blur-sm">
       <div className="flex h-14 items-center gap-3 px-3 sm:px-5">
         {/* mobile back / logo */}
         <button className="lg:hidden" onClick={() => useAppStore.getState().goBack()} aria-label="Go back">
@@ -161,7 +160,7 @@ export function Topbar({ unread, onLogout }: { unread: number; onLogout: () => v
             onChange={(e) => onQueryChange(e.target.value)}
             onFocus={() => q.trim().length >= 2 && setOpen(true)}
             placeholder="Search people, groups, channels, events…"
-            className="h-10 rounded-2xl border-border/70 bg-card/70 pl-10 pr-9 text-sm"
+            className="h-10 rounded-xl border-2 border-input bg-card pl-10 pr-9 text-sm font-bold shadow-[0_3px_0_0_var(--edge-soft)] focus-visible:shadow-none"
             aria-label="Global search"
           />
           {q && (
@@ -186,7 +185,7 @@ export function Topbar({ unread, onLogout }: { unread: number; onLogout: () => v
                   {results.users.map((u) => (
                     <SearchRow key={u.id} onClick={() => go({ name: "profile", id: u.id })}>
                       <UserAvatar user={u} size="sm" />
-                      <span className="min-w-0 flex-1 truncate text-sm font-semibold">{u.name}</span>
+                      <span className="min-w-0 flex-1 truncate text-sm font-bold">{u.name}</span>
                       {u.verified && <BadgeCheck className="h-3.5 w-3.5 text-lime-600" aria-label="Verified" />}
                       <span className="truncate text-[10px] text-muted-foreground">{u.department}</span>
                     </SearchRow>
@@ -196,7 +195,7 @@ export function Topbar({ unread, onLogout }: { unread: number; onLogout: () => v
                   {results.groups.map((g) => (
                     <SearchRow key={g.id} onClick={() => go({ name: "group", id: g.id })}>
                       <span className="text-lg">{g.emoji}</span>
-                      <span className="min-w-0 flex-1 truncate text-sm font-semibold">{g.name}</span>
+                      <span className="min-w-0 flex-1 truncate text-sm font-bold">{g.name}</span>
                       <span className="text-[10px] text-muted-foreground">{g.memberCount} members</span>
                     </SearchRow>
                   ))}
@@ -205,7 +204,7 @@ export function Topbar({ unread, onLogout }: { unread: number; onLogout: () => v
                   {results.channels.map((c) => (
                     <SearchRow key={c.id} onClick={() => go({ name: "channel", id: c.id })}>
                       <Megaphone className="h-4 w-4 text-lime-600" />
-                      <span className="min-w-0 flex-1 truncate text-sm font-semibold">{c.name}</span>
+                      <span className="min-w-0 flex-1 truncate text-sm font-bold">{c.name}</span>
                       {c.official && <Badge className="h-4 rounded bg-lemon px-1 text-[8px] font-bold text-ink">✓</Badge>}
                     </SearchRow>
                   ))}
@@ -214,7 +213,7 @@ export function Topbar({ unread, onLogout }: { unread: number; onLogout: () => v
                   {results.events.map((e) => (
                     <SearchRow key={e.id} onClick={() => go({ name: "events" })}>
                       <CalendarDays className="h-4 w-4 text-lime-600" />
-                      <span className="min-w-0 flex-1 truncate text-sm font-semibold">{e.title}</span>
+                      <span className="min-w-0 flex-1 truncate text-sm font-bold">{e.title}</span>
                       <span className="text-[10px] text-muted-foreground">{timeAgo(e.startsAt)}</span>
                     </SearchRow>
                   ))}
@@ -294,13 +293,13 @@ export function MobileNav({ unread }: { unread: number }) {
       {/* mobile new post FAB */}
       <button
         onClick={() => setComposerOpen(true)}
-        className="fixed bottom-[84px] right-4 z-40 flex h-13 w-13 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-110 active:scale-90 lg:hidden"
+        className="fixed bottom-[84px] right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full border-2 border-ink bg-primary text-primary-foreground shadow-[0_5px_0_0_var(--bevel-lemon)] transition-transform hover:scale-105 active:translate-y-[3px] active:shadow-none lg:hidden"
         aria-label="Create post"
       >
-        <Plus className="h-6 w-6" strokeWidth={2.5} />
+        <Plus className="h-6 w-6" strokeWidth={3} />
       </button>
 
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/60 glass pb-[env(safe-area-inset-bottom)] lg:hidden" aria-label="Mobile navigation">
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-edge bg-card/97 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm lg:hidden" aria-label="Mobile navigation">
         <div className="grid grid-cols-5">
           {items.map((item) => (
             <TabButton key={item.name} item={item} />
@@ -335,8 +334,13 @@ function TabButton({ item }: { item: { name: ViewName; label: string; icon: Reac
       className="flex flex-col items-center justify-center gap-0.5 py-2.5"
       aria-current={active ? "page" : undefined}
     >
-      <item.icon className={cn("h-5 w-5 transition-all", active ? "scale-110 text-lime-600 dark:text-lime-400" : "text-muted-foreground")} />
-      <span className={cn("text-[9px] font-bold", active ? "text-lime-700 dark:text-lime-300" : "text-muted-foreground")}>{item.label}</span>
+      <span className={cn(
+        "flex h-7 w-12 items-center justify-center rounded-full border-2 transition-all",
+        active ? "border-ink bg-lemon shadow-[0_2px_0_0_var(--bevel-lemon)]" : "border-transparent"
+      )}>
+        <item.icon className={cn("h-4.5 w-4.5 transition-all", active ? "text-ink" : "text-muted-foreground")} />
+      </span>
+      <span className={cn("text-[9px] font-bold", active ? "text-lime-800 dark:text-lime-300" : "text-muted-foreground")}>{item.label}</span>
     </button>
   );
 }

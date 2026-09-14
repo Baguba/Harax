@@ -57,14 +57,14 @@ export function AdminView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-6 text-lemon-soft">
+      <div className="relative overflow-hidden rounded-3xl border-2 border-ink bg-forest p-6 text-lemon-soft shadow-[0_6px_0_0_rgba(12,17,11,0.35)]">
         <div className="relative flex flex-wrap items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-lemon/15">
-            <ShieldCheck className="h-6 w-6 text-lemon" />
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-ink bg-lemon shadow-[0_3px_0_0_rgba(12,17,11,0.35)]">
+            <ShieldCheck className="h-6 w-6 text-ink" strokeWidth={2.5} />
           </span>
           <div>
-            <h1 className="font-display text-2xl font-bold text-white">Mission control 🛡</h1>
-            <p className="text-xs text-lemon-soft/70">
+            <h1 className="font-display text-2xl font-extrabold text-white">Mission control 🛡</h1>
+            <p className="text-xs font-bold text-lemon-soft/70">
               Signed in as {user.name} · {user.role === "SUPERADMIN" ? "superadmin — full control" : "admin — campus-wide powers"}
             </p>
           </div>
@@ -87,20 +87,20 @@ export function AdminView() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04 }}
-                className="rounded-3xl border bg-card p-4"
+                className="game-card rounded-3xl p-4"
               >
                 <div className="flex items-center justify-between">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{c.label}</p>
                   <c.icon className="h-4 w-4 text-lime-600" />
                 </div>
-                <p className="mt-1.5 font-display text-2xl font-bold text-lime-700 dark:text-lime-400">{c.value}</p>
+                <p className="mt-1.5 font-display text-2xl font-extrabold text-lime-700 dark:text-lime-400">{c.value}</p>
                 <p className="text-[10px] text-muted-foreground">{c.delta}</p>
               </motion.div>
             ))}
           </div>
 
           {/* activity chart */}
-          <div className="rounded-3xl border bg-card p-5">
+          <div className="game-card rounded-3xl p-5">
             <h3 className="mb-4 flex items-center gap-2 font-display text-sm font-bold">
               <TrendingUp className="h-4 w-4 text-lime-600" /> Campus activity — last 14 days
             </h3>
@@ -111,8 +111,8 @@ export function AdminView() {
                   <XAxis dataKey="label" tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} width={24} />
                   <Tooltip
-                    contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 16, fontSize: 12 }}
-                     labelStyle={{ fontWeight: 700 }}
+                    contentStyle={{ background: "var(--popover)", border: "2px solid var(--edge)", borderRadius: 16, fontSize: 12, fontWeight: 600, boxShadow: "0 4px 0 0 var(--edge-soft)" }}
+                     labelStyle={{ fontWeight: 800 }}
                   />
                   <Bar dataKey="posts" name="Posts" fill="#a3e635" radius={[6, 6, 0, 0]} maxBarSize={18} />
                   <Bar dataKey="messages" name="Messages" fill="#4d7c0f" radius={[6, 6, 0, 0]} maxBarSize={18} />
@@ -122,14 +122,14 @@ export function AdminView() {
           </div>
 
           {/* top posts */}
-          <div className="rounded-3xl border bg-card p-5">
+          <div className="game-card rounded-3xl p-5">
             <h3 className="mb-3 flex items-center gap-2 font-display text-sm font-bold"><Flame className="h-4 w-4 text-lime-600" /> Hottest posts right now</h3>
             <div className="space-y-2">
               {data.topPosts.map((p, i) => (
-                <div key={p.id} className="flex items-center gap-3 rounded-2xl border border-border/50 bg-muted/20 p-3">
+                <div key={p.id} className="game-inset flex items-center gap-3 p-3">
                   <span className="font-display text-lg font-bold text-lemon">#{i + 1}</span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-xs font-semibold">{p.content}</p>
+                    <p className="truncate text-xs font-bold">{p.content}</p>
                     <p className="text-[10px] text-muted-foreground">{p.author.name} · {timeAgo(p.createdAt)} ago</p>
                   </div>
                   <div className="shrink-0 text-right text-[10px] font-bold">
@@ -177,8 +177,8 @@ function UsersTable({ users, isSuper }: { users: AdminStats["users"]; isSuper: b
   };
 
   return (
-    <div className="rounded-3xl border bg-card">
-      <div className="flex flex-wrap items-center gap-2.5 border-b border-border/60 p-4">
+    <div className="game-card rounded-3xl">
+      <div className="flex flex-wrap items-center gap-2.5 border-b-2 border-edge p-4">
         <div className="relative flex-1 sm:max-w-xs">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search users…" className="h-9 rounded-2xl pl-9 text-xs" />
@@ -189,7 +189,7 @@ function UsersTable({ users, isSuper }: { users: AdminStats["users"]; isSuper: b
             {["ALL", "STUDENT", "LECTURER", "ADMIN", "SUPERADMIN"].map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
           </SelectContent>
         </Select>
-        <p className="ml-auto text-[10px] font-semibold text-muted-foreground">{filtered.length} users</p>
+        <p className="ml-auto text-[10px] font-bold text-muted-foreground">{filtered.length} users</p>
       </div>
 
       <div className="max-h-[62svh] overflow-auto nice-scrollbar">
@@ -232,7 +232,7 @@ function UsersTable({ users, isSuper }: { users: AdminStats["users"]; isSuper: b
                   )}
                 </TableCell>
                 <TableCell className="hidden sm:table-cell">
-                  <p className="text-[10px] font-semibold">{u.counts.posts} posts · {u.counts.comments} comments</p>
+                  <p className="text-[10px] font-bold">{u.counts.posts} posts · {u.counts.comments} comments</p>
                   <p className="text-[9px] text-muted-foreground">{u.counts.groups} groups · {u.provider}</p>
                 </TableCell>
                 <TableCell>
@@ -304,7 +304,7 @@ function ModerationPanel() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            "rounded-3xl border bg-card p-5",
+            "game-card rounded-3xl p-5",
             r.status === "OPEN" ? "border-amber-300/60" : "opacity-60"
           )}
         >
@@ -316,10 +316,10 @@ function ModerationPanel() {
             <span className="ml-auto text-[10px] text-muted-foreground">reported {timeAgo(r.createdAt)} ago by {r.reporter.name}</span>
           </div>
 
-          <p className="mt-3 text-sm font-semibold">"{r.reason}"</p>
+          <p className="mt-3 text-sm font-bold">"{r.reason}"</p>
 
           {r.target && (
-            <div className="mt-3 rounded-2xl border border-border/60 bg-muted/30 p-3.5">
+            <div className="game-inset mt-3 p-3.5">
               {r.targetType === "POST" && (
                 <div className="flex items-start gap-3">
                   <UserAvatar user={{ name: r.target.name ?? "Author", avatarUrl: null }} size="sm" />

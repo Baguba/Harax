@@ -30,7 +30,7 @@ export function SideChatView() {
   if (activeRoom) {
     return (
       <div className="space-y-4">
-        <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-5 text-lemon-soft">
+        <div className="relative overflow-hidden rounded-3xl border-2 border-ink bg-forest p-5 text-lemon-soft shadow-[0_5px_0_0_rgba(12,17,11,0.35)]">
           <button onClick={() => setActiveRoom(null)} className="absolute left-3 top-3 rounded-xl p-2 text-lemon-soft/70 transition hover:bg-white/10 hover:text-white" aria-label="All rooms">
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -50,7 +50,7 @@ export function SideChatView() {
         </div>
 
         {!user && (
-          <div className="flex items-center gap-2.5 rounded-2xl border border-amber-200 bg-amber-50 p-3.5 text-xs font-semibold text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300">
+          <div className="flex items-center gap-2.5 rounded-2xl border border-amber-200 bg-amber-50 p-3.5 text-xs font-bold text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300">
             <ShieldAlert className="h-4 w-4 shrink-0" />
             Sign in to join the conversation — your identity stays hidden behind your room alias either way.
           </div>
@@ -70,7 +70,7 @@ export function SideChatView() {
   return (
     <div className="space-y-4">
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-forest p-6 text-lemon-soft">
+      <div className="relative overflow-hidden rounded-3xl border-2 border-ink bg-forest p-6 text-lemon-soft shadow-[0_5px_0_0_rgba(12,17,11,0.35)]">
         <div className="relative">
           <div className="inline-flex items-center gap-2 rounded-full border border-lemon/30 bg-lemon/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-lime-300">
             <Ghost className="h-3 w-3" /> Anonymous · No names · Just vibes
@@ -100,15 +100,15 @@ export function SideChatView() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
                 onClick={() => setActiveRoom(r)}
-                className="card-lift group relative overflow-hidden rounded-3xl border bg-card p-5 text-left"
+                className="card-lift group relative overflow-hidden game-card rounded-3xl p-5 text-left"
               >
                 {r.lastHourActive && (
-                  <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-lemon/20 px-2 py-0.5 text-[9px] font-bold text-lime-800 dark:text-lime-300">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-lemon" /> LIVE
+                  <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full border-2 border-ink bg-lemon px-2 py-0.5 text-[9px] font-bold text-ink shadow-[0_2px_0_0_var(--bevel-lemon)]">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink" /> LIVE
                   </span>
                 )}
                 <div className="flex items-center gap-3">
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-forest text-3xl transition-transform group-hover:scale-110 group-hover:rotate-6">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-2 border-ink bg-forest shadow-[0_3px_0_0_rgba(12,17,11,0.3)] text-3xl transition-transform group-hover:scale-110 group-hover:rotate-6">
                     {r.emoji}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -126,7 +126,7 @@ export function SideChatView() {
                     <span className="ml-auto shrink-0 text-[9px]">{timeAgo(r.lastMessage.createdAt)}</span>
                   </div>
                 )}
-                <div className="mt-3 flex items-center gap-3 text-[10px] font-semibold text-muted-foreground">
+                <div className="mt-3 flex items-center gap-3 text-[10px] font-bold text-muted-foreground">
                   <span className="inline-flex items-center gap-1"><MessageCircle className="h-3 w-3" /> {r.messageCount} messages</span>
                   {r.lastHourActive && <span className="inline-flex items-center gap-1 text-lime-700 dark:text-lime-400"><Flame className="h-3 w-3" /> popping now</span>}
                   <span className="ml-auto inline-flex items-center gap-1 font-bold text-lime-700 transition-transform group-hover:translate-x-0.5 dark:text-lime-400">
@@ -139,7 +139,7 @@ export function SideChatView() {
         </div>
       )}
 
-      <p className="rounded-2xl border border-dashed border-border/70 p-3.5 text-center text-[10px] leading-relaxed text-muted-foreground">
+      <p className="game-card rounded-2xl border-dashed p-3.5 text-center text-[10px] font-bold leading-relaxed text-muted-foreground">
         Sidechat is anonymous but not lawless — harassment and hate speech are reported
         straight to the moderation queue. Keep the tea light 💚
       </p>

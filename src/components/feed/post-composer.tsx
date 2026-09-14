@@ -70,7 +70,7 @@ export function PostComposer({ onPosted, autoFocus, groupId, channelId, compactP
   };
 
   return (
-    <div className="rounded-3xl border border-border/70 bg-card p-4 shadow-sm">
+    <div className="game-card rounded-3xl p-4">
       <div className="flex gap-3">
         <UserAvatar user={user} size="lg" />
         <div className="min-w-0 flex-1">
@@ -79,8 +79,8 @@ export function PostComposer({ onPosted, autoFocus, groupId, channelId, compactP
             onChange={(e) => setContent(e.target.value)}
             autoFocus={autoFocus}
             maxLength={2000}
-            placeholder={compactPlaceholder ?? (groupId ? "Post for the group…" : channelId ? "Write a broadcast…" : "What's happening at Haramaya today?")}
-            className="min-h-[64px] resize-none rounded-2xl border-0 bg-muted/60 px-4 py-3 text-[15px] leading-relaxed placeholder:text-muted-foreground/70 focus-visible:ring-1 focus-visible:ring-lemon/60"
+            placeholder={compactPlaceholder ?? (groupId ? "Post for the group…" : channelId ? "Write a broadcast…" : "What's good on campus today?")}
+            className="min-h-[64px] resize-none rounded-2xl border-0 bg-muted/60 px-4 py-3 text-[15px] leading-relaxed placeholder:text-muted-foreground/70 focus-visible:ring-2 focus-visible:ring-lemon/70"
           />
 
           {/* emoji quick bar */}
@@ -115,29 +115,29 @@ export function PostComposer({ onPosted, autoFocus, groupId, channelId, compactP
             </div>
           )}
 
-          <div className="mt-3 flex items-center gap-1.5">
+          <div className="mt-3 flex flex-wrap items-center gap-1.5">
             <button
               onClick={() => pickFile("image/*", false)}
               disabled={uploading || !!media}
-              className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-lime-700 dark:hover:text-lime-400 disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold text-muted-foreground transition-colors hover:bg-muted hover:text-lime-700 dark:hover:text-lime-400 disabled:opacity-50"
             >
               <ImagePlus className="h-4 w-4" /> Photo
             </button>
             <button
               onClick={() => pickFile("video/mp4,video/webm,video/quicktime", true)}
               disabled={uploading || !!media}
-              className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-lime-700 dark:hover:text-lime-400 disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold text-muted-foreground transition-colors hover:bg-muted hover:text-lime-700 dark:hover:text-lime-400 disabled:opacity-50"
             >
               <Video className="h-4 w-4" /> Short video
             </button>
-            <span className="ml-auto text-[10px] font-semibold text-muted-foreground">{content.length}/2000</span>
+            <span className="ml-auto text-[10px] font-bold text-muted-foreground">{content.length}/2000</span>
             <Button
               onClick={submit}
               disabled={posting || uploading || (!content.trim() && !media)}
-              className="h-10 rounded-2xl px-5 font-display font-bold"
+              className="h-10 w-full rounded-2xl px-5 text-game-caps sm:w-auto"
             >
               {posting || uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-              Post
+              Post it
             </Button>
           </div>
         </div>
