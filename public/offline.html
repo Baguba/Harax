@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>You're offline — Harax</title>
+  <meta name="theme-color" content="#a3e635" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      background: #edf1e4;
+      font-family: "Nunito", ui-rounded, system-ui, -apple-system, sans-serif;
+      color: #10160f;
+      padding: 24px;
+    }
+    .card {
+      max-width: 420px;
+      width: 100%;
+      background: #ffffff;
+      border: 2px solid #26331d;
+      border-radius: 28px;
+      box-shadow: 0 6px 0 0 #c6d4b2;
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .badge {
+      width: 64px; height: 64px;
+      margin: 0 auto 20px;
+      display: grid; place-items: center;
+      background: #a3e635;
+      border: 2px solid #0c110b;
+      border-radius: 20px;
+      box-shadow: 0 4px 0 0 #4d7c0f;
+    }
+    .badge svg { width: 32px; height: 32px; }
+    h1 { font-size: 24px; letter-spacing: -0.02em; margin-bottom: 10px; }
+    p { font-size: 15px; line-height: 1.6; color: #4b5742; font-weight: 600; }
+    button {
+      margin-top: 24px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: 800;
+      font-family: inherit;
+      background: #a3e635;
+      color: #0c110b;
+      border: 2px solid #0c110b;
+      border-radius: 16px;
+      box-shadow: 0 4px 0 0 #4d7c0f;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 #4d7c0f; }
+    button:active { transform: translateY(3px); box-shadow: none; }
+    .hint { margin-top: 16px; font-size: 12px; color: #7c8a6f; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="badge" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none">
+        <path d="M40 8H16a8 8 0 0 0-8 8v40l12-10h20a8 8 0 0 0 8-8V16a8 8 0 0 0-8-8Z" fill="#0c110b"/>
+        <path d="M24 30h16M24 38h10" stroke="#a3e635" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1>You're offline</h1>
+    <p>Harax needs the internet to reach the campus. Check your connection — your posts, chats and game streaks are all safe and waiting.</p>
+    <button onclick="location.reload()">Try again</button>
+    <p class="hint">Harax — Haramaya University community</p>
+  </main>
+</body>
+</html>

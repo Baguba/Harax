@@ -17,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Pencil, Loader2, CalendarDays, Users, Megaphone, MapPin, AtSign, Newspaper, Camera, ImagePlus, X, LogOut } from "lucide-react";
+import { Pencil, Loader2, CalendarDays, Users, Megaphone, MapPin, AtSign, Newspaper, Camera, ImagePlus, X, LogOut, Settings as SettingsIcon } from "lucide-react";
 import { logoutFlow } from "@/components/shell/app-chrome";
 import { DEPARTMENTS, YEARS } from "@/lib/validation-constants";
 
@@ -136,6 +136,16 @@ export function ProfileView({ userId }: { userId: string }) {
           )}
           {profile.isMe && (
             <div className="absolute right-3 top-3 flex items-center gap-2">
+              <Button
+                onClick={() => setView({ name: "settings" })}
+                size="sm"
+                className="gap-1.5 rounded-2xl glass font-semibold"
+                aria-label="Open settings"
+                title="Settings"
+              >
+                <SettingsIcon className="h-3.5 w-3.5" aria-hidden />
+                Settings
+              </Button>
               <Button
                 onClick={handleLogout}
                 disabled={loggingOut}

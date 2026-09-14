@@ -15,6 +15,7 @@ export type ViewName =
   | "games"
   | "notifications"
   | "profile"
+  | "settings"
   | "admin";
 
 export interface View {

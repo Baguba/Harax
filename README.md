@@ -56,7 +56,24 @@ Open your own profile and you can personalize it two ways:
 
 Both save instantly, work on mobile and desktop, and accept JPG / PNG / WebP / GIF up to 5 MB (photo) and 8 MB (banner). Uploads are checked server-side by magic bytes (a renamed `.exe` can never pass as an image), stored under `public/uploads/`, and files you replace or remove are cleaned up automatically.
 
-Your own profile header also carries a **Log out** button (top of the banner, next to *Edit profile*) — handy on phones, where the sidebar isn't visible. It ends the session server-side and returns you to the landing page.
+Your own profile header also carries a **Log out** button and a **Settings** button (top of the banner, next to *Edit profile*) — handy on phones, where the sidebar isn't visible. Logging out ends the session server-side and returns you to the landing page.
+
+## Settings & account deletion
+
+The **Settings** view (sidebar on desktop, the gear pill on your profile on mobile) gathers everything personal in one place:
+
+- **Account** — your name, e-mail, role badge, and a shortcut to the profile editor.
+- **Appearance** — switch between the light campus theme and dark mode.
+- **Legal** — the in-app **Privacy Policy** (`/privacy`) and **Terms of Service** (`/terms`), also linked in the landing footer. Both pages are static, server-rendered and reachable without signing in — a hard requirement for Google Play.
+- **Danger zone → Delete account** — a Play-Store-compliant, permanent self-service account deletion: confirm by typing `DELETE`, and the server wipes your profile, photos, posts, comments, sidechat history and Game Zone records (sessions die, uploaded files are unlinked). The super-admin account is protected from deleting itself so the platform always keeps an owner.
+
+## Installable app (PWA) & offline
+
+Harax is a full **PWA**: the web manifest (`public/manifest.webmanifest`) ships PNG icons (192/512 + maskable, generated from the hand-drawn logo via `scripts/gen-icons.mjs`), so Android's "Add to Home screen" and PWABuilder both get proper artwork. A small **service worker** (`public/sw.js`) precaches the app shell and icons, serves uploaded photos cache-first, keeps all `/api/**` traffic live, and falls back to a friendly `offline.html` card when the network is gone. The worker only registers in production builds (`npm start`), never in `next dev`, so hot reload stays clean.
+
+## Deploying to the internet (and the Play Store)
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for the complete path: hosting the live site (Railway/Render/Fly), pointing a domain at it, generating the signed Android app bundle with PWABuilder, and submitting to the Google Play Console (data-safety answers included).
 
 ## Game Zone — play, score, win the week
 
@@ -86,7 +103,7 @@ The game engines live in `mini-services/chat-service/game-engines/` (plain Node,
 
 ## Configuration
 
-Everything works out of the box with the included `.env`:
+Everything works out of the box with the included `.env` (zip) or by copying `.env.example` to `.env` (git clone):
 
 ```ini
 DATABASE_URL=file:../db/custom.db      # SQLite file (relative to prisma/schema.prisma)
@@ -108,7 +125,8 @@ Optional environment variables:
 │   ├── app/                  # Next.js App Router — the SPA at `/` + all REST API routes
 │   │   └── api/               # auth, posts, comments, reactions, events, groups,
 │   │                         # channels, sidechat, notifications, search, admin, upload…
-│   ├── components/            # feed, groups, sidechat, events, channels, games, shell, auth, admin…
+│   │   └── privacy/, terms/   # static legal pages (Play Store requirement)
+│   ├── components/            # feed, groups, sidechat, events, channels, games, settings, shell, auth, admin…
 │   ├── hooks/                 # use-chat, use-game-socket (REST + socket.io + fallbacks)
 │   └── lib/                   # auth (sessions, bcrypt), rate limiting, validation, db, art, games-meta
 ├── prisma/                    # schema.prisma + seed.ts

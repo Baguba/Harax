@@ -379,9 +379,11 @@ export function Landing() {
               Haramaya University · Ethiopia · Community platform
             </p>
           </div>
-          <div className="flex items-center gap-6 text-sm font-bold text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-bold text-muted-foreground">
             <a href="#features" className="nav-sweep hover:text-foreground">Features</a>
             <a href="#safety" className="nav-sweep hover:text-foreground">Safety</a>
+            <a href="/privacy" className="nav-sweep hover:text-foreground">Privacy</a>
+            <a href="/terms" className="nav-sweep hover:text-foreground">Terms</a>
             <span className="flex items-center gap-1.5">
               <HaraxMark size={18} /> © 2026
             </span>

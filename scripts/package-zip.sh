@@ -13,9 +13,11 @@ rsync -a --delete mini-services "$STAGE/"
 rsync -a --delete db "$STAGE/"
 # whole public dir except uploads (icons, manifest, img/landing photos...)
 rsync -a --delete --exclude 'uploads' public/ "$STAGE/public/"
-for f in README.md package.json next.config.ts tsconfig.json tailwind.config.ts postcss.config.mjs components.json eslint.config.mjs; do
-  cp -f "$f" "$STAGE/"
+for f in README.md DEPLOYMENT.md .env.example package.json next.config.ts tsconfig.json tailwind.config.ts postcss.config.mjs components.json eslint.config.mjs; do
+  cp -f "$f" "$STAGE/" 2>/dev/null || true
 done
+# a working local .env (only DATABASE_URL — safe defaults)
+cp -f .env "$STAGE/.env"
 
 # 2) scripts: only the runtime orchestrators, never test screenshots or one-off image tooling
 mkdir -p "$STAGE/scripts"
@@ -49,3 +51,8 @@ echo "size: $(du -h download/harax.zip | awk '{print $1}')"
 unzip -p download/harax.zip harax/src/components/profile/profile-view.tsx | grep -c "Log out" | xargs echo "Log-out refs in zipped profile-view:"
 unzip -l download/harax.zip | grep -c "game-engines" | xargs echo "game engine files in zip:"
 unzip -p download/harax.zip harax/mini-services/chat-service/games.js | grep -c "POINTS" | xargs echo "games service refs in zip:"
+unzip -l download/harax.zip | grep -c "api/upload/route.ts" | xargs echo "upload route in zip (must be 1):"
+unzip -l download/harax.zip | grep -c "settings-view.tsx" | xargs echo "settings view in zip (must be 1):"
+unzip -l download/harax.zip | grep -c "legal-shell" | xargs echo "legal pages in zip (must be >=1):"
+unzip -l download/harax.zip | grep -c "sw.js" | xargs echo "service worker in zip (must be 1):"
+unzip -l download/harax.zip | grep -c "icon-512.png" | xargs echo "512 PNG icon in zip (must be 1):"

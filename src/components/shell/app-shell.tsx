@@ -14,6 +14,7 @@ import { SideChatView } from "@/components/sidechat/sidechat-view";
 import { GameZone } from "@/components/games/game-zone";
 import { NotificationsView } from "@/components/notifications/notifications-view";
 import { ProfileView } from "@/components/profile/profile-view";
+import { SettingsView } from "@/components/settings/settings-view";
 import { AdminView } from "@/components/admin/admin-view";
 import { ExploreView } from "@/components/feed/explore-view";
 import { RightRail } from "@/components/shell/right-rail";
@@ -115,6 +116,8 @@ function ViewRouter() {
       return <NotificationsView />;
     case "profile":
       return <ProfileView key={view.id} userId={view.id!} />;
+    case "settings":
+      return <SettingsView />;
     case "admin":
       return <AdminView />;
     default:

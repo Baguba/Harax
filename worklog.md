@@ -205,3 +205,26 @@ Work Log:
 Stage Summary:
 - Game Zone now connects through proxies/edges that block WebSocket upgrades (polling-first + endpoint rotation) and never permanently gives up; when it can't connect, the UI says exactly why and offers one-tap retry, and `GET /api/games/health` reports service status.
 - Deliverable refreshed: /home/z/my-project/download/harax.zip.
+
+---
+Task ID: 9
+Agent: Super Z (main)
+Task: Play Store app-side prep (user request) + repo hygiene + critical bugfix
+
+Work Log:
+- Git hygiene: untracked .env, db/custom.db, public/uploads photos; added .env.example; extended .gitignore (db, uploads, download, worklog); set remote origin → github.com/Baguba/Harax (empty repo, verified). Push blocked: no GitHub credentials in env — needs user PAT.
+- 🔴 CRITICAL FIX: /api/upload route (134 lines) had been accidentally deleted in commit 98703d4 (Game Zone styling sweep) — this broke ALL image uploads (avatar/banner/post media), almost certainly the user's "why it is not working". Restored verbatim from git history; verified POST → 401 (alive).
+- PWA icons: scripts/gen-icons.mjs (sharp) → icon-192/512, maskable-192/512 (full-bleed, rx flattened), apple-touch-icon 180; manifest.webmanifest updated with PNG set; layout.tsx icon metadata updated. Play icon copied to download/play-store/play-store-icon-512.png (VLM-verified).
+- Legal pages: src/components/legal/legal-shell.tsx + src/app/privacy/page.tsx + src/app/terms/page.tsx (static, no-auth, Play requirement); landing footer links Privacy/Terms. Contact email is placeholder support@harax.app — user must replace.
+- Account deletion (Play requirement): DELETE handler in /api/users/me (cascade wipe, uploads unlink, SUPERADMIN protected, session destroyed) + Settings view (src/components/settings/settings-view.tsx) with Danger zone + type-DELETE AlertDialog; "settings" added to app-store ViewName, ViewRouter, NAV_ITEMS, and Settings pill on profile banner next to Log out. E2E tested via curl: register → delete → session dead → login rejected → DB rows 0.
+- Service worker: public/sw.js (network-first navigate + offline.html fallback, cache-first statics, /api always live) + public/offline.html (themed) + RegisterSW client component in layout (production only).
+- Production path verified: removed output:"standalone" from next.config.ts (made next start unsupported); full npm run build + npm start test — all routes 200, chat service + 3 game engines up, login works in prod mode.
+- Play Store assets in download/play-store/: 8 phone screenshots 1080×1920 (landing/feed/gamezone/sidechat/profile/settings/delete-dialog/privacy; padded via scripts/pad-screenshots.py) + feature-graphic.png 1024×500 (HTML-rendered via scripts/feature-graphic.html, VLM-approved).
+- DEPLOYMENT.md written (Railway volume + env + start command, domain, PWABuilder TWA, assetlinks, Play Console data-safety answers, maintenance).
+- README.md updated (settings/deletion, PWA/offline, deploy pointer, structure); package-zip.sh extended (.env/.env.example/DEPLOYMENT.md + 5 new verify greps); zip repackaged: 263 files, 916K, all checks green.
+
+Stage Summary:
+- App is Play-Store-ready on the code side: icons, manifest, privacy/terms, account deletion, offline, prod build all verified.
+- Root cause of "not working" found & fixed (deleted upload route restored).
+- Blocked on: GitHub push (needs user PAT), hosting/domain/Play account purchases (user side).
+- Placeholder to replace: support@harax.app in privacy/terms/settings emails.

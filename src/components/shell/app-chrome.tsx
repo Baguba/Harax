@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Newspaper, Compass, CalendarDays, Users, Megaphone, Ghost, Gamepad2, Bell, User as UserIcon, ShieldCheck, BadgeCheck, Plus, LogOut, Moon, Sun, Search, X, ChevronLeft } from "lucide-react";
+import { Newspaper, Compass, CalendarDays, Users, Megaphone, Ghost, Gamepad2, Bell, User as UserIcon, ShieldCheck, BadgeCheck, Plus, LogOut, Moon, Sun, Search, X, ChevronLeft, Settings as SettingsIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAppStore, type View, type ViewName } from "@/store/app-store";
@@ -26,6 +26,7 @@ export const NAV_ITEMS: Array<{ name: ViewName; label: string; icon: React.Eleme
   { name: "games", label: "Game Zone", icon: Gamepad2 },
   { name: "notifications", label: "Notifications", icon: Bell },
   { name: "profile", label: "Profile", icon: UserIcon },
+  { name: "settings", label: "Settings", icon: SettingsIcon },
   { name: "admin", label: "Admin", icon: ShieldCheck, showFor: "admin" },
 ];
 
