@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Gamepad2, Medal, Swords, TriangleAlert, Trophy } from "lucide-react";
+import { Gamepad2, Loader2, Medal, PlugZap, Swords, TriangleAlert, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { apiQ } from "@/lib/client-api";
@@ -17,6 +17,10 @@ interface GamesHomeData {
   season: SeasonInfo;
   me: MyGameStats | null;
   history: unknown[];
+}
+
+interface GamesHealthData {
+  socketService: boolean;
 }
 
 type Tab = "play" | "ladder" | "mine";
@@ -50,11 +54,21 @@ export function GameZone() {
     refetchInterval: 45_000,
   });
 
+  const inMatch = Boolean(g.match);
+
+  // only checked while the socket is down — tells "service not running"
+  // apart from "this network blocks the real-time link"
+  const { data: health } = useQuery<GamesHealthData>({
+    queryKey: ["games-health"],
+    queryFn: () => apiQ<GamesHealthData>("/api/games/health"),
+    enabled: !g.connected,
+    refetchInterval: 8_000,
+  });
+
   const season = data?.season ?? null;
   const stats = data?.me ?? null;
   const countdown = useCountdownChip(season?.endsAt ?? null);
 
-  const inMatch = Boolean(g.match);
   const TABS: Array<{ key: Tab; label: string; icon: React.ElementType }> = [
     { key: "play", label: "Play", icon: Gamepad2 },
     { key: "ladder", label: "Leaderboard", icon: Trophy },
@@ -99,6 +113,49 @@ export function GameZone() {
             </p>
             <button onClick={g.clearError} className="text-[10px] font-bold uppercase tracking-wider text-red-700 underline dark:text-red-300">
               dismiss
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* game-service connection status */}
+      <AnimatePresence>
+        {!g.connected && !inMatch && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            className="game-card flex flex-wrap items-center justify-between gap-3 rounded-2xl border-amber-400 bg-amber-50 p-3 dark:bg-amber-500/10"
+          >
+            <div className="flex min-w-0 items-center gap-2.5">
+              <Loader2 className="h-4 w-4 shrink-0 animate-spin text-amber-600 dark:text-amber-300" />
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-amber-800 dark:text-amber-200">
+                  {health?.socketService === false
+                    ? "The real-time game service isn't reachable from the server."
+                    : "Connecting to the game service…"}
+                </p>
+                <p className="mt-0.5 text-[11px] font-semibold leading-relaxed text-amber-700/90 dark:text-amber-300/80">
+                  {health?.socketService === false ? (
+                    <>
+                      Games need it for live play. If you're running Harax locally, start it with{" "}
+                      <code className="rounded bg-amber-100 px-1 font-bold dark:bg-amber-400/20">npm run dev</code>{" "}
+                      — it runs the web app and the game service together.
+                    </>
+                  ) : (
+                    <>
+                      Live games need the real-time link — buttons light up the moment it's up.
+                      {g.attempts > 1 && <> Attempt {g.attempts} — still trying.</>}
+                    </>
+                  )}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={g.reconnectNow}
+              className="flex shrink-0 items-center gap-1.5 rounded-xl border-2 border-amber-500 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 transition-transform hover:-translate-y-0.5 dark:bg-transparent dark:text-amber-200"
+            >
+              <PlugZap className="h-3.5 w-3.5" /> Retry now
             </button>
           </motion.div>
         )}

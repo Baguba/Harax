@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, Flag, Handshake, LogOut, RefreshCw, Send, Trophy } from "lucide-react";
+import { Bot, Flag, Handshake, Loader2, LogOut, RefreshCw, Send, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
 import { UserAvatar } from "@/components/common/user-avatar";
@@ -309,6 +309,22 @@ export function MatchView({ g }: { g: Game }) {
             <Button size="sm" variant="destructive" onClick={() => g.leaveMatch()}>Yes, leave</Button>
             <Button size="sm" variant="outline" onClick={() => setConfirmLeave(false)}>Keep playing</Button>
           </div>
+        </div>
+      )}
+
+      {/* my own connection dropped mid-match — reassure + retry */}
+      {!g.connected && match.status === "ACTIVE" && (
+        <div className="game-card mb-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl border-amber-400 bg-amber-50 p-3 dark:bg-amber-500/10">
+          <p className="flex items-center gap-2 text-xs font-bold text-amber-800 dark:text-amber-200">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Reconnecting… the board picks up right where you left it.
+          </p>
+          <button
+            onClick={g.reconnectNow}
+            className="text-[10px] font-bold uppercase tracking-wider text-amber-700 underline dark:text-amber-300"
+          >
+            retry now
+          </button>
         </div>
       )}
 

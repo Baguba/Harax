@@ -68,6 +68,7 @@ Your own profile header also carries a **Log out** button (top of the banner, ne
 - **Weekly seasons reset every Monday 00:00 (East Africa time)** — when a week expires the top 3 are recorded in the hall of fame with their prizes (**gold trophy + 500 ETB campus voucher**, silver + 300, bronze + 150), get a notification, and the ladder starts fresh.
 - **Fair-play timers** — 1:30 per move in X&O, 2:00 in checkers, 3:00 in chess. Clock out and you lose; leave the board and you have 2 minutes to come back before forfeiting.
 - **Rematch, draw offers, resign and table talk** — all realtime, plus auto-resume: come back to Game Zone and your live match opens right where you left it.
+- **Resilient connection** — the game link starts on HTTP polling (works behind any proxy) and upgrades to WebSocket when possible, rotates between the gateway and direct endpoints if one keeps failing, and never stops retrying. If it ever can't connect you get a clear banner (with a *Retry now* button), and `GET /api/games/health` tells you whether the game service itself is running.
 
 The game engines live in `mini-services/chat-service/game-engines/` (plain Node, no build step) and the session manager (matchmaking, timers, points, seasons) in `mini-services/chat-service/games.js`. Leaderboard data comes from `GET /api/games/leaderboard`. The included database ships with a demo ladder + last week's podium so everything is explorable immediately.
 
@@ -126,6 +127,9 @@ Optional environment variables:
 - Messages are stored in SQLite and survive restarts.
 
 ## Troubleshooting
+
+**Game Zone buttons stay grayed out / "Connecting to the game service…"**
+The realtime service isn't reachable from your browser yet. If you run Harax locally, make sure you started it with `npm run dev` (or `npm start`) — those run the web app **and** the game service together. The banner clears and the buttons light up automatically the moment the link is up.
 
 **Port 3000 / 3003 already in use**
 Something else is running there. Stop it, or edit the port in `scripts/dev.mjs` (web) and `mini-services/chat-service/index.js` (`PORT` const).

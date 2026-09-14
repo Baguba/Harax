@@ -106,6 +106,7 @@ export function PlayPanel({
                 onClick={() => g.quickMatch(game.key)}
                 disabled={g.busy || !g.connected}
                 className="flex-1 text-game-caps"
+                title={g.connected ? undefined : "Waits for the real-time game service — see the status banner above"}
               >
                 <Swords className="h-4 w-4" /> Find opponent
               </Button>
@@ -114,7 +115,7 @@ export function PlayPanel({
                 disabled={g.busy || !g.connected}
                 variant="outline"
                 className="text-game-caps"
-                title="Practice vs the house bot — no weekly points"
+                title={g.connected ? "Practice vs the house bot — no weekly points" : "Waits for the real-time game service — see the status banner above"}
               >
                 <Bot className="h-4 w-4" /> Bot
               </Button>
@@ -129,8 +130,13 @@ export function PlayPanel({
           <h3 className="flex items-center gap-2 font-display text-lg font-bold">
             <Users className="h-5 w-5" /> Open tables
           </h3>
-          <span className="game-chip flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">
-            <CircleDot className={cn("h-3 w-3", g.connected ? "text-lime-600" : "text-red-500")} />
+          <span
+            className={cn(
+              "game-chip flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
+              !g.connected && "border-amber-400 bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300"
+            )}
+          >
+            <CircleDot className={cn("h-3 w-3", g.connected ? "text-lime-600" : "animate-pulse text-amber-500")} />
             {g.connected ? "live" : "connecting…"}
           </span>
         </div>

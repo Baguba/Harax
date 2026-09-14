@@ -176,3 +176,32 @@ Stage Summary:
 - Game Zone is live: any signed-in user can play X&O, checkers or chess against anyone on campus in realtime (or practice vs the bot), earn per-game points on the weekly ladder, and the top 3 each Monday are awarded trophies + campus vouchers before the ladder resets.
 - Everything is server-authoritative (engines in the chat service), rate-limited and persistence-backed; matches survive reconnects via auto-resume.
 - Deliverable refreshed: /home/z/my-project/download/harax.zip.
+
+---
+Task ID: 9
+Agent: main-agent (Super Z)
+Task: Fix "Game Zone not working" — user screenshot showed the three game cards with grayed-out (disabled) FIND OPPONENT / BOT buttons; games were unplayable.
+
+Work Log:
+- Diagnosed from the user's screenshot (pixel-level + VLM): buttons rendered in disabled state → `g.connected === false`; a lemon `#a3e635` block over the Checkers title matched the app's `::selection` style — the user had been dragging text on the card trying to get a response.
+- Root cause: `use-game-socket.ts` connected with `transports: ["websocket", "polling"]` (websocket-first) and `reconnectionAttempts: 10`. Behind the hosting edge (and strict networks generally) the WebSocket upgrade can hang/fail, and after 10 attempts the socket gave up forever → buttons permanently disabled with no explanation. Chat never showed this because it has REST send + 3s polling fallback; Game Zone was socket-only. (Worklog Task 2 already hit this class of failure for chat.)
+- Verified infrastructure inside the sandbox was healthy (chat service :3003, Caddy :81 query-routing, websocket AND polling both work direct + through Caddy) — failure is environmental (edge/proxy), so fixed with defense-in-depth on the client:
+  1. use-game-socket.ts — polling-first transport order (socket.io upgrades to websocket when allowed), endpoint failover (gateway `/?XTransformPort=3003` ↔ direct `host:3003`, rotated after 3 consecutive failures), `reconnection: true` with no attempt cap (never gives up), connection timeout 12s, exposes `attempts` + `reconnectNow()`.
+  2. use-chat.ts — same polling-first order (latent bug, chat masked it with REST fallback).
+  3. NEW `GET /api/games/health` — probes the chat-service control port (127.0.0.1:3011) server-side; distinguishes "service not running" from "network blocks the realtime link".
+  4. game-zone.tsx — amber status banner while disconnected: accurate copy per health probe (incl. "start it with npm run dev" hint for local runs), attempt counter, RETRY NOW button; hidden mid-match.
+  5. play-panel.tsx — disabled buttons get a title tooltip explaining the wait; "connecting…" chip now amber + pulsing instead of a red dot.
+  6. match-view.tsx — mid-match "Reconnecting… the board picks up right where you left it" strip with retry when my own socket drops during an active match.
+- Fixed a bug found during verification: health route initially returned a flat JSON body; the client `api()` wrapper expects the `{ok, data}` envelope → "Query data cannot be undefined" console error. Now uses the shared `ok()` helper.
+- Verified end-to-end in the browser (agent-browser):
+  * Normal localhost: connected, buttons enabled, bot match playable, 0 console errors.
+  * Simulated broken edge (network route aborting every `transport=websocket` request): socket connects via POLLING, live chip shows, full vs-bot game played to a draw with result overlay + Play again — proves the user's scenario now works.
+  * Simulated service down (killed chat service): banner shows "The real-time game service isn't reachable from the server… start it with npm run dev", buttons disabled with tooltips, health returns socketService:false; after restarting the service the socket AUTO-RECONNECTS (banner clears, buttons enable, chip "live") with no user action.
+  * Simulated fully blocked socket (both transports aborted): banner shows "Connecting to the game service… Attempt 11 — still trying" — retry loop confirmed unbounded.
+- Regression: scripts/test-game-socket.mjs — all 31 checks pass (matchmaking, turn-gating, resign/mate/draw points, rematch color swap, leaderboard). tsc: only the pre-existing errors; eslint clean.
+- Cleanup: wiped E2E test matches + inflated scores, re-seeded the demo ladder (Selam 47 / Meron 38 / Naol 35 …) + past-season hall of fame; leaderboard VLM-verified (podium, prizes, 6d countdown).
+- README: documented the resilient connection + a Troubleshooting entry for grayed-out Game Zone buttons. Repackaged download/harax.zip (242 files, 852K) with the new hook, health route, banner UIs and current README; verified by listing the archive.
+
+Stage Summary:
+- Game Zone now connects through proxies/edges that block WebSocket upgrades (polling-first + endpoint rotation) and never permanently gives up; when it can't connect, the UI says exactly why and offers one-tap retry, and `GET /api/games/health` reports service status.
+- Deliverable refreshed: /home/z/my-project/download/harax.zip.

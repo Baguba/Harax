@@ -81,9 +81,11 @@ export function useChat(roomType: "GROUP" | "SIDECHAT", roomId: string | null) {
     });
 
     // 2) socket for real-time updates
+    //    polling-first: survives proxies that mishandle WebSocket upgrades
+    //    (socket.io upgrades to websocket automatically when it can)
     const socket = io(socketUrl() as `${string}`, {
       path: "/",
-      transports: ["websocket", "polling"],
+      transports: ["polling", "websocket"],
       withCredentials: true,
       forceNew: true,
       reconnectionAttempts: 8,
