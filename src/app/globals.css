@@ -239,6 +239,58 @@
   box-shadow: 0 7px 0 0 var(--edge-soft);
 }
 
+/* ── Game Zone boards ─────────────────────────────────────── */
+/* checkers + chess squares (light tray / dark olive) */
+.sq-light {
+  background: #efe9d8;
+}
+.sq-dark {
+  background: #9db06a;
+}
+.dark .sq-light {
+  background: #5c6a4d;
+}
+.dark .sq-dark {
+  background: #2e3b26;
+}
+/* last-move tint sits on top of the square color */
+.sq-last {
+  box-shadow: inset 0 0 0 999px color-mix(in srgb, var(--lemon) 42%, transparent);
+}
+.sq-selected {
+  box-shadow: inset 0 0 0 3px var(--ink), inset 0 0 0 999px color-mix(in srgb, var(--lemon) 55%, transparent);
+}
+/* chess glyphs — solid unicode chessmen with a fat outline, sticker style */
+.chess-piece {
+  line-height: 1;
+  font-weight: 400;
+  -webkit-text-stroke: 1.5px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 0 2px 0 rgba(12, 17, 11, 0.28);
+  user-select: none;
+}
+.chess-piece-w {
+  color: #fdfcf5;
+}
+.chess-piece-b {
+  color: #23301b;
+  -webkit-text-stroke: 1.5px #d7e2b8;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+}
+/* checkers discs */
+.checker-disc {
+  border: 2px solid var(--ink);
+  box-shadow: 0 2px 0 0 rgba(12, 17, 11, 0.35), inset 0 -3px 0 0 rgba(0, 0, 0, 0.22);
+}
+/* board coordinate labels */
+.board-coord {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 /* ── Speech bubble (mascot) ───────────────────────────────── */
 .speech-bubble {
   position: relative;

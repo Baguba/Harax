@@ -11,6 +11,7 @@ import { GroupDetail } from "@/components/groups/group-detail";
 import { ChannelsView } from "@/components/channels/channels-view";
 import { ChannelDetail } from "@/components/channels/channel-detail";
 import { SideChatView } from "@/components/sidechat/sidechat-view";
+import { GameZone } from "@/components/games/game-zone";
 import { NotificationsView } from "@/components/notifications/notifications-view";
 import { ProfileView } from "@/components/profile/profile-view";
 import { AdminView } from "@/components/admin/admin-view";
@@ -47,7 +48,7 @@ function ShellInner() {
     qc.clear();
   };
 
-  const wide = view.name === "admin" || view.name === "groups" || view.name === "channels" || view.name === "sidechat" || view.name === "events";
+  const wide = view.name === "admin" || view.name === "groups" || view.name === "channels" || view.name === "sidechat" || view.name === "events" || view.name === "games";
   const showRail = view.name === "feed";
 
   return (
@@ -108,6 +109,8 @@ function ViewRouter() {
       return <ChannelDetail key={view.id} channelId={view.id!} />;
     case "sidechat":
       return <SideChatView />;
+    case "games":
+      return <GameZone />;
     case "notifications":
       return <NotificationsView />;
     case "profile":

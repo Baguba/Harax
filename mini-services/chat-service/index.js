@@ -17,6 +17,7 @@ const { createServer } = require("http");
 const { createHash, timingSafeEqual } = require("crypto");
 const { Server } = require("socket.io");
 const { PrismaClient } = require("@prisma/client");
+const games = require("./games");
 
 const PORT = 3003;
 const INTERNAL_PORT = 3011;
@@ -33,6 +34,8 @@ const io = new Server(httpServer, {
   pingInterval: 25000,
   maxHttpBufferSize: 1e6, // 1MB
 });
+
+games.init({ io, db });
 
 // ─── helpers ────────────────────────────────────────────────
 const sha256 = (s) => createHash("sha256").update(s).digest("hex");
@@ -131,6 +134,7 @@ io.on("connection", async (socket) => {
 
   socket.data.user = user;
   socket.emit("auth:ok", { id: user.id, name: user.name });
+  games.attach(socket, user);
 
   // join a room (GROUP or SIDECHAT)
   socket.on("room:join", async (payload) => {
@@ -235,6 +239,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("disconnect", () => {
+    games.onDisconnect(socket);
     const roomId = socket.data.roomId;
     if (roomId) {
       const set = presence.get(roomId);
@@ -248,7 +253,7 @@ io.on("connection", async (socket) => {
 });
 
 // ─── loopback control endpoint (Next REST routes call this) ─
-const internal = createServer((req, res) => {
+const internal = createServer(async (req, res) => {
   const json = (code, body) => {
     res.writeHead(code, { "content-type": "application/json" });
     res.end(JSON.stringify(body));
@@ -256,6 +261,19 @@ const internal = createServer((req, res) => {
 
   if (req.method === "GET" && (req.url === "/health" || req.url === "/health/")) {
     return json(200, { ok: true, pid: process.pid, uptime: process.uptime(), rooms: presence.size, sockets: io.engine ? io.engine.clientsCount : -1 });
+  }
+
+  if (req.method === "POST" && (req.url === "/internal/ensure-season" || req.url === "/internal/ensure-season/")) {
+    if (!tokenValid(req)) return json(403, { ok: false, error: "bad token" });
+    try {
+      const season = await games.ensureSeason();
+      return json(200, {
+        ok: true,
+        season: { id: season.id, index: season.index, startsAt: season.startsAt.toISOString(), endsAt: season.endsAt.toISOString() },
+      });
+    } catch (e) {
+      return json(500, { ok: false, error: String(e?.message ?? e) });
+    }
   }
 
   if (req.method === "POST" && (req.url === "/internal/broadcast" || req.url === "/internal/broadcast/")) {

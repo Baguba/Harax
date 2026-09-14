@@ -43,6 +43,10 @@ model User {
   notifications Notification[]
   reportsFiled  Report[]            @relation("Reporter")
   sessions      Session[]
+  gameHosted    GameMatch[]         @relation("GameHost")
+  gameJoined    GameMatch[]         @relation("GameGuest")
+  seasonScores  SeasonScore[]
+  gamePrizes    GameWinner[]
 }
 
 model Session {
@@ -225,4 +229,84 @@ model Report {
   reason     String
   status     String   @default("OPEN") // OPEN | RESOLVED | DISMISSED
   createdAt  DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────────────────────
+// GAME ZONE · weekly seasons, matches, points, prizes
+// ─────────────────────────────────────────────────────────────
+
+// One row per week. When a season expires the top-3 are awarded
+// (GameWinner), it is marked closed and a fresh season begins.
+model GameSeason {
+  id        String   @id @default(cuid())
+  index     Int      @unique // week number since the very first season
+  startsAt  DateTime // Monday 00:00 East-Africa time (UTC+3)
+  endsAt    DateTime // next Monday 00:00 EAT
+  closed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  matches GameMatch[]
+  scores  SeasonScore[]
+  winners GameWinner[]
+}
+
+// A match. state = JSON blob of the engine state (+ move history).
+// Sides are per-game symbols: X|O (tic-tac-toe), r|k (checkers), w|b (chess).
+// hostColor = the side the host plays; the guest plays the other.
+model GameMatch {
+  id         String     @id @default(cuid())
+  seasonId   String
+  season     GameSeason @relation(fields: [seasonId], references: [id])
+  game       String // TICTACTOE | CHECKERS | CHESS
+  status     String     @default("WAITING") // WAITING | ACTIVE | FINISHED
+  vsBot      Boolean    @default(false)
+  hostColor  String // X | r | w (or the other symbol)
+  playerXId  String // host
+  playerX    User       @relation("GameHost", fields: [playerXId], references: [id])
+  playerOId  String? // guest (null while WAITING or vs bot)
+  playerO    User?      @relation("GameGuest", fields: [playerOId], references: [id])
+  winnerId   String? // null = draw / aborted without a winner
+  reason     String? // LINE | NO_MOVES | CHECKMATE | STALEMATE | MATERIAL | RESIGN | TIMEOUT | ABANDON | DRAW_AGREED | ABORTED
+  state      String // JSON: engine state incl. move list
+  turn       String
+  lastMoveAt DateTime   @default(now())
+  createdAt  DateTime   @default(now())
+  endedAt    DateTime?
+
+  @@index([status, game, createdAt])
+  @@index([seasonId])
+  @@index([playerXId])
+  @@index([playerOId])
+}
+
+// Weekly points ladder — one row per player per season.
+model SeasonScore {
+  id       String     @id @default(cuid())
+  seasonId String
+  season   GameSeason @relation(fields: [seasonId], references: [id])
+  userId   String
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  points   Int        @default(0)
+  wins     Int        @default(0)
+  draws    Int        @default(0)
+  losses   Int        @default(0)
+
+  @@unique([seasonId, userId])
+  @@index([seasonId, points])
+}
+
+// Podium of a finished week — the "prize" records.
+model GameWinner {
+  id        String     @id @default(cuid())
+  seasonId  String
+  season    GameSeason @relation(fields: [seasonId], references: [id])
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rank      Int // 1 | 2 | 3
+  points    Int
+  prize     String
+  createdAt DateTime   @default(now())
+
+  @@unique([seasonId, userId])
+  @@index([seasonId, rank])
 }

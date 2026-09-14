@@ -58,6 +58,19 @@ Both save instantly, work on mobile and desktop, and accept JPG / PNG / WebP / G
 
 Your own profile header also carries a **Log out** button (top of the banner, next to *Edit profile*) — handy on phones, where the sidebar isn't visible. It ends the session server-side and returns you to the landing page.
 
+## Game Zone — play, score, win the week
+
+**Game Zone** (sidebar / mobile *Games* tab) is a realtime multiplayer arcade for the campus:
+
+- **Three games, full rules, live opponents** — *X & O* (tic-tac-toe), *Checkers* (forced captures, chain jumps, kings) and *Chess* (castling, en passant, promotions, checkmate/stalemate/50-move). Hit **Find opponent** to open a table anyone can join, or **Bot** to practice against the house bot (no weekly points).
+- **Every rule is enforced server-side** — the browser only renders state and ships your taps; illegal or out-of-turn moves are rejected by the game engines in the chat service.
+- **Points per game** — X&O: win **+6** / draw +2 · Checkers: win **+12** / draw +4 · Chess: win **+15** / draw +5 (losses pay +1 in checkers & chess). Points stack on the weekly ladder all week.
+- **Weekly seasons reset every Monday 00:00 (East Africa time)** — when a week expires the top 3 are recorded in the hall of fame with their prizes (**gold trophy + 500 ETB campus voucher**, silver + 300, bronze + 150), get a notification, and the ladder starts fresh.
+- **Fair-play timers** — 1:30 per move in X&O, 2:00 in checkers, 3:00 in chess. Clock out and you lose; leave the board and you have 2 minutes to come back before forfeiting.
+- **Rematch, draw offers, resign and table talk** — all realtime, plus auto-resume: come back to Game Zone and your live match opens right where you left it.
+
+The game engines live in `mini-services/chat-service/game-engines/` (plain Node, no build step) and the session manager (matchmaking, timers, points, seasons) in `mini-services/chat-service/games.js`. Leaderboard data comes from `GET /api/games/leaderboard`. The included database ships with a demo ladder + last week's podium so everything is explorable immediately.
+
 ## All scripts
 
 | Command | What it does |
@@ -94,12 +107,13 @@ Optional environment variables:
 │   ├── app/                  # Next.js App Router — the SPA at `/` + all REST API routes
 │   │   └── api/               # auth, posts, comments, reactions, events, groups,
 │   │                         # channels, sidechat, notifications, search, admin, upload…
-│   ├── components/            # feed, groups, sidechat, events, channels, shell, auth, admin…
-│   ├── hooks/                 # use-chat (REST + socket.io + polling fallback)
-│   └── lib/                   # auth (sessions, bcrypt), rate limiting, validation, db, art
+│   ├── components/            # feed, groups, sidechat, events, channels, games, shell, auth, admin…
+│   ├── hooks/                 # use-chat, use-game-socket (REST + socket.io + fallbacks)
+│   └── lib/                   # auth (sessions, bcrypt), rate limiting, validation, db, art, games-meta
 ├── prisma/                    # schema.prisma + seed.ts
-├── db/custom.db               # SQLite database (pre-seeded)
-├── mini-services/chat-service # socket.io real-time service (plain Node, no build step)
+├── db/custom.db               # SQLite database (pre-seeded, incl. Game Zone demo ladder)
+├── mini-services/chat-service # socket.io real-time service (chat + Game Zone, plain Node, no build step)
+│   └── game-engines/          # tic-tac-toe, checkers, chess rules (pure functions)
 ├── scripts/                   # dev.mjs / start.mjs orchestrators
 └── public/                    # logo, PWA icons, uploads
 ```

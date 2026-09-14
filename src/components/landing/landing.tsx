@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, CalendarDays, MessageCircle, Megaphone, ShieldCheck, Users, Newspaper, Ghost, Lock, Check } from "lucide-react";
+import { ArrowRight, CalendarDays, MessageCircle, Megaphone, ShieldCheck, Users, Newspaper, Ghost, Gamepad2, Lock, Check } from "lucide-react";
 import { HaraxLogo, HaraxMark } from "@/components/common/harax-logo";
 import { ScrollReveal, StaggerGroup, StaggerItem } from "@/components/common/scroll-reveal";
 import { MockPostCard, MockChatCard, MockEventCard, MockChannelToast } from "@/components/landing/hero-mocks";
@@ -17,6 +17,7 @@ const TICKER = [
   "Blood drive near main gate 🩸",
   "Meme Factory is popping tonight 😂",
   "Poetry night under the acacia tree 🎤",
+  "Game Zone: weekly top 3 win prizes 🏆",
 ];
 
 const FEATURES = [
@@ -44,6 +45,11 @@ const FEATURES = [
     icon: Ghost,
     title: "Sidechat Rooms",
     desc: "The fun zone — anonymous rooms for campus tea, memes and confessions. Zero names, zero pressure, maximum vibes. Enter if you dare.",
+  },
+  {
+    icon: Gamepad2,
+    title: "Game Zone",
+    desc: "X & O, checkers and chess against anyone on campus — live, in the browser. Stack points all week, climb the leaderboard, and the top 3 every Monday take home trophies + prizes.",
   },
   {
     icon: ShieldCheck,

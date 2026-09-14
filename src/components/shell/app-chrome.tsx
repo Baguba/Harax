@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Newspaper, Compass, CalendarDays, Users, Megaphone, Ghost, Bell, User as UserIcon, ShieldCheck, BadgeCheck, Plus, LogOut, Moon, Sun, Search, X, ChevronLeft } from "lucide-react";
+import { Newspaper, Compass, CalendarDays, Users, Megaphone, Ghost, Gamepad2, Bell, User as UserIcon, ShieldCheck, BadgeCheck, Plus, LogOut, Moon, Sun, Search, X, ChevronLeft } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAppStore, type View, type ViewName } from "@/store/app-store";
@@ -23,6 +23,7 @@ export const NAV_ITEMS: Array<{ name: ViewName; label: string; icon: React.Eleme
   { name: "groups", label: "Groups", icon: Users },
   { name: "channels", label: "Channels", icon: Megaphone },
   { name: "sidechat", label: "Sidechat", icon: Ghost },
+  { name: "games", label: "Game Zone", icon: Gamepad2 },
   { name: "notifications", label: "Notifications", icon: Bell },
   { name: "profile", label: "Profile", icon: UserIcon },
   { name: "admin", label: "Admin", icon: ShieldCheck, showFor: "admin" },
@@ -300,10 +301,11 @@ export function MobileNav({ unread }: { unread: number }) {
       </button>
 
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-edge bg-card/97 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm lg:hidden" aria-label="Mobile navigation">
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-6">
           {items.map((item) => (
             <TabButton key={item.name} item={item} />
           ))}
+          <TabButton item={{ name: "games", label: "Games", icon: Gamepad2 }} />
           <TabButton item={{ name: "sidechat", label: "Side", icon: Ghost }} />
           <TabButton item={{ name: "groups", label: "Groups", icon: Users }} />
           <button

@@ -27,7 +27,7 @@ import { api } from "@/lib/client-api";
  *    http-only session cookie still authenticates the socket.
  *  - Override with NEXT_PUBLIC_CHAT_URL if you host differently.
  */
-function socketUrl(): string {
+export function socketUrl(): string {
   const override = process.env.NEXT_PUBLIC_CHAT_URL;
   if (override) return override;
   if (typeof window === "undefined") return "/?XTransformPort=3003";

@@ -12,6 +12,7 @@ export type ViewName =
   | "channels"
   | "channel"
   | "sidechat"
+  | "games"
   | "notifications"
   | "profile"
   | "admin";

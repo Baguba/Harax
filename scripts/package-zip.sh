@@ -1,5 +1,5 @@
 #!/bin/bash
-# Repackage download/harax.zip from the live project (Task 6: profile logout button)
+# Repackage download/harax.zip from the live project (Task 8: Game Zone)
 set -e
 cd /home/z/my-project
 
@@ -47,3 +47,5 @@ unzip -t download/harax.zip > /dev/null && echo "zip OK"
 echo "files: $(unzip -l download/harax.zip | tail -1 | awk '{print $2}')"
 echo "size: $(du -h download/harax.zip | awk '{print $1}')"
 unzip -p download/harax.zip harax/src/components/profile/profile-view.tsx | grep -c "Log out" | xargs echo "Log-out refs in zipped profile-view:"
+unzip -l download/harax.zip | grep -c "game-engines" | xargs echo "game engine files in zip:"
+unzip -p download/harax.zip harax/mini-services/chat-service/games.js | grep -c "POINTS" | xargs echo "games service refs in zip:"
