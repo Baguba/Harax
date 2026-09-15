@@ -40,14 +40,14 @@ If you cloned from GitHub instead, just `git push`. The `.gitignore` already kee
 
 ## Stage 2 — Put Harax online with Railway
 
+A focused, click-by-click version of this stage lives in **[RAILWAY_SETUP.md](./RAILWAY_SETUP.md)**.
+
 These steps are for **Railway** (the friendliest for Next.js + Node sidecars). Render and Fly.io work the same way with their equivalents.
 
 ### 2.1 Create the project
 
 1. Go to **railway.app → New Project → Deploy from GitHub repo** → pick `Baguba/Harax`.
-2. Railway detects Next.js automatically. Override the settings so the chat service starts too:
-   - **Build command:** `npm ci && npm run build`
-   - **Start command:** `npm start`   *(runs `scripts/start.mjs` = web on 3000 + chat service on 3003/3011)*
+2. No manual overrides needed — the repo ships a `railway.json`, so Railway deploys out of the box. It runs `npm ci && npm run build`, then a start command that boots the single-port proxy (web + chat on one port), runs `prisma db push` against the database, and binds uploads to the volume. Don't add a Dockerfile and don't change the builder (Nixpacks is correct).
 3. **Networking tab → Generate Domain** — you get a `*.up.railway.app` HTTPS URL immediately. Test it: sign in, post, open Game Zone. If the games connect, the chat service is alive.
 
 ### 2.2 Add a persistent volume (critical)
@@ -60,22 +60,17 @@ By default Railway's filesystem is **ephemeral** — every redeploy wipes the da
    DATABASE_URL=file:/data/custom.db
    ```
 3. The chat service reads `DATABASE_URL` from the environment too, so one variable covers both processes.
-4. Move uploads to the volume as well — add to the **Start command**:
-   ```bash
-   mkdir -p /data/uploads && rm -rf public/uploads && ln -s /data/uploads public/uploads && npm start
-   ```
+4. Nothing else to do manually: the uploads symlink (`public/uploads → /data/uploads`) and `prisma db push` are already part of the `railway.json` start command, so the old "add this to the Start command" snippet is no longer needed.
 
 ### 2.3 First-run database setup
 
-The repo ships the Prisma schema but **not** the database (it's gitignored). On first deploy, run once from Railway's **Settings → Terminal** (or locally with `DATABASE_URL` pointed at the volume):
+`npx prisma db push` now runs automatically on every boot (it creates the tables on first deploy and is a no-op afterwards), so this stage is only about the optional seed and your super-admin:
 
 ```bash
-npx prisma db push          # creates all tables
 npx prisma db seed          # optional: demo community (22 users, posts, events…)
 ```
 
-Then register your own super-admin account through the app's sign-up, and (optionally) promote it directly in SQLite:
-`UPDATE User SET role='SUPERADMIN', verified=1 WHERE email='you@example.com';`
+Then register your own super-admin account through the app's sign-up and promote it with one command in Railway's **Settings → Terminal** — the exact command is in **RAILWAY_SETUP.md → "First run"**.
 
 > **Backups:** Railway volumes can snapshot. Also do a weekly `scp`/download of `/data/custom.db` — one file, that's the whole community.
 
@@ -173,9 +168,9 @@ Full description (start from this):
 
 | Symptom | Fix |
 |---|---|
-| Games/chat say "Connecting…" on Railway | Start command must be `npm start` (not `next start`) so `scripts/start.mjs` boots the chat service too |
+| Games/chat say "Connecting…" on Railway | The single-port proxy + chat service are wired up automatically by `railway.json` — open **Deploy Logs** and look for `[chat]`/`[web]` errors (more in RAILWAY_SETUP.md → Troubleshooting) |
 | Data disappears after redeploy | Volume not mounted, or `DATABASE_URL` doesn't point at `/data` |
-| Uploads 404 after redeploy | `public/uploads` symlink to the volume missing (Stage 2.2 step 4) |
+| Uploads 404 after redeploy | Volume not mounted at `/data` — the uploads symlink is recreated automatically by the `railway.json` start command on every boot |
 | Play build fails "no 512 icon" | The PNG icons ship in `public/` — make sure the manifest `icons` array wasn't reverted |
 | URL bar shows in the Android app | `/.well-known/assetlinks.json` missing or fingerprint mismatch — re-copy from PWABuilder |
 | First review rejected | 95% of the time: privacy policy unreachable, or Data safety inconsistent with the policy. Both ship with the app — double-check the live URLs |
